@@ -4,7 +4,7 @@ import { createContext, useContextSelector } from "use-context-selector";
 export function createStore<
   TStore,
   THookKeys extends string,
-  THook extends (store: TStore) => any,
+  THook extends (store: TStore) => (props: any) => any,
   THooksObj extends Record<THookKeys, THook>
 >(
   useStoreHook: () => TStore,
@@ -27,15 +27,19 @@ export function createStore<
   type HooksKey = keyof NonNullable<typeof options>["hooks"];
 
   const hooks: {
-    [HookKey in HooksKey]: () => ReturnType<THooksObj[HookKey]>;
+    [HookKey in HooksKey]: (
+      ...props: Parameters<ReturnType<THooksObj[HookKey]>>
+    ) => ReturnType<ReturnType<THooksObj[HookKey]>>;
   } = {};
 
   if (options?.hooks) {
-    for (const [key, hook] of Object.entries<THook>(options.hooks)) {
+    for (const [key, hookSelector] of Object.entries<THook>(options.hooks)) {
       // @ts-ignore
-      hooks[key] = () => {
+      hooks[key] = (props: any) => {
         // eslint-disable-next-line
-        return useContextSelector(Context, hook);
+        return useContextSelector(Context, store => {
+          return hookSelector(store)(props);
+        });
       };
     }
   }

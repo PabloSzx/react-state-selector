@@ -10,14 +10,17 @@ const { Provider, useCount, useSetCount, useOther } = createStore(
   },
   {
     hooks: {
-      useCount: ({ state }) => {
+      useCount: ({ state }) => ({ max }: { max: number }) => {
+        if (state > max) {
+          return max;
+        }
         return state;
       },
-      useSetCount: ({ setState }) => {
+      useSetCount: ({ setState }) => () => {
         return setState;
       },
-      useOther: ({ state }) => {
-        return "";
+      useOther: () => () => {
+        return "123";
       }
     },
     initialState: {
@@ -28,9 +31,9 @@ const { Provider, useCount, useSetCount, useOther } = createStore(
 );
 
 const Test: FC = () => {
-  const count = useCount();
+  const count = useCount({ max: 5 });
   const setCount = useSetCount();
-
+  const other = useOther();
   return (
     <div>
       <button
@@ -48,6 +51,9 @@ const Test: FC = () => {
       >
         +
       </button>
+      <br />
+      <br />
+      <span>{other}</span>
     </div>
   );
 };
