@@ -39,9 +39,13 @@
     "husky": "^4.2.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-scripts": "^3.4.0",
     "ts-loader": "^6.2.1",
     "tsdx": "^0.12.3",
     "tslib": "^1.10.0",
     "typescript": "^3.7.5"
+  },
+  "dependencies": {
+    "use-context-selector": "^1.0.1"
   }
 }

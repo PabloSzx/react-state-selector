@@ -1,4 +1,5 @@
-import React, { createContext, FC, useContext } from "react";
+import { createElement, FC } from "react";
+import { createContext, useContextSelector } from "use-context-selector";
 
 function assertIsDefined<T = unknown>(
   value: T,
@@ -21,12 +22,15 @@ export function createStore<
     keys?: Record<string, string>;
   }
 ) {
-  const Context = createContext<TStore | null>(null);
+  const Context = createContext<TStore>(null as any);
 
   const Provider: FC = ({ children }) => {
     const value = useStoreHook();
 
-    return <Context.Provider value={value}>{children}</Context.Provider>;
+    return createElement(Context.Provider, {
+      value,
+      children
+    });
   };
 
   type HooksKey = keyof NonNullable<typeof options>["hooks"];
@@ -39,10 +43,9 @@ export function createStore<
     for (const [hookKey, createHook] of Object.entries<THook>(options.hooks)) {
       // @ts-ignore
       hooks[hookKey] = () => {
-        const ctx = useContext(Context);
-        assertIsDefined(ctx, "You should render the context provider!");
-        const hookData = createHook(ctx);
-
+        // eslint-disable-next-line
+        const hookData = useContextSelector(Context, createHook);
+        assertIsDefined(hookData, "You should render the context provider!");
         return hookData;
       };
     }
