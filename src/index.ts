@@ -12,7 +12,14 @@ export function createStore<
     hooks?: THooksObj;
     initialState: TStore;
   }
-) {
+): {
+  Provider: FC<{}>;
+  useStore: () => TStore;
+} & {
+  [HookKey in keyof NonNullable<typeof options>["hooks"]]: (
+    ...props: Parameters<ReturnType<THooksObj[HookKey]>>
+  ) => ReturnType<ReturnType<THooksObj[HookKey]>>;
+} {
   const Context = createContext<TStore>(options.initialState);
 
   const Provider: FC = ({ children }) => {
@@ -24,10 +31,8 @@ export function createStore<
     });
   };
 
-  type HooksKey = keyof NonNullable<typeof options>["hooks"];
-
   const hooks: {
-    [HookKey in HooksKey]: (
+    [HookKey in keyof NonNullable<typeof options>["hooks"]]: (
       ...props: Parameters<ReturnType<THooksObj[HookKey]>>
     ) => ReturnType<ReturnType<THooksObj[HookKey]>>;
   } = {};
