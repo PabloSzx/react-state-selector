@@ -1,15 +1,6 @@
 import { createElement, FC } from "react";
 import { createContext, useContextSelector } from "use-context-selector";
 
-function assertIsDefined<T = unknown>(
-  value: T,
-  message: string
-): asserts value is NonNullable<T> {
-  if (value == null) {
-    throw new Error(message);
-  }
-}
-
 export function createStore<
   TStore,
   THookKeys extends string,
@@ -17,12 +8,12 @@ export function createStore<
   THooksObj extends Record<THookKeys, THook>
 >(
   useStoreHook: () => TStore,
-  options?: {
+  options: {
     hooks?: THooksObj;
-    keys?: Record<string, string>;
+    initialState: TStore;
   }
 ) {
-  const Context = createContext<TStore>(null as any);
+  const Context = createContext<TStore>(options.initialState);
 
   const Provider: FC = ({ children }) => {
     const value = useStoreHook();
@@ -40,16 +31,21 @@ export function createStore<
   } = {};
 
   if (options?.hooks) {
-    for (const [hookKey, createHook] of Object.entries<THook>(options.hooks)) {
+    for (const [key, hook] of Object.entries<THook>(options.hooks)) {
       // @ts-ignore
-      hooks[hookKey] = () => {
+      hooks[key] = () => {
         // eslint-disable-next-line
-        const hookData = useContextSelector(Context, createHook);
-        assertIsDefined(hookData, "You should render the context provider!");
-        return hookData;
+        return useContextSelector(Context, hook);
       };
     }
   }
 
-  return { Provider, ...hooks };
+  return {
+    Provider,
+    useStore: () => {
+      // eslint-disable-next-line
+      return useContextSelector(Context, s => s);
+    },
+    ...hooks
+  };
 }

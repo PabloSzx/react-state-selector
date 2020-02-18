@@ -4,7 +4,7 @@ import { createStore } from "../src";
 
 const { Provider, useCount, useSetCount, useOther } = createStore(
   () => {
-    const [state, setState] = useState(1);
+    const [state, setState] = useState(0);
 
     return { state, setState };
   },
@@ -19,6 +19,10 @@ const { Provider, useCount, useSetCount, useOther } = createStore(
       useOther: ({ state }) => {
         return "";
       }
+    },
+    initialState: {
+      state: 0,
+      setState: () => {}
     }
   }
 );
