@@ -1,31 +1,29 @@
 {
+  "name": "react-state-selector",
   "version": "0.1.2",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "author": "PabloSzx",
   "files": [
     "dist"
   ],
+  "main": "dist/index.js",
+  "module": "dist/react-state-selector.esm.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
-    "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test --passWithNoTests",
+    "build-storybook": "build-storybook",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
+    "start": "tsdx watch",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  },
-  "peerDependencies": {
-    "react": ">=16"
+    "test": "tsdx test --passWithNoTests"
   },
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
     }
   },
-  "name": "react-state-selector",
-  "author": "PabloSzx",
-  "module": "dist/react-state-selector.esm.js",
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@storybook/addon-actions": "^5.3.13",
@@ -43,9 +41,10 @@
     "ts-loader": "^6.2.1",
     "tsdx": "^0.12.3",
     "tslib": "^1.10.0",
-    "typescript": "^3.7.5"
-  },
-  "dependencies": {
+    "typescript": "^3.7.5",
     "use-context-selector": "^1.0.1"
+  },
+  "peerDependencies": {
+    "react": ">=16"
   }
 }

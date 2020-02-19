@@ -2,38 +2,41 @@ import React, { FC, useState } from "react";
 
 import { createStore } from "../src";
 
-const { Provider, useCount, useSetCount, useOther } = createStore(
+const { Provider, useCountA, useCountB } = createStore(
   () => {
-    const [state, setState] = useState(0);
+    const [countA, setCountA] = useState(0);
+    const [countB, setCountB] = useState(0);
 
-    return { state, setState };
+    return { countA, setCountA, countB, setCountB };
   },
   {
     hooks: {
-      useCount: ({ state }) => ({ max }: { max: number }) => {
-        if (state > max) {
-          return max;
-        }
-        return state;
+      useCountA: ({ countA, setCountA }) => (a: number) => {
+        return { countA, setCountA };
       },
-      useSetCount: ({ setState }) => () => {
-        return setState;
+      useCountB: ({ countB, setCountB }) => (b: string) => {
+        return { countB, setCountB };
+      }
+    },
+    selectorKeys: {
+      useCountA: store => props => {
+        return store.countA;
       },
-      useOther: () => () => {
-        return "123";
+      useCountB: ({ countB }) => b => {
+        return countB;
       }
     },
     initialState: {
-      state: 0,
-      setState: () => {}
+      countA: 0,
+      countB: 0,
+      setCountA: () => {},
+      setCountB: () => {}
     }
   }
 );
 
-const Test: FC = () => {
-  const count = useCount({ max: 5 });
-  const setCount = useSetCount();
-  const other = useOther();
+const CountA: FC = () => {
+  const { countA: count, setCountA: setCount } = useCountA(12);
   return (
     <div>
       <button
@@ -53,7 +56,32 @@ const Test: FC = () => {
       </button>
       <br />
       <br />
-      <span>{other}</span>
+      <span>{Math.round(Math.random() * 100)}</span>
+    </div>
+  );
+};
+const CountB: FC = () => {
+  const { countB: count, setCountB: setCount } = useCountB("1");
+  return (
+    <div>
+      <button
+        onClick={() => {
+          setCount(count - 1);
+        }}
+      >
+        -
+      </button>
+      <span>{count}</span>
+      <button
+        onClick={() => {
+          setCount(count + 1);
+        }}
+      >
+        +
+      </button>
+      <br />
+      <br />
+      <span>{Math.round(Math.random() * 100)}</span>
     </div>
   );
 };
@@ -64,10 +92,11 @@ export default {
 
 export const toStorybook = () => (
   <Provider>
-    <Test />
+    <CountA />
+    <CountB />
   </Provider>
 );
 
 toStorybook.story = {
-  name: "to Storybook"
+  name: "to Storybook1"
 };
