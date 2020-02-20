@@ -1,3 +1,5 @@
+/* eslint react-hooks/rules-of-hooks: 0 */
+
 import { Draft, Immutable, produce } from "immer";
 import { createElement, FC, useEffect, useLayoutEffect, useRef } from "react";
 import { createSelector } from "reselect";
@@ -139,9 +141,8 @@ export function createStore<
   let currentStore = store;
 
   const useStore = () => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const update = useUpdate();
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+
     useIsomorphicLayoutEffect(() => {
       const globalListener = createSelector(
         (s: TStore) => s,
@@ -180,63 +181,45 @@ export function createStore<
   if (hooks) {
     for (const [key, hookSelector] of Object.entries(hooks)) {
       hooksObj[key] = (hooksProps: unknown) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
         const stateRef = useRef(currentStore);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const selectorsRef = useRef<{
-          state: OutputSelector<
-            Immutable<TStore>,
-            void,
-            (res1: unknown, res2: void) => void
-          >;
-          props: OutputSelector<unknown, void, (res: unknown) => void>;
-        } | null>(null);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
+
+        const selectorsRef = useRef<OutputSelector<
+          Immutable<TStore>,
+          void,
+          (res1: unknown) => void
+        > | null>(null);
+
         const update = useUpdate();
-        // eslint-disable-next-line react-hooks/rules-of-hooks
+
         useIsomorphicLayoutEffect(() => {
           if (selectorsRef.current) {
-            listeners.set(selectorsRef.current.state, hooksProps);
+            listeners.set(selectorsRef.current, hooksProps);
 
-            selectorsRef.current.props(hooksProps);
-
-            selectorsRef.current.state(stateRef.current, hooksProps);
+            selectorsRef.current(stateRef.current, hooksProps);
           }
         }, [hooksProps]);
-        // eslint-disable-next-line react-hooks/rules-of-hooks
+
         useIsomorphicLayoutEffect(() => {
           let firstRender = true;
           if (!selectorsRef.current) {
-            const propsSelector = createSelector(
-              props => props,
-              () => {}
-            );
-            const stateSelector = createSelector(
-              hookSelector,
-              propsSelector,
-              () => {
-                if (firstRender) return;
+            const stateSelector = createSelector(hookSelector, () => {
+              if (firstRender) return;
 
-                update();
-              }
-            );
-            selectorsRef.current = {
-              state: stateSelector,
-              props: propsSelector
-            };
+              update();
+            });
+            selectorsRef.current = stateSelector;
           }
-          selectorsRef.current.props(hooksProps);
-          selectorsRef.current.state(stateRef.current, hooksProps);
+          selectorsRef.current(stateRef.current, hooksProps);
 
           setTimeout(() => {
             firstRender = false;
           }, 0);
 
-          listeners.set(selectorsRef.current.state, hooksProps);
+          listeners.set(selectorsRef.current, hooksProps);
 
           return () => {
             if (selectorsRef.current) {
-              listeners.delete(selectorsRef.current.state);
+              listeners.delete(selectorsRef.current);
             } else {
               if (process.env.NODE_ENV === "development") {
                 console.warn("MEMORY LEAK!");

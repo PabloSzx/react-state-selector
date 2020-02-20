@@ -89,7 +89,7 @@ const CountB: FC = () => {
 
 export const ProduceC = () => {
   useProduce();
-  const [a, setA] = useState("asd");
+  const [a, setA] = useState("zxc");
   const count = useCountA({ a });
   return (
     <>
