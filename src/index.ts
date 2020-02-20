@@ -1,15 +1,17 @@
 import { Draft, Immutable, produce } from "immer";
-import {
-  createElement,
-  FC,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { createElement, FC, useEffect, useLayoutEffect, useRef } from "react";
 import { createSelector } from "reselect";
 
 import { createContext, useContextSelector } from "./useContextSelector";
+import { useUpdate } from "./useUpdate";
+
+export type Selector<S, R, P = unknown> = (state: S, props?: P) => R;
+
+export type OutputSelector<S, R, C> = Selector<S, R> & {
+  resultFunc: C;
+  recomputations: () => number;
+  resetRecomputations: () => number;
+};
 
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -97,49 +99,12 @@ export function createStoreHook<
   };
 }
 
-// interface IStoreExample {
-//   a: { b: number; c: string };
-// }
-
-// const selectorFnExample = (store: IStoreExample) => {
-//   return store.a.b;
-// };
-
-// const selectorFnExample2 = (store: IStoreExample) => {
-//   return store.a.c;
-// };
-
-// const selector = createSelector(
-//   (state: IStoreExample) => {
-//     return selectorFnExample(state);
-//   },
-//   (state: IStoreExample) => {
-//     return selectorFnExample2(state);
-//   },
-//   (res1, res2) => {
-//     console.log("function 1 called!", {
-//       res1,
-//       res2
-//     });
-//   }
-// );
-
-// const exampleStore: IStoreExample = {
-//   a: { b: 1, c: "asd" }
-// };
-
-// selector(exampleStore);
-
-// const exampleStore2: IStoreExample = {
-//   a: { b: 2, c: "asd" }
-// };
-
-// selector(exampleStore2);
-
 export function createStore<
-  TStore extends Immutable<Record<string | number | symbol, unknown>>,
-  THookKeys extends string,
-  THooksObj extends Record<THookKeys, (store: Immutable<TStore>) => unknown>
+  TStore extends Record<string | number | symbol, unknown>,
+  THooksObj extends Record<
+    string,
+    (store: Immutable<TStore>, props?: unknown) => unknown
+  >
 >(
   store: Immutable<TStore>,
   hooks?: THooksObj
@@ -149,27 +114,42 @@ export function createStore<
     produce: (draft: (draft: Draft<TStore>) => void) => void;
   };
 } & {
-  [HookKey in keyof typeof hooks]: () => // ...props: Parameters<ReturnType<typeof hooks[HookKey]>>
-  ReturnType<typeof hooks[HookKey]>;
-
-  // ReturnType<ReturnType<typeof hooks[HookKey]>>;
+  [HookKey in keyof typeof hooks]: (
+    props?: Parameters<typeof hooks[HookKey]>[1]
+  ) => ReturnType<typeof hooks[HookKey]>;
 } {
   const hooksObj: Record<string, Function> = {};
 
-  let listeners = new Map<Function, boolean>();
+  if (process.env.NODE_ENV === "development") {
+    for (const name in hooks) {
+      if (
+        name.length < 4 ||
+        name.slice(0, 3) !== "use" ||
+        name.charAt(3) === name.charAt(3).toLowerCase()
+      ) {
+        throw new Error(
+          `All hooks should follow the rules of hooks for naming and "${name}" doesn't`
+        );
+      }
+    }
+  }
+
+  let listeners = new Map<Function, unknown /* props */>();
 
   let currentStore = store;
 
   const useStore = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [, update] = useState(0);
+    const update = useUpdate();
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useIsomorphicLayoutEffect(() => {
-      const selector = (s: TStore) => s;
-      const globalListener = createSelector(selector, () => {
-        update(n => ++n);
-      });
-      listeners.set(globalListener, true);
+      const globalListener = createSelector(
+        (s: TStore) => s,
+        () => {
+          update();
+        }
+      );
+      listeners.set(globalListener, null);
 
       return () => {
         listeners.delete(globalListener);
@@ -190,42 +170,84 @@ export function createStore<
 
         currentStore = produceFn(currentStore);
 
-        listeners.forEach((_, listener) => {
-          listener(currentStore);
+        listeners.forEach((props, listener) => {
+          listener(currentStore, props);
         });
       }
     };
   };
 
   if (hooks) {
-    for (const [key, hookSelector] of Object.entries<
-      (store: Immutable<TStore>) => unknown
-    >(hooks)) {
-      hooksObj[key] = (props: unknown) => {
+    for (const [key, hookSelector] of Object.entries(hooks)) {
+      hooksObj[key] = (hooksProps: unknown) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const stateRef = useRef(currentStore);
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const [, update] = useState(0);
+        const selectorsRef = useRef<{
+          state: OutputSelector<
+            Immutable<TStore>,
+            void,
+            (res1: unknown, res2: void) => void
+          >;
+          props: OutputSelector<unknown, void, (res: unknown) => void>;
+        } | null>(null);
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const update = useUpdate();
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useIsomorphicLayoutEffect(() => {
+          if (selectorsRef.current) {
+            listeners.set(selectorsRef.current.state, hooksProps);
+
+            selectorsRef.current.props(hooksProps);
+
+            selectorsRef.current.state(stateRef.current, hooksProps);
+          }
+        }, [hooksProps]);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         useIsomorphicLayoutEffect(() => {
           let firstRender = true;
-          const selector = createSelector(hookSelector, () => {
-            if (!firstRender) {
-              update(n => ++n);
-            }
-          });
-          selector(stateRef.current);
-          firstRender = false;
-          listeners.set(selector, true);
+          if (!selectorsRef.current) {
+            const propsSelector = createSelector(
+              props => props,
+              () => {}
+            );
+            const stateSelector = createSelector(
+              hookSelector,
+              propsSelector,
+              () => {
+                if (firstRender) return;
+
+                update();
+              }
+            );
+            selectorsRef.current = {
+              state: stateSelector,
+              props: propsSelector
+            };
+          }
+          selectorsRef.current.props(hooksProps);
+          selectorsRef.current.state(stateRef.current, hooksProps);
+
+          setTimeout(() => {
+            firstRender = false;
+          }, 0);
+
+          listeners.set(selectorsRef.current.state, hooksProps);
 
           return () => {
-            listeners.delete(selector);
+            if (selectorsRef.current) {
+              listeners.delete(selectorsRef.current.state);
+            } else {
+              if (process.env.NODE_ENV === "development") {
+                console.warn("MEMORY LEAK!");
+              }
+            }
           };
         }, []);
 
         stateRef.current = currentStore;
 
-        return hookSelector(stateRef.current);
+        return hookSelector(stateRef.current, hooksProps);
       };
     }
   }

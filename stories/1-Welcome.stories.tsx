@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 import { createStore } from "../src";
 
@@ -8,8 +8,8 @@ const { useCountA, useCountB, useProduce } = createStore(
     countB: 0
   },
   {
-    useCountA: ({ countA }) => {
-      return countA;
+    useCountA: ({ countA }, arg: { a: string }) => {
+      return countA + arg.a;
     },
     useCountB: ({ countB }) => {
       return countB;
@@ -18,11 +18,18 @@ const { useCountA, useCountB, useProduce } = createStore(
 );
 
 const CountA: FC = () => {
-  const count = useCountA();
+  const [a, setA] = useState("asd");
+
+  const count = useCountA({ a });
+
   const { produce } = useProduce();
-  console.log(Math.round(Math.random() * 100));
+
   return (
     <div>
+      <input value={a} onChange={({ target: { value } }) => setA(value)} />
+
+      <br />
+      <br />
       <button
         onClick={() => {
           produce(state => {
@@ -82,8 +89,22 @@ const CountB: FC = () => {
 
 export const ProduceC = () => {
   useProduce();
+  const [a, setA] = useState("asd");
+  const count = useCountA({ a });
+  return (
+    <>
+      <br />
+      <input value={a} onChange={({ target: { value } }) => setA(value)} />
 
-  return <>{Math.round(Math.random() * 1000)}</>;
+      <br />
+
+      <br />
+      <br />
+      {Math.round(Math.random() * 1000)}
+
+      <p>{count}</p>
+    </>
+  );
 };
 
 export default {
