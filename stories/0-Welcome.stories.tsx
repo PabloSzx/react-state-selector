@@ -19,7 +19,7 @@ const { Provider, useCountA, useCountB } = createStore(
       }
     },
     selectorKeys: {
-      useCountA: store => props => {
+      useCountA: store => a => {
         return store.countA;
       },
       useCountB: ({ countB }) => b => {

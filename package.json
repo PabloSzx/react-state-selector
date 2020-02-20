@@ -23,7 +23,11 @@
       "pre-commit": "tsdx lint"
     }
   },
-  "dependencies": {},
+  "dependencies": {
+    "immer": "^5.3.6",
+    "react-use": "^13.26.1",
+    "reselect": "^4.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@storybook/addon-actions": "^5.3.13",

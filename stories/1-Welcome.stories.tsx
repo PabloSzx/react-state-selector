@@ -1,44 +1,32 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 
-import { createStore } from "../dist";
+import { createStore } from "../src";
 
-const { Provider, useCount, useSetCount, useOther } = createStore(
-  () => {
-    const [state, setState] = useState(0);
-
-    return { state, setState };
+const { useCountA, useCountB, useProduce } = createStore(
+  {
+    countA: 0,
+    countB: 0
   },
   {
-    hooks: {
-      useCount: ({ state }) => ({ max }: { max: number }) => {
-        if (state > max) {
-          return max;
-        }
-        return state;
-      },
-      useSetCount: ({ setState }) => () => {
-        return setState;
-      },
-      useOther: () => () => {
-        return "123";
-      }
+    useCountA: ({ countA }) => (a: number) => {
+      return { countA };
     },
-    initialState: {
-      state: 0,
-      setState: () => {}
+    useCountB: ({ countB }) => (b: string) => {
+      return { countB };
     }
   }
 );
 
-const Test: FC = () => {
-  const count = useCount({ max: 5 });
-  const setCount = useSetCount();
-  const other = useOther();
+const CountA: FC = () => {
+  const { countA: count } = useCountA(12);
+  const { produce } = useProduce();
   return (
     <div>
       <button
         onClick={() => {
-          setCount(count - 1);
+          produce(state => {
+            state.countA -= 1;
+          });
         }}
       >
         -
@@ -46,16 +34,55 @@ const Test: FC = () => {
       <span>{count}</span>
       <button
         onClick={() => {
-          setCount(count + 1);
+          produce(state => {
+            state.countA += 2;
+          });
         }}
       >
         +
       </button>
       <br />
       <br />
-      <span>{other}</span>
+      <span>{Math.round(Math.random() * 100)}</span>
     </div>
   );
+};
+const CountB: FC = () => {
+  const { countB: count } = useCountB("1");
+  const { produce } = useProduce();
+
+  return (
+    <div>
+      <button
+        onClick={() => {
+          produce(state => {
+            state.countB -= 1;
+          });
+        }}
+      >
+        -
+      </button>
+      <span>{count}</span>
+      <button
+        onClick={() => {
+          produce(state => {
+            state.countB += 1;
+          });
+        }}
+      >
+        +
+      </button>
+      <br />
+      <br />
+      <span>{Math.round(Math.random() * 100)}</span>
+    </div>
+  );
+};
+
+export const ProduceC = () => {
+  useProduce();
+
+  return <>{Math.round(Math.random() * 100)}</>;
 };
 
 export default {
@@ -63,11 +90,13 @@ export default {
 };
 
 export const toStorybook = () => (
-  <Provider>
-    <Test />
-  </Provider>
+  <>
+    <CountA />
+    <CountB />
+    <ProduceC />
+  </>
 );
 
 toStorybook.story = {
-  name: "to Storybook"
+  name: "to Storybook1"
 };
