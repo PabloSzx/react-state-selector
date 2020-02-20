@@ -1,15 +1,15 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 
-import { Draft, Immutable, produce } from "immer";
+import { createDraft, Draft, finishDraft, Immutable, produce } from "immer";
 import { createElement, FC, useEffect, useLayoutEffect, useRef } from "react";
 import { createSelector } from "reselect";
 
 import { createContext, useContextSelector } from "./useContextSelector";
 import { useUpdate } from "./useUpdate";
 
-export type Selector<S, R, P = unknown> = (state: S, props?: P) => R;
+export type Selector<S, R = unknown, P = unknown> = (state: S, props?: P) => R;
 
-export type OutputSelector<S, R, C> = Selector<S, R> & {
+type OutputSelector<S, R, C> = Selector<S, R> & {
   resultFunc: C;
   recomputations: () => number;
   resetRecomputations: () => number;
@@ -103,25 +103,23 @@ export function createStoreHook<
 
 export function createStore<
   TStore,
-  THooksObj extends Record<
-    string,
-    (store: Immutable<TStore>, props?: unknown) => unknown
-  >
+  THooks extends Record<string, Selector<Immutable<TStore>>>
 >(
-  store: Immutable<TStore>,
-  hooks?: THooksObj
+  initialStore: Immutable<TStore>,
+  hooks?: THooks
 ): {
   useStore: () => Immutable<TStore>;
   useProduce: () => {
-    produce: (draft: (draft: Draft<TStore>) => void) => void;
+    asyncProduce: (
+      draft: (draft: Draft<TStore>) => Promise<void>
+    ) => Promise<Immutable<TStore>>;
+    produce: (draft: (draft: Draft<TStore>) => void) => Immutable<TStore>;
   };
 } & {
   [HookKey in keyof typeof hooks]: (
     props?: Parameters<typeof hooks[HookKey]>[1]
   ) => ReturnType<typeof hooks[HookKey]>;
 } {
-  const hooksObj: Record<string, Function> = {};
-
   if (process.env.NODE_ENV === "development") {
     for (const name in hooks) {
       if (
@@ -136,12 +134,9 @@ export function createStore<
     }
   }
 
-  const listeners = new Map<
-    OutputSelector<Immutable<TStore>, void, (res: never) => void>,
-    unknown /* props */
-  >();
+  const listeners = new Map<Selector<Immutable<TStore>>, unknown /* props */>();
 
-  let currentStore = store;
+  let currentStore = initialStore;
 
   const useStore = () => {
     const update = useUpdate();
@@ -177,9 +172,29 @@ export function createStore<
         listeners.forEach((props, listener) => {
           listener(currentStore, props);
         });
+
+        return currentStore;
+      },
+      asyncProduce: async (draft: (draft: Draft<TStore>) => Promise<void>) => {
+        const storeDraft = createDraft(currentStore as TStore);
+
+        await Promise.resolve(draft(storeDraft));
+
+        currentStore = (finishDraft(storeDraft) as any) as Immutable<TStore>;
+
+        listeners.forEach((props, listener) => {
+          listener(currentStore, props);
+        });
+
+        return currentStore;
       }
     };
   };
+
+  const hooksObj: Record<
+    string,
+    (store: Immutable<TStore>, props?: unknown) => unknown
+  > = {};
 
   if (hooks) {
     for (const [key, hookSelector] of Object.entries(hooks)) {

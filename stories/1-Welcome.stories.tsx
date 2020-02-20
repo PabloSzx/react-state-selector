@@ -22,12 +22,27 @@ const CountA: FC = () => {
 
   const count = useCountA({ a });
 
-  const { produce } = useProduce();
+  const { produce, asyncProduce } = useProduce();
 
   return (
     <div>
       <input value={a} onChange={({ target: { value } }) => setA(value)} />
-
+      <br />
+      <br />
+      <br />
+      <br />
+      <button
+        onClick={() => {
+          asyncProduce(async draft => {
+            alert(draft.countA);
+            draft.countA = 0;
+          });
+        }}
+      >
+        Async produce
+      </button>
+      <br />
+      <br />
       <br />
       <br />
       <button
@@ -87,8 +102,7 @@ const CountB: FC = () => {
   );
 };
 
-export const ProduceC = () => {
-  useProduce();
+export const CountC = () => {
   const [a, setA] = useState("zxc");
   const count = useCountA({ a });
   return (
@@ -107,6 +121,28 @@ export const ProduceC = () => {
   );
 };
 
+const Produce: FC = () => {
+  const { asyncProduce } = useProduce();
+  return (
+    <>
+      {Math.round(Math.random() * 1000)}
+      <button
+        onClick={async () => {
+          await asyncProduce(async draft => {
+            await new Promise(resolve => {
+              setTimeout(resolve, 4000);
+            });
+            alert(draft.countA);
+          });
+          alert("END");
+        }}
+      >
+        Async produce alert
+      </button>
+    </>
+  );
+};
+
 export default {
   title: "Welcome"
 };
@@ -115,7 +151,8 @@ export const toStorybook = () => (
   <>
     <CountA />
     <CountB />
-    <ProduceC />
+    <CountC />
+    <Produce />
   </>
 );
 
