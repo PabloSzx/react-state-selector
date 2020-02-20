@@ -28,7 +28,7 @@ export function assertIsDefined<T = unknown>(
 }
 
 export function createStoreHook<
-  TStore extends Record<string | number | symbol, unknown>,
+  TStore,
   THookKeys extends string,
   THooksObj extends Record<
     THookKeys,
@@ -102,7 +102,7 @@ export function createStoreHook<
 }
 
 export function createStore<
-  TStore extends Record<string | number | symbol, unknown>,
+  TStore,
   THooksObj extends Record<
     string,
     (store: Immutable<TStore>, props?: unknown) => unknown
@@ -136,7 +136,10 @@ export function createStore<
     }
   }
 
-  let listeners = new Map<Function, unknown /* props */>();
+  const listeners = new Map<
+    OutputSelector<Immutable<TStore>, void, (res: never) => void>,
+    unknown /* props */
+  >();
 
   let currentStore = store;
 
@@ -145,7 +148,7 @@ export function createStore<
 
     useIsomorphicLayoutEffect(() => {
       const globalListener = createSelector(
-        (s: TStore) => s,
+        (s: Immutable<TStore>) => s,
         () => {
           update();
         }
