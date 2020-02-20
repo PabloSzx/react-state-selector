@@ -8,24 +8,25 @@ const { useCountA, useCountB, useProduce } = createStore(
     countB: 0
   },
   {
-    useCountA: ({ countA }) => (a: number) => {
-      return { countA };
+    useCountA: ({ countA }) => {
+      return countA;
     },
-    useCountB: ({ countB }) => (b: string) => {
-      return { countB };
+    useCountB: ({ countB }) => {
+      return countB;
     }
   }
 );
 
 const CountA: FC = () => {
-  const { countA: count } = useCountA(12);
+  const count = useCountA();
   const { produce } = useProduce();
+  console.log(Math.round(Math.random() * 100));
   return (
     <div>
       <button
         onClick={() => {
           produce(state => {
-            state.countA -= 1;
+            state.countA -= 2;
           });
         }}
       >
@@ -43,12 +44,12 @@ const CountA: FC = () => {
       </button>
       <br />
       <br />
-      <span>{Math.round(Math.random() * 100)}</span>
+      <span>{Math.round(Math.random() * 1000)}</span>
     </div>
   );
 };
 const CountB: FC = () => {
-  const { countB: count } = useCountB("1");
+  const count = useCountB();
   const { produce } = useProduce();
 
   return (
@@ -74,7 +75,7 @@ const CountB: FC = () => {
       </button>
       <br />
       <br />
-      <span>{Math.round(Math.random() * 100)}</span>
+      <span>{Math.round(Math.random() * 1000)}</span>
     </div>
   );
 };
@@ -82,7 +83,7 @@ const CountB: FC = () => {
 export const ProduceC = () => {
   useProduce();
 
-  return <>{Math.round(Math.random() * 100)}</>;
+  return <>{Math.round(Math.random() * 1000)}</>;
 };
 
 export default {

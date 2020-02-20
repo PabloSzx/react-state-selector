@@ -1,6 +1,13 @@
 import { Draft, Immutable, produce } from "immer";
-import { createElement, FC, useEffect, useLayoutEffect, useRef } from "react";
-import { useUpdate } from "react-use";
+import {
+  createElement,
+  FC,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { createSelector } from "reselect";
 
 import { createContext, useContextSelector } from "./useContextSelector";
 
@@ -90,13 +97,49 @@ export function createStoreHook<
   };
 }
 
+// interface IStoreExample {
+//   a: { b: number; c: string };
+// }
+
+// const selectorFnExample = (store: IStoreExample) => {
+//   return store.a.b;
+// };
+
+// const selectorFnExample2 = (store: IStoreExample) => {
+//   return store.a.c;
+// };
+
+// const selector = createSelector(
+//   (state: IStoreExample) => {
+//     return selectorFnExample(state);
+//   },
+//   (state: IStoreExample) => {
+//     return selectorFnExample2(state);
+//   },
+//   (res1, res2) => {
+//     console.log("function 1 called!", {
+//       res1,
+//       res2
+//     });
+//   }
+// );
+
+// const exampleStore: IStoreExample = {
+//   a: { b: 1, c: "asd" }
+// };
+
+// selector(exampleStore);
+
+// const exampleStore2: IStoreExample = {
+//   a: { b: 2, c: "asd" }
+// };
+
+// selector(exampleStore2);
+
 export function createStore<
   TStore extends Immutable<Record<string | number | symbol, unknown>>,
   THookKeys extends string,
-  THooksObj extends Record<
-    THookKeys,
-    (store: Immutable<TStore>) => (props: unknown) => unknown
-  >
+  THooksObj extends Record<THookKeys, (store: Immutable<TStore>) => unknown>
 >(
   store: Immutable<TStore>,
   hooks?: THooksObj
@@ -106,34 +149,30 @@ export function createStore<
     produce: (draft: (draft: Draft<TStore>) => void) => void;
   };
 } & {
-  [HookKey in keyof typeof hooks]: (
-    ...props: Parameters<ReturnType<typeof hooks[HookKey]>>
-  ) => ReturnType<ReturnType<typeof hooks[HookKey]>>;
+  [HookKey in keyof typeof hooks]: () => // ...props: Parameters<ReturnType<typeof hooks[HookKey]>>
+  ReturnType<typeof hooks[HookKey]>;
+
+  // ReturnType<ReturnType<typeof hooks[HookKey]>>;
 } {
   const hooksObj: Record<string, Function> = {};
 
-  // when an action is called, call all the listeners
-  let listeners: Function[] = [];
+  let listeners = new Map<Function, boolean>();
 
   let currentStore = store;
 
   const useStore = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const update = useUpdate();
+    const [, update] = useState(0);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useIsomorphicLayoutEffect(() => {
-      const listener = () => {
-        update();
-      };
-      listeners.push(listener);
+      const selector = (s: TStore) => s;
+      const globalListener = createSelector(selector, () => {
+        update(n => ++n);
+      });
+      listeners.set(globalListener, true);
 
       return () => {
-        listeners = produce(listeners, state => {
-          state.splice(
-            state.findIndex(fn => fn === listener),
-            1
-          );
-        });
+        listeners.delete(globalListener);
       };
     }, []);
 
@@ -150,42 +189,43 @@ export function createStore<
         >(draft);
 
         currentStore = produceFn(currentStore);
-        for (const listener of listeners) {
-          listener();
-        }
+
+        listeners.forEach((_, listener) => {
+          listener(currentStore);
+        });
       }
     };
   };
 
   if (hooks) {
     for (const [key, hookSelector] of Object.entries<
-      (store: Immutable<TStore>) => (props: unknown) => unknown
+      (store: Immutable<TStore>) => unknown
     >(hooks)) {
       hooksObj[key] = (props: unknown) => {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const stateRef = useRef(currentStore);
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        const update = useUpdate();
+        const [, update] = useState(0);
         // eslint-disable-next-line react-hooks/rules-of-hooks
         useIsomorphicLayoutEffect(() => {
-          const listener = () => {
-            update();
-          };
-          listeners.push(listener);
+          let firstRender = true;
+          const selector = createSelector(hookSelector, () => {
+            if (!firstRender) {
+              update(n => ++n);
+            }
+          });
+          selector(stateRef.current);
+          firstRender = false;
+          listeners.set(selector, true);
 
           return () => {
-            listeners = produce(listeners, state => {
-              state.splice(
-                state.findIndex(fn => fn === listener),
-                1
-              );
-            });
+            listeners.delete(selector);
           };
         }, []);
 
         stateRef.current = currentStore;
 
-        return hookSelector(stateRef.current)(props);
+        return hookSelector(stateRef.current);
       };
     }
   }
