@@ -4,12 +4,12 @@ import { createStore } from "../src";
 
 const { useCountA, useCountB, useProduce } = createStore(
   {
-    countA: 0,
-    countB: 0
+    countA: 5,
+    countB: 15
   },
   {
     useCountA: ({ countA }, arg: { a: string }) => {
-      return countA + arg.a;
+      return arg.a + " - " + countA;
     },
     useCountB: ({ countB }) => {
       return countB;
@@ -34,12 +34,11 @@ const CountA: FC = () => {
       <button
         onClick={() => {
           asyncProduce(async draft => {
-            alert(draft.countA);
             draft.countA = 0;
           });
         }}
       >
-        Async produce
+        Async produce A
       </button>
       <br />
       <br />
@@ -85,7 +84,7 @@ const CountB: FC = () => {
       >
         -
       </button>
-      <span>{count}</span>
+      <span>94 - {count}</span>
       <button
         onClick={() => {
           produce(state => {
@@ -132,12 +131,12 @@ const Produce: FC = () => {
             await new Promise(resolve => {
               setTimeout(resolve, 4000);
             });
-            alert(draft.countA);
+
+            draft.countB += 100;
           });
-          alert("END");
         }}
       >
-        Async produce alert
+        Async produce B
       </button>
     </>
   );

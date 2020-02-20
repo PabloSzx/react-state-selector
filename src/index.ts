@@ -2,18 +2,16 @@
 
 import { createDraft, Draft, finishDraft, Immutable, produce } from "immer";
 import { createElement, FC, useEffect, useLayoutEffect, useRef } from "react";
-import { createSelector } from "reselect";
+import { createSelector, ParametricSelector } from "reselect";
 
 import { createContext, useContextSelector } from "./useContextSelector";
 import { useUpdate } from "./useUpdate";
 
-export type Selector<S, R = unknown, P = unknown> = (state: S, props?: P) => R;
-
-type OutputSelector<S, R, C> = Selector<S, R> & {
-  resultFunc: C;
-  recomputations: () => number;
-  resetRecomputations: () => number;
-};
+export type Selector<
+  TState,
+  TProps = unknown,
+  TResult = unknown
+> = ParametricSelector<TState, TProps, TResult>;
 
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
@@ -191,66 +189,42 @@ export function createStore<
     };
   };
 
-  const hooksObj: Record<
-    string,
-    (store: Immutable<TStore>, props?: unknown) => unknown
-  > = {};
+  const hooksObj: Record<string, Selector<Immutable<TStore>>> = {};
 
-  if (hooks) {
-    for (const [key, hookSelector] of Object.entries(hooks)) {
-      hooksObj[key] = (hooksProps: unknown) => {
-        const stateRef = useRef(currentStore);
+  for (const [key, hookSelector] of Object.entries(hooks ?? [])) {
+    hooksObj[key] = (hooksProps: unknown) => {
+      const update = useUpdate();
 
-        const selectorsRef = useRef<OutputSelector<
-          Immutable<TStore>,
-          void,
-          (res1: unknown) => void
-        > | null>(null);
+      const isMountedRef = useRef(false);
+      const stateRef = useRef(hookSelector(currentStore, hooksProps));
+      const updateSelectorRef = useRef(
+        createSelector(hookSelector, result => {
+          stateRef.current = result;
 
-        const update = useUpdate();
-
-        useIsomorphicLayoutEffect(() => {
-          if (selectorsRef.current) {
-            listeners.set(selectorsRef.current, hooksProps);
-
-            selectorsRef.current(stateRef.current, hooksProps);
+          if (!isMountedRef.current) {
+            return;
           }
-        }, [hooksProps]);
 
-        useIsomorphicLayoutEffect(() => {
-          let firstRender = true;
-          if (!selectorsRef.current) {
-            const stateSelector = createSelector(hookSelector, () => {
-              if (firstRender) return;
+          update();
+        })
+      );
 
-              update();
-            });
-            selectorsRef.current = stateSelector;
-          }
-          selectorsRef.current(stateRef.current, hooksProps);
+      useIsomorphicLayoutEffect(() => {
+        updateSelectorRef.current(currentStore, hooksProps);
 
-          setTimeout(() => {
-            firstRender = false;
-          }, 0);
+        listeners.set(updateSelectorRef.current, hooksProps);
+      }, [hooksProps]);
 
-          listeners.set(selectorsRef.current, hooksProps);
+      useEffect(() => {
+        isMountedRef.current = true;
 
-          return () => {
-            if (selectorsRef.current) {
-              listeners.delete(selectorsRef.current);
-            } else {
-              if (process.env.NODE_ENV === "development") {
-                console.warn("MEMORY LEAK!");
-              }
-            }
-          };
-        }, []);
+        return () => {
+          listeners.delete(updateSelectorRef.current);
+        };
+      }, []);
 
-        stateRef.current = currentStore;
-
-        return hookSelector(stateRef.current, hooksProps);
-      };
-    }
+      return stateRef.current;
+    };
   }
 
   return {
