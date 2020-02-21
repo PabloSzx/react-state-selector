@@ -2,17 +2,43 @@ import React, { FC, useState } from "react";
 
 import { createStore } from "../src";
 
-const { useCountA, useCountB, useProduce } = createStore(
+const {
+  useCountA,
+  useCountB,
+  useProduce,
+  incrementA,
+  printCurrentStore
+} = createStore(
   {
     countA: 5,
     countB: 15
   },
   {
-    useCountA: ({ countA }, arg: { a: string }) => {
-      return arg.a + " - " + countA;
+    hooks: {
+      useCountA: ({ countA }, { a, b }: { a: string; b?: string }) => {
+        return a + (b || "") + " - " + countA;
+      },
+      useCountB: ({ countB }) => {
+        return countB;
+      }
     },
-    useCountB: ({ countB }) => {
-      return countB;
+    actions: {
+      incrementA: (a: number) => async draft => {
+        const delay = false;
+        if (delay) {
+          draft.countA += await new Promise<number>(resolve => {
+            setTimeout(() => {
+              resolve(a);
+            }, 1000);
+          });
+        } else {
+          draft.countA += a;
+        }
+        return "xd" as const;
+      },
+      printCurrentStore: () => draft => {
+        alert(JSON.stringify(draft));
+      }
     }
   }
 );
@@ -20,7 +46,7 @@ const { useCountA, useCountB, useProduce } = createStore(
 const CountA: FC = () => {
   const [a, setA] = useState("asd");
 
-  const count = useCountA({ a });
+  const count = useCountA(() => ({ a, b: "..." }), []);
 
   const { produce, asyncProduce } = useProduce();
 
@@ -142,6 +168,34 @@ const Produce: FC = () => {
   );
 };
 
+const Actions: FC = () => {
+  return (
+    <>
+      <br />
+      <br />
+      <br />
+      <button
+        onClick={async () => {
+          const result = await incrementA(1);
+          alert(result);
+        }}
+      >
+        Increment A + 1
+      </button>
+      <br />
+      <br />
+      <br />
+      <button
+        onClick={() => {
+          printCurrentStore();
+        }}
+      >
+        Print Current Store
+      </button>
+    </>
+  );
+};
+
 export default {
   title: "Welcome"
 };
@@ -152,6 +206,7 @@ export const toStorybook = () => (
     <CountB />
     <CountC />
     <Produce />
+    <Actions />
   </>
 );
 

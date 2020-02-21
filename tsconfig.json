@@ -8,6 +8,7 @@
     "declaration": true,
     "sourceMap": true,
     "rootDir": "./",
+    "declarationDir": "./dist/index.d.ts",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -22,7 +23,6 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "jsx": "react",
-    "esModuleInterop": true,
-    "allowJs": true
+    "esModuleInterop": true
   }
 }

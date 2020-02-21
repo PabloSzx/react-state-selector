@@ -1,110 +1,37 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 
 import { createDraft, Draft, finishDraft, Immutable, produce } from "immer";
-import { createElement, FC, useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { createSelector, ParametricSelector } from "reselect";
 
-import { createContext, useContextSelector } from "./useContextSelector";
-import { useUpdate } from "./useUpdate";
+import useUpdate from "./utils/useUpdate";
 
 export type Selector<
   TState,
-  TProps = unknown,
+  TProps = unknown | (() => unknown),
   TResult = unknown
 > = ParametricSelector<TState, TProps, TResult>;
 
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
-export function assertIsDefined<T = unknown>(
-  value: T,
-  message: string
-): asserts value is NonNullable<T> {
-  if (value === undefined || value === null) {
-    throw new Error(message);
+function toAnonFunction(arg: unknown): () => typeof arg {
+  if (typeof arg === "function") {
+    return arg as () => typeof arg;
   }
-}
-
-export function createStoreHook<
-  TStore,
-  THookKeys extends string,
-  THooksObj extends Record<
-    THookKeys,
-    (store: TStore) => (props: unknown) => unknown
-  >,
-  THooksSelectorKeys extends {
-    [HookSelectKey in keyof THooksObj]?: (
-      store: TStore
-    ) => (
-      ...props: Parameters<ReturnType<THooksObj[HookSelectKey]>>
-    ) => unknown;
-  }
->(
-  useStoreHook: () => TStore,
-  options: {
-    hooks?: THooksObj;
-    selectorKeys?: THooksSelectorKeys;
-    initialState: TStore;
-  }
-): {
-  Provider: FC;
-  useStore: () => TStore;
-} & {
-  [HookKey in keyof typeof options["hooks"]]: (
-    ...props: Parameters<ReturnType<THooksObj[HookKey]>>
-  ) => ReturnType<ReturnType<THooksObj[HookKey]>>;
-} {
-  const Context = createContext<TStore>(options.initialState);
-
-  const Provider: FC = ({ children }) => {
-    // eslint-disable-next-line
-    const value = useStoreHook();
-
-    return createElement<any>(Context.Provider, {
-      value,
-      children
-    });
-  };
-
-  const hooks: Record<string, Function> = {};
-  const selectorKeys: Record<
-    string,
-    ((store: TStore) => (...props: any) => unknown) | undefined
-  > = options.selectorKeys ?? {};
-
-  if (options.hooks) {
-    for (const [key, hookSelector] of Object.entries<Function>(options.hooks)) {
-      hooks[key] = (props: unknown) => {
-        // eslint-disable-next-line
-        return useContextSelector(
-          Context,
-          store => {
-            return hookSelector(store)(props);
-          },
-          key in selectorKeys
-            ? store => selectorKeys[key]?.(store)(props)
-            : undefined
-        );
-      };
-    }
-  }
-
-  return {
-    Provider,
-    useStore: () => {
-      // eslint-disable-next-line
-      return useContextSelector(Context, s => s);
-    },
-    ...hooks
-  };
+  return () => arg;
 }
 
 export function createStore<
   TStore,
-  THooks extends Record<string, Selector<Immutable<TStore>>>
+  THooks extends Record<string, Selector<Immutable<TStore>>>,
+  TActions extends Record<
+    string,
+    (...args: unknown[]) => (draft: Draft<TStore>) => unknown
+  >
 >(
   initialStore: Immutable<TStore>,
-  hooks?: THooks
+  options?: { hooks?: THooks; actions?: TActions }
 ): {
   useStore: () => Immutable<TStore>;
   useProduce: () => {
@@ -114,12 +41,22 @@ export function createStore<
     produce: (draft: (draft: Draft<TStore>) => void) => Immutable<TStore>;
   };
 } & {
-  [HookKey in keyof typeof hooks]: (
-    props?: Parameters<typeof hooks[HookKey]>[1]
-  ) => ReturnType<typeof hooks[HookKey]>;
-} {
+  [HookName in keyof NonNullable<typeof options>["hooks"]]: (
+    props?:
+      | Parameters<NonNullable<typeof options>["hooks"][HookName]>[1]
+      | (() => Parameters<NonNullable<typeof options>["hooks"][HookName]>[1]),
+    propsDeps?: any[]
+  ) => ReturnType<NonNullable<typeof options>["hooks"][HookName]>;
+} &
+  {
+    [ActionName in keyof NonNullable<typeof options>["actions"]]: (
+      ...args: Parameters<NonNullable<typeof options>["actions"][ActionName]>
+    ) => ReturnType<
+      ReturnType<NonNullable<typeof options>["actions"][ActionName]>
+    >;
+  } {
   if (process.env.NODE_ENV === "development") {
-    for (const name in hooks) {
+    for (const name in options?.hooks) {
       if (
         name.length < 4 ||
         name.slice(0, 3) !== "use" ||
@@ -189,14 +126,48 @@ export function createStore<
     };
   };
 
-  const hooksObj: Record<string, Selector<Immutable<TStore>>> = {};
+  const actionsObj: Record<
+    string,
+    (...args: unknown[]) => Promise<unknown>
+  > = {};
 
-  for (const [key, hookSelector] of Object.entries(hooks ?? [])) {
-    hooksObj[key] = (hooksProps: unknown) => {
+  for (const [actionName, actionFn] of Object.entries(options?.actions || {})) {
+    actionsObj[actionName] = async (...args) => {
+      const storeDraft = createDraft(currentStore as TStore);
+
+      const actionDraft = actionFn(...args);
+
+      const ownDraftResult = await Promise.resolve(actionDraft(storeDraft));
+
+      currentStore = (finishDraft(storeDraft) as any) as Immutable<TStore>;
+
+      listeners.forEach((props, listener) => {
+        listener(currentStore, props);
+      });
+
+      return ownDraftResult;
+    };
+  }
+
+  const hooksObj: Record<
+    string,
+    (hookProps?: (() => unknown) | unknown, hookPropsDeps?: any[]) => unknown
+  > = {};
+
+  for (const [hookName, hookSelector] of Object.entries(options?.hooks || {})) {
+    hooksObj[hookName] = (
+      hooksProps?: (() => unknown) | unknown,
+      hookPropsDeps?: any[]
+    ) => {
       const update = useUpdate();
 
+      const props = useMemo(
+        toAnonFunction(hooksProps),
+        hookPropsDeps || [hooksProps]
+      );
+
       const isMountedRef = useRef(false);
-      const stateRef = useRef(hookSelector(currentStore, hooksProps));
+      const stateRef = useRef(hookSelector(currentStore, props));
       const updateSelectorRef = useRef(
         createSelector(hookSelector, result => {
           stateRef.current = result;
@@ -210,10 +181,10 @@ export function createStore<
       );
 
       useIsomorphicLayoutEffect(() => {
-        updateSelectorRef.current(currentStore, hooksProps);
+        updateSelectorRef.current(currentStore, props);
 
-        listeners.set(updateSelectorRef.current, hooksProps);
-      }, [hooksProps]);
+        listeners.set(updateSelectorRef.current, props);
+      }, [props]);
 
       useEffect(() => {
         isMountedRef.current = true;
@@ -230,6 +201,7 @@ export function createStore<
   return {
     useStore,
     useProduce,
+    ...actionsObj,
     ...hooksObj
   };
 }
