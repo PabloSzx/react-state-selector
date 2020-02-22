@@ -14,7 +14,7 @@ import React, {
   useLayoutEffect,
   useMemo,
   useRef,
-  useState,
+  useState
 } from "react";
 import { createSelector, ParametricSelector } from "reselect";
 
@@ -46,39 +46,62 @@ const useUpdate = () => {
 
 const emptyArray = Object.freeze([]);
 
+type NN<T> = NonNullable<T>;
+
+type IHooksObj<
+  A extends { hooks?: Record<string, Selector<any>> } | undefined
+> = {
+  [HookName in keyof NN<NN<A>["hooks"]>]: (
+    props?:
+      | Parameters<NN<NN<A>["hooks"]>[HookName]>[1]
+      | (() => Parameters<NN<NN<A>["hooks"]>[HookName]>[1]),
+    propsDeps?: unknown[]
+  ) => ReturnType<NN<NN<A>["hooks"]>[HookName]>;
+};
+
+type IActionsObj<
+  A extends
+    | {
+        actions?: Record<
+          string,
+          (...args: unknown[]) => (draft: Draft<any>) => unknown
+        >;
+      }
+    | undefined
+> = {
+  [ActionName in keyof NN<NN<A>["actions"]>]: (
+    ...args: Parameters<NN<NN<A>["actions"]>[ActionName]>
+  ) => ReturnType<ReturnType<NN<NN<A>["actions"]>[ActionName]>>;
+};
+
+export type IHooks<TStore> = Record<string, Selector<Immutable<TStore>>>;
+
+export type IActions<TStore> = Record<
+  string,
+  (...args: unknown[]) => (draft: Draft<TStore>) => unknown
+>;
+
+type IUseStore<TStore> = () => Immutable<TStore>;
+
+type IUseProduce<TStore> = () => {
+  asyncProduce: (
+    draft: (draft: Draft<TStore>) => Promise<void>
+  ) => Promise<Immutable<TStore>>;
+  produce: (draft: (draft: Draft<TStore>) => void) => Immutable<TStore>;
+};
+
 export function createStore<
   TStore,
-  THooks extends Record<string, Selector<Immutable<TStore>>>,
-  TActions extends Record<
-    string,
-    (...args: unknown[]) => (draft: Draft<TStore>) => unknown
-  >
+  THooks extends IHooks<TStore>,
+  TActions extends IActions<TStore>
 >(
   initialStore: Immutable<TStore>,
   options?: { hooks?: THooks; actions?: TActions }
 ): {
-  useStore: () => Immutable<TStore>;
-  useProduce: () => {
-    asyncProduce: (
-      draft: (draft: Draft<TStore>) => Promise<void>
-    ) => Promise<Immutable<TStore>>;
-    produce: (draft: (draft: Draft<TStore>) => void) => Immutable<TStore>;
-  };
-} & {
-  [HookName in keyof NonNullable<typeof options>["hooks"]]: (
-    props?:
-      | Parameters<NonNullable<typeof options>["hooks"][HookName]>[1]
-      | (() => Parameters<NonNullable<typeof options>["hooks"][HookName]>[1]),
-    propsDeps?: unknown[]
-  ) => ReturnType<NonNullable<typeof options>["hooks"][HookName]>;
-} &
-  {
-    [ActionName in keyof NonNullable<typeof options>["actions"]]: (
-      ...args: Parameters<NonNullable<typeof options>["actions"][ActionName]>
-    ) => ReturnType<
-      ReturnType<NonNullable<typeof options>["actions"][ActionName]>
-    >;
-  } {
+  useStore: IUseStore<TStore>;
+  useProduce: IUseProduce<TStore>;
+} & IHooksObj<typeof options> &
+  IActionsObj<typeof options> {
   if (process.env.NODE_ENV === "development") {
     for (const name in options?.hooks) {
       if (
@@ -233,45 +256,24 @@ export function createStore<
   return {
     useStore,
     useProduce,
-    ...actionsObj,
-    ...hooksObj,
+    ...((actionsObj as unknown) as IActionsObj<typeof options>),
+    ...((hooksObj as unknown) as IHooksObj<typeof options>),
   };
 }
 
 export function createStoreContext<
   TStore,
-  THooks extends Record<string, Selector<Immutable<TStore>>>,
-  TActions extends Record<
-    string,
-    (...args: unknown[]) => (draft: Draft<TStore>) => unknown
-  >
+  THooks extends IHooks<TStore>,
+  TActions extends IActions<TStore>
 >(
   initialStore: Immutable<TStore>,
   options?: { hooks?: THooks; actions?: TActions }
 ): {
   Provider: FC;
-  useStore: () => Immutable<TStore>;
-  useProduce: () => {
-    asyncProduce: (
-      draft: (draft: Draft<TStore>) => Promise<void>
-    ) => Promise<Immutable<TStore>>;
-    produce: (draft: (draft: Draft<TStore>) => void) => Immutable<TStore>;
-  };
-  useActions: () => {
-    [ActionName in keyof NonNullable<typeof options>["actions"]]: (
-      ...args: Parameters<NonNullable<typeof options>["actions"][ActionName]>
-    ) => ReturnType<
-      ReturnType<NonNullable<typeof options>["actions"][ActionName]>
-    >;
-  };
-} & {
-  [HookName in keyof NonNullable<typeof options>["hooks"]]: (
-    props?:
-      | Parameters<NonNullable<typeof options>["hooks"][HookName]>[1]
-      | (() => Parameters<NonNullable<typeof options>["hooks"][HookName]>[1]),
-    propsDeps?: unknown[]
-  ) => ReturnType<NonNullable<typeof options>["hooks"][HookName]>;
-} {
+  useStore: IUseStore<TStore>;
+  useProduce: IUseProduce<TStore>;
+  useActions: () => IActionsObj<typeof options>;
+} & IHooksObj<typeof options> {
   if (process.env.NODE_ENV === "development") {
     for (const name in options?.hooks) {
       if (
@@ -399,7 +401,7 @@ export function createStoreContext<
           return ownDraftResult;
         };
       }
-      return actionsObj;
+      return (actionsObj as unknown) as IActionsObj<typeof options>;
     }, [storeCtx]);
 
     return actions;
@@ -469,6 +471,6 @@ export function createStoreContext<
     useStore,
     useProduce,
     useActions,
-    ...hooksObj,
+    ...((hooksObj as unknown) as IHooksObj<typeof options>),
   };
 }

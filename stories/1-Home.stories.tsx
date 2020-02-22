@@ -2,16 +2,30 @@ import React, { FC, useState } from "react";
 
 import { createStore } from "../src";
 
+const { hooks } = createStore(
+  {
+    a: 1,
+  },
+  {
+    hooks: {
+      useA: () => {},
+    },
+    actions: {
+      asd: () => draft => {
+        return draft;
+      },
+    },
+  }
+);
+
 const {
-  useCountA,
-  useCountB,
+  hooks: { useCountA, useCountB },
+  actions: { incrementA, printCurrentStore },
   useProduce,
-  incrementA,
-  printCurrentStore
 } = createStore(
   {
     countA: 5,
-    countB: 15
+    countB: 15,
   },
   {
     hooks: {
@@ -20,7 +34,7 @@ const {
       },
       useCountB: ({ countB }) => {
         return countB;
-      }
+      },
     },
     actions: {
       incrementA: (a: number) => async draft => {
@@ -38,8 +52,8 @@ const {
       },
       printCurrentStore: () => draft => {
         alert(JSON.stringify(draft));
-      }
-    }
+      },
+    },
   }
 );
 
@@ -207,9 +221,9 @@ export const Home = () => (
 );
 
 export default {
-  title: "Home"
+  title: "Home",
 };
 
 Home.story = {
-  name: "Home"
+  name: "Home",
 };

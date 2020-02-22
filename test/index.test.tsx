@@ -6,7 +6,7 @@ import { createStore } from "../src";
 
 describe("works", () => {
   it("renders without crashing", () => {
-    const { useStore } = createStore(
+    const { useStore, useCountB, printCurrentStore } = createStore(
       {
         countA: 5,
         countB: 15,
@@ -16,6 +16,7 @@ describe("works", () => {
           useCountB: ({ countB }) => {
             return countB;
           },
+          useTuPune: () => {},
         },
         actions: {
           printCurrentStore: () => draft => {
