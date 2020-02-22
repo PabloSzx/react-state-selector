@@ -1,5 +1,6 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
 /* eslint react-hooks/exhaustive-deps: 0 */
+/* eslint no-loop-func: 0 */
 
 import { createDraft, Draft, finishDraft, Immutable, produce } from "immer";
 import React, {
@@ -145,7 +146,7 @@ export function createStore<
         });
 
         return currentStore;
-      }
+      },
     };
   };
 
@@ -205,7 +206,7 @@ export function createStore<
 
             update();
           }),
-          initialStateRef: hookSelector(currentStore, props)
+          initialStateRef: hookSelector(currentStore, props),
         };
       }, emptyArray);
 
@@ -233,7 +234,7 @@ export function createStore<
     useStore,
     useProduce,
     ...actionsObj,
-    ...hooksObj
+    ...hooksObj,
   };
 }
 
@@ -294,14 +295,14 @@ export function createStoreContext<
       >;
     }>
   >({
-    current: { store: initialStore, listeners: new Map() }
+    current: { store: initialStore, listeners: new Map() },
   });
 
   const Provider: FC = memo(({ children }) => {
     const initialRef = useMemo(() => {
       return {
         store: initialStore,
-        listeners: new Map<Selector<Immutable<TStore>>, unknown /* props */>()
+        listeners: new Map<Selector<Immutable<TStore>>, unknown /* props */>(),
       };
     }, emptyArray);
     const valueRef = useRef(initialRef);
@@ -364,7 +365,7 @@ export function createStoreContext<
         });
 
         return storeCtx.current.store;
-      }
+      },
     };
   };
 
@@ -439,7 +440,7 @@ export function createStoreContext<
 
             update();
           }),
-          initialStateRef: hookSelector(storeCtx.current.store, props)
+          initialStateRef: hookSelector(storeCtx.current.store, props),
         };
       }, emptyArray);
 
@@ -468,6 +469,6 @@ export function createStoreContext<
     useStore,
     useProduce,
     useActions,
-    ...hooksObj
+    ...hooksObj,
   };
 }
