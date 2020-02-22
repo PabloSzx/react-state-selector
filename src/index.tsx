@@ -22,7 +22,7 @@ export { createSelector } from "reselect";
 
 export type Selector<
   TState,
-  TProps = unknown | (() => unknown),
+  TProps = any | (() => any),
   TResult = unknown
 > = ParametricSelector<TState, TProps, TResult>;
 
@@ -48,32 +48,6 @@ const emptyArray = Object.freeze([]);
 
 type NN<T> = NonNullable<T>;
 
-type IHooksObj<
-  A extends { hooks?: Record<string, Selector<any>> } | undefined
-> = {
-  [HookName in keyof NN<NN<A>["hooks"]>]: (
-    props?:
-      | Parameters<NN<NN<A>["hooks"]>[HookName]>[1]
-      | (() => Parameters<NN<NN<A>["hooks"]>[HookName]>[1]),
-    propsDeps?: unknown[]
-  ) => ReturnType<NN<NN<A>["hooks"]>[HookName]>;
-};
-
-type IActionsObj<
-  A extends
-    | {
-        actions?: Record<
-          string,
-          (...args: unknown[]) => (draft: Draft<any>) => unknown
-        >;
-      }
-    | undefined
-> = {
-  [ActionName in keyof NN<NN<A>["actions"]>]: (
-    ...args: Parameters<NN<NN<A>["actions"]>[ActionName]>
-  ) => ReturnType<ReturnType<NN<NN<A>["actions"]>[ActionName]>>;
-};
-
 export type IHooks<TStore> = Record<string, Selector<Immutable<TStore>>>;
 
 export type IActions<TStore> = Record<
@@ -81,13 +55,39 @@ export type IActions<TStore> = Record<
   (...args: unknown[]) => (draft: Draft<TStore>) => unknown
 >;
 
+type IHooksObj<TStore, A extends { hooks?: IHooks<TStore> } | undefined> = {
+  [HookName in keyof NN<NN<A>["hooks"]>]: (
+    props: Parameters<NN<NN<A>["hooks"]>[HookName]>[1] extends undefined
+      ? void
+      :
+          | Parameters<NN<NN<A>["hooks"]>[HookName]>[1]
+          | (() => Parameters<NN<NN<A>["hooks"]>[HookName]>[1]),
+    propsDeps?: unknown[]
+  ) => ReturnType<NN<NN<A>["hooks"]>[HookName]>;
+};
+
+type IActionsObj<
+  TStore,
+  A extends { actions?: IActions<TStore> } | undefined
+> = {
+  [ActionName in keyof NN<NN<A>["actions"]>]: (
+    ...args: Parameters<NN<NN<A>["actions"]>[ActionName]>
+  ) => ReturnType<ReturnType<NN<NN<A>["actions"]>[ActionName]>>;
+};
+
 type IUseStore<TStore> = () => Immutable<TStore>;
 
+type IAsyncProduce<TStore> = (
+  draft: (draft: Draft<TStore>) => Promise<void>
+) => Promise<Immutable<TStore>>;
+
+type IProduce<TStore> = (
+  draft: (draft: Draft<TStore>) => void
+) => Immutable<TStore>;
+
 type IUseProduce<TStore> = () => {
-  asyncProduce: (
-    draft: (draft: Draft<TStore>) => Promise<void>
-  ) => Promise<Immutable<TStore>>;
-  produce: (draft: (draft: Draft<TStore>) => void) => Immutable<TStore>;
+  asyncProduce: IAsyncProduce<TStore>;
+  produce: IProduce<TStore>;
 };
 
 export function createStore<
@@ -99,9 +99,10 @@ export function createStore<
   options?: { hooks?: THooks; actions?: TActions }
 ): {
   useStore: IUseStore<TStore>;
-  useProduce: IUseProduce<TStore>;
-} & IHooksObj<typeof options> &
-  IActionsObj<typeof options> {
+  produce: IProduce<TStore>;
+  asyncProduce: IAsyncProduce<TStore>;
+} & IHooksObj<TStore, typeof options> &
+  IActionsObj<TStore, typeof options> {
   if (process.env.NODE_ENV === "development") {
     for (const name in options?.hooks) {
       if (
@@ -140,37 +141,38 @@ export function createStore<
     return currentStore;
   };
 
-  const useProduce = () => {
-    return {
-      produce: (draft: (draft: Draft<TStore>) => void) => {
-        const produceFn = produce<
-          (draft: Draft<TStore>) => void,
-          [Draft<TStore>],
-          TStore
-        >(draft);
+  const produceObj: {
+    produce: IProduce<TStore>;
+    asyncProduce: IAsyncProduce<TStore>;
+  } = {
+    produce: draft => {
+      const produceFn = produce<
+        (draft: Draft<TStore>) => void,
+        [Draft<TStore>],
+        TStore
+      >(draft);
 
-        currentStore = produceFn(currentStore);
+      currentStore = produceFn(currentStore);
 
-        listeners.forEach((props, listener) => {
-          listener(currentStore, props);
-        });
+      listeners.forEach((props, listener) => {
+        listener(currentStore, props);
+      });
 
-        return currentStore;
-      },
-      asyncProduce: async (draft: (draft: Draft<TStore>) => Promise<void>) => {
-        const storeDraft = createDraft(currentStore as TStore);
+      return currentStore;
+    },
+    asyncProduce: async draft => {
+      const storeDraft = createDraft(currentStore as TStore);
 
-        await Promise.resolve(draft(storeDraft));
+      await Promise.resolve(draft(storeDraft));
 
-        currentStore = (finishDraft(storeDraft) as any) as Immutable<TStore>;
+      currentStore = (finishDraft(storeDraft) as any) as Immutable<TStore>;
 
-        listeners.forEach((props, listener) => {
-          listener(currentStore, props);
-        });
+      listeners.forEach((props, listener) => {
+        listener(currentStore, props);
+      });
 
-        return currentStore;
-      },
-    };
+      return currentStore;
+    },
   };
 
   const actionsObj: Record<
@@ -255,9 +257,9 @@ export function createStore<
 
   return {
     useStore,
-    useProduce,
-    ...((actionsObj as unknown) as IActionsObj<typeof options>),
-    ...((hooksObj as unknown) as IHooksObj<typeof options>),
+    ...produceObj,
+    ...((actionsObj as unknown) as IActionsObj<TStore, typeof options>),
+    ...((hooksObj as unknown) as IHooksObj<TStore, typeof options>),
   };
 }
 
@@ -272,8 +274,8 @@ export function createStoreContext<
   Provider: FC;
   useStore: IUseStore<TStore>;
   useProduce: IUseProduce<TStore>;
-  useActions: () => IActionsObj<typeof options>;
-} & IHooksObj<typeof options> {
+  useActions: () => IActionsObj<TStore, typeof options>;
+} & IHooksObj<TStore, typeof options> {
   if (process.env.NODE_ENV === "development") {
     for (const name in options?.hooks) {
       if (
@@ -401,7 +403,7 @@ export function createStoreContext<
           return ownDraftResult;
         };
       }
-      return (actionsObj as unknown) as IActionsObj<typeof options>;
+      return (actionsObj as unknown) as IActionsObj<TStore, typeof options>;
     }, [storeCtx]);
 
     return actions;
@@ -471,6 +473,6 @@ export function createStoreContext<
     useStore,
     useProduce,
     useActions,
-    ...((hooksObj as unknown) as IHooksObj<typeof options>),
+    ...((hooksObj as unknown) as IHooksObj<TStore, typeof options>),
   };
 }

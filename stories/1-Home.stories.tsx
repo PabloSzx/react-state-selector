@@ -2,26 +2,13 @@ import React, { FC, useState } from "react";
 
 import { createStore } from "../src";
 
-const { hooks } = createStore(
-  {
-    a: 1,
-  },
-  {
-    hooks: {
-      useA: () => {},
-    },
-    actions: {
-      asd: () => draft => {
-        return draft;
-      },
-    },
-  }
-);
-
 const {
-  hooks: { useCountA, useCountB },
-  actions: { incrementA, printCurrentStore },
-  useProduce,
+  useCountA,
+  useCountB,
+  produce,
+  asyncProduce,
+  incrementA,
+  printCurrentStore,
 } = createStore(
   {
     countA: 5,
@@ -61,8 +48,6 @@ const CountA: FC = () => {
   const [a, setA] = useState("asd");
 
   const count = useCountA(() => ({ a, b: "..." }), [a]);
-
-  const { produce, asyncProduce } = useProduce();
 
   return (
     <div>
@@ -111,7 +96,6 @@ const CountA: FC = () => {
 };
 const CountB: FC = () => {
   const count = useCountB();
-  const { produce } = useProduce();
 
   return (
     <div>
@@ -161,7 +145,6 @@ const CountC = () => {
 };
 
 const Produce: FC = () => {
-  const { asyncProduce } = useProduce();
   return (
     <>
       {Math.round(Math.random() * 1000)}
