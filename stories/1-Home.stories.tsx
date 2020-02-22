@@ -127,7 +127,7 @@ const CountB: FC = () => {
   );
 };
 
-export const CountC = () => {
+const CountC = () => {
   const [a, setA] = useState("zxc");
   const count = useCountA({ a });
   return (
@@ -196,20 +196,20 @@ const Actions: FC = () => {
   );
 };
 
-export default {
-  title: "Welcome"
-};
-
-export const toStorybook = () => (
-  <>
+export const Home = () => (
+  <div>
     <CountA />
     <CountB />
     <CountC />
     <Produce />
     <Actions />
-  </>
+  </div>
 );
 
-toStorybook.story = {
-  name: "to Storybook1"
+export default {
+  title: "Home"
+};
+
+Home.story = {
+  name: "Home"
 };
