@@ -1,10 +1,16 @@
 /* eslint react-hooks/rules-of-hooks: 0 */
+/* eslint react-hooks/exhaustive-deps: 0 */
 
 import { createDraft, Draft, finishDraft, Immutable, produce } from "immer";
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createSelector, ParametricSelector } from "reselect";
-
-import useUpdate from "./utils/useUpdate";
 
 export type Selector<
   TState,
@@ -21,6 +27,16 @@ function toAnonFunction(arg: unknown): () => typeof arg {
   }
   return () => arg;
 }
+
+const incrementParameter = (num: number) => ++num;
+
+const useUpdate = () => {
+  const [, setState] = useState(0);
+
+  return useCallback(() => setState(incrementParameter), []);
+};
+
+const emptyArray = Object.freeze([]);
 
 export function createStore<
   TStore,
@@ -45,7 +61,7 @@ export function createStore<
     props?:
       | Parameters<NonNullable<typeof options>["hooks"][HookName]>[1]
       | (() => Parameters<NonNullable<typeof options>["hooks"][HookName]>[1]),
-    propsDeps?: any[]
+    propsDeps?: unknown[]
   ) => ReturnType<NonNullable<typeof options>["hooks"][HookName]>;
 } &
   {
@@ -151,13 +167,16 @@ export function createStore<
 
   const hooksObj: Record<
     string,
-    (hookProps?: (() => unknown) | unknown, hookPropsDeps?: any[]) => unknown
+    (
+      hookProps?: (() => unknown) | unknown,
+      hookPropsDeps?: unknown[]
+    ) => unknown
   > = {};
 
   for (const [hookName, hookSelector] of Object.entries(options?.hooks || {})) {
     hooksObj[hookName] = (
       hooksProps?: (() => unknown) | unknown,
-      hookPropsDeps?: any[]
+      hookPropsDeps?: unknown[]
     ) => {
       const update = useUpdate();
 
@@ -167,32 +186,37 @@ export function createStore<
       );
 
       const isMountedRef = useRef(false);
-      const stateRef = useRef(hookSelector(currentStore, props));
-      const updateSelectorRef = useRef(
-        createSelector(hookSelector, result => {
-          stateRef.current = result;
 
-          if (!isMountedRef.current) {
-            return;
-          }
+      const { updateSelector, initialStateRef } = useMemo(() => {
+        return {
+          updateSelector: createSelector(hookSelector, result => {
+            stateRef.current = result;
 
-          update();
-        })
-      );
+            if (!isMountedRef.current) {
+              return;
+            }
+
+            update();
+          }),
+          initialStateRef: hookSelector(currentStore, props)
+        };
+      }, emptyArray);
+
+      const stateRef = useRef(initialStateRef);
 
       useIsomorphicLayoutEffect(() => {
-        updateSelectorRef.current(currentStore, props);
+        updateSelector(currentStore, props);
 
-        listeners.set(updateSelectorRef.current, props);
+        listeners.set(updateSelector, props);
       }, [props]);
 
       useEffect(() => {
         isMountedRef.current = true;
 
         return () => {
-          listeners.delete(updateSelectorRef.current);
+          listeners.delete(updateSelector);
         };
-      }, []);
+      }, emptyArray);
 
       return stateRef.current;
     };

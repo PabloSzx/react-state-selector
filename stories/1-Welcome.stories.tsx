@@ -46,7 +46,7 @@ const {
 const CountA: FC = () => {
   const [a, setA] = useState("asd");
 
-  const count = useCountA(() => ({ a, b: "..." }), []);
+  const count = useCountA(() => ({ a, b: "..." }), [a]);
 
   const { produce, asyncProduce } = useProduce();
 
