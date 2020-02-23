@@ -105,6 +105,66 @@ describe("basic createStore", () => {
   });
 });
 
+describe("actions", () => {
+  it("defined actions work", () => {
+    const initialStore = Object.freeze({
+      a: 1,
+    });
+    const { actions, useStore } = createStore(initialStore, {
+      actions: {
+        increment: (n: number) => draft => {
+          draft.a += n;
+        },
+        decrement: (n: number) => draft => {
+          draft.a -= n;
+        },
+      },
+    });
+
+    const n = 5;
+
+    const ActionsComp: FC = () => {
+      const { a } = useStore();
+
+      return (
+        <div>
+          <button
+            data-testid="increment"
+            onClick={() => actions.increment(n)}
+          />
+          <button
+            data-testid="decrement"
+            onClick={() => actions.decrement(n)}
+          />
+          <span>{a}</span>
+        </div>
+      );
+    };
+
+    const { container, getByTestId, unmount } = render(<ActionsComp />);
+
+    const IncrementButton = getByTestId("increment");
+    const DecrementButton = getByTestId("decrement");
+
+    expect(container.innerHTML).toContain(initialStore.a);
+
+    act(() => {
+      IncrementButton.click();
+    });
+
+    expect(container.innerHTML).toContain(initialStore.a + n);
+
+    act(() => {
+      DecrementButton.click();
+      DecrementButton.click();
+    });
+
+    expect(container.innerHTML).toContain(initialStore.a + n - n * 2);
+
+    unmount();
+  });
+});
+
 describe("selectors and listeners", () => {
   it("basic number object and individual selectors", () => {
     const initialStore = Object.freeze({

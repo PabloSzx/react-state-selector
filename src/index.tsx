@@ -38,13 +38,13 @@ function toAnonFunction(arg: unknown): () => typeof arg {
 
 const incrementParameter = (num: number) => ++num;
 
+const emptyArray = Object.freeze([]);
+
 const useUpdate = () => {
   const [, setState] = useState(0);
 
-  return useCallback(() => setState(incrementParameter), []);
+  return useCallback(() => setState(incrementParameter), emptyArray);
 };
-
-const emptyArray = Object.freeze([]);
 
 type NN<T> = NonNullable<T>;
 
@@ -137,7 +137,7 @@ export function createStore<
       return () => {
         listeners.delete(globalListener);
       };
-    }, []);
+    }, emptyArray);
 
     return currentStore;
   };
@@ -376,20 +376,17 @@ export function createStoreContext<
     const storeCtx = useContext(StoreContext);
 
     const actions = useMemo(() => {
-      const actionsObj: Record<
-        string,
-        (...args: unknown[]) => Promise<unknown>
-      > = {};
+      const actionsObj: Record<string, (...args: unknown[]) => unknown> = {};
 
       for (const [actionName, actionFn] of Object.entries(
         options?.actions || {}
       )) {
-        actionsObj[actionName] = async (...args) => {
+        actionsObj[actionName] = (...args) => {
           const storeDraft = createDraft(storeCtx.current.store as TStore);
 
           const actionDraft = actionFn(...args);
 
-          const ownDraftResult = await Promise.resolve(actionDraft(storeDraft));
+          const ownDraftResult = actionDraft(storeDraft);
 
           storeCtx.current.store = (finishDraft(
             storeDraft
@@ -403,7 +400,7 @@ export function createStoreContext<
         };
       }
       return (actionsObj as unknown) as IActionsObj<TStore, typeof options>;
-    }, [storeCtx]);
+    }, emptyArray);
 
     return actions;
   };
