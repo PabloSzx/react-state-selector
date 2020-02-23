@@ -52,7 +52,7 @@ export type IHooks<TStore> = Record<string, Selector<Immutable<TStore>>>;
 
 export type IActions<TStore> = Record<
   string,
-  (...args: unknown[]) => (draft: Draft<TStore>) => unknown
+  (...args: any[]) => (draft: Draft<TStore>) => unknown
 >;
 
 type IHooksObj<TStore, A extends { hooks?: IHooks<TStore> } | undefined> = {
