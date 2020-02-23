@@ -175,18 +175,15 @@ export function createStore<
     },
   };
 
-  const actionsObj: Record<
-    string,
-    (...args: unknown[]) => Promise<unknown>
-  > = {};
+  const actionsObj: Record<string, (...args: unknown[]) => unknown> = {};
 
   for (const [actionName, actionFn] of Object.entries(options?.actions || {})) {
-    actionsObj[actionName] = async (...args) => {
+    actionsObj[actionName] = (...args) => {
       const storeDraft = createDraft(currentStore as TStore);
 
       const actionDraft = actionFn(...args);
 
-      const ownDraftResult = await Promise.resolve(actionDraft(storeDraft));
+      const ownDraftResult = actionDraft(storeDraft);
 
       currentStore = (finishDraft(storeDraft) as any) as Immutable<TStore>;
 
