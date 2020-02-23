@@ -101,8 +101,9 @@ export function createStore<
   useStore: IUseStore<TStore>;
   produce: IProduce<TStore>;
   asyncProduce: IAsyncProduce<TStore>;
-} & IHooksObj<TStore, typeof options> &
-  IActionsObj<TStore, typeof options> {
+  hooks: IHooksObj<TStore, typeof options>;
+  actions: IActionsObj<TStore, typeof options>;
+} {
   if (process.env.NODE_ENV === "development") {
     for (const name in options?.hooks) {
       if (
@@ -254,9 +255,9 @@ export function createStore<
 
   return {
     useStore,
+    actions: (actionsObj as unknown) as IActionsObj<TStore, typeof options>,
+    hooks: (hooksObj as unknown) as IHooksObj<TStore, typeof options>,
     ...produceObj,
-    ...((actionsObj as unknown) as IActionsObj<TStore, typeof options>),
-    ...((hooksObj as unknown) as IHooksObj<TStore, typeof options>),
   };
 }
 
@@ -272,7 +273,8 @@ export function createStoreContext<
   useStore: IUseStore<TStore>;
   useProduce: IUseProduce<TStore>;
   useActions: () => IActionsObj<TStore, typeof options>;
-} & IHooksObj<TStore, typeof options> {
+  hooks: IHooksObj<TStore, typeof options>;
+} {
   if (process.env.NODE_ENV === "development") {
     for (const name in options?.hooks) {
       if (
@@ -470,6 +472,6 @@ export function createStoreContext<
     useStore,
     useProduce,
     useActions,
-    ...((hooksObj as unknown) as IHooksObj<TStore, typeof options>),
+    hooks: (hooksObj as unknown) as IHooksObj<TStore, typeof options>,
   };
 }

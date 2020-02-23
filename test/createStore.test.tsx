@@ -113,12 +113,15 @@ describe("selectors and listeners", () => {
       c: 3,
     });
 
-    const { useA, useB, useC } = createStore(initialStore, {
+    const {
+      hooks: { useA, useB, useC },
+    } = createStore(initialStore, {
       hooks: {
         useA: store => store.a,
         useB: store => store.b,
         useC: store => store.c,
       },
+      actions: {},
     });
 
     const AComp: FC = () => {
@@ -152,20 +155,22 @@ describe("selectors and listeners", () => {
       b: 10,
     });
 
-    const { useStore, useA, useB, useAxB, produce } = createStore(
-      initialStore,
-      {
-        hooks: {
-          useA: store => {
-            return store.a;
-          },
-          useB: store => {
-            return store.b;
-          },
-          useAxB: store => store.a * store.b,
+    const {
+      useStore,
+      hooks: { useA, useB, useAxB },
+      produce,
+    } = createStore(initialStore, {
+      hooks: {
+        useA: store => {
+          return store.a;
         },
-      }
-    );
+        useB: store => {
+          return store.b;
+        },
+        useAxB: store => store.a * store.b,
+      },
+      actions: {},
+    });
 
     const AllStoreComp: FC = () => {
       const store = useStore();
@@ -272,22 +277,23 @@ describe("selectors and listeners", () => {
       otherList: Object.freeze([0, 2, 4, 6]),
     });
 
-    const { useMultiplySlow, useMultiplyFast, produce } = createStore(
-      initialStore,
-      {
-        hooks: {
-          useMultiplySlow: store => {
-            return store.list.map(n => n * 2);
-          },
-          useMultiplyFast: createSelector(
-            state => state.list,
-            list => {
-              return list.map(n => n * 2);
-            }
-          ),
+    const {
+      hooks: { useMultiplySlow, useMultiplyFast },
+      produce,
+    } = createStore(initialStore, {
+      hooks: {
+        useMultiplySlow: store => {
+          return store.list.map(n => n * 2);
         },
-      }
-    );
+        useMultiplyFast: createSelector(
+          state => state.list,
+          list => {
+            return list.map(n => n * 2);
+          }
+        ),
+      },
+      actions: {},
+    });
 
     const CompSlow: FC = () => {
       const list = useMultiplySlow();
