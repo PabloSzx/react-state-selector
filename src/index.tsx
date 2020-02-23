@@ -14,7 +14,7 @@ import React, {
   useLayoutEffect,
   useMemo,
   useRef,
-  useState
+  useState,
 } from "react";
 import { createSelector, ParametricSelector } from "reselect";
 

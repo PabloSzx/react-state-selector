@@ -1,6 +1,6 @@
 {
   "name": "react-state-selector",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "license": "MIT",
   "author": "PabloSzx",
   "files": [
@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsdx build",
     "build-storybook": "build-storybook",
-    "lint": "tsdx lint",
+    "lint": "tsdx lint --fix",
     "prepublishOnly": "tsdx build",
     "start": "tsdx watch",
     "storybook": "start-storybook -p 6006",

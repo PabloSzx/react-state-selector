@@ -1,3 +1,5 @@
+/* eslint react-hooks/exhaustive-deps: 0 */
+
 import React, { FC, useLayoutEffect } from "react";
 import waitForExpect from "wait-for-expect";
 
