@@ -180,9 +180,9 @@ export function createStore<
 
   for (const [actionName, actionFn] of Object.entries(options?.actions || {})) {
     actionsObj[actionName] = (...args) => {
-      const storeDraft = createDraft(currentStore as TStore);
-
       const actionDraft = actionFn(...args);
+
+      const storeDraft = createDraft(currentStore as TStore);
 
       const ownDraftResult = actionDraft(storeDraft);
 

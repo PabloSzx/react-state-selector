@@ -6,7 +6,7 @@ import waitForExpect from "wait-for-expect";
 import { act, render } from "@testing-library/react";
 
 import { createSelector, createStoreContext } from "../src";
-import { useRenderCount } from "./utils/useRenderCount";
+import { nRenderString, useRenderCount } from "./utils/useRenderCount";
 
 describe("basic createStore", () => {
   const initialStore = Object.freeze({
@@ -32,7 +32,7 @@ describe("basic createStore", () => {
     unmount();
   });
 
-  it("produce works", () => {
+  it("produce works with useStore", () => {
     const { useStore, useProduce, Provider } = createStoreContext(initialStore);
 
     const n = 5;
@@ -61,7 +61,7 @@ describe("basic createStore", () => {
     unmount();
   });
 
-  it("asyncProduce works", async () => {
+  it("asyncProduce works with useStore", async () => {
     const { useStore, useProduce } = createStoreContext(initialStore);
 
     const n = 5;
@@ -96,6 +96,8 @@ describe("basic createStore", () => {
     const { container, unmount, getByTestId } = render(
       <AsyncProduceComponent />
     );
+
+    expect(container.innerHTML).toContain(initialStore.a);
 
     getByTestId("button").click();
     await waitForExpect(
@@ -323,16 +325,16 @@ describe("selectors and listeners", () => {
     const axbComp = getByTestId("onlyAxB");
     const producerComp = getByTestId("producer");
 
-    expect(allStoreComp.innerHTML).toContain("nRenders=1");
+    expect(allStoreComp.innerHTML).toContain(nRenderString(1));
     expect(allStoreComp.innerHTML).toContain(JSON.stringify(initialStore));
 
-    expect(aComp.innerHTML).toContain("nRenders=1");
+    expect(aComp.innerHTML).toContain(nRenderString(1));
     expect(aComp.innerHTML).toContain(`A=${initialStore.a}`);
 
-    expect(bComp.innerHTML).toContain("nRenders=1");
+    expect(bComp.innerHTML).toContain(nRenderString(1));
     expect(bComp.innerHTML).toContain(`B=${initialStore.b}`);
 
-    expect(axbComp.innerHTML).toContain("nRenders=1");
+    expect(axbComp.innerHTML).toContain(nRenderString(1));
     expect(axbComp.innerHTML).toContain(
       `AxB=${initialStore.a * initialStore.b}`
     );
@@ -341,18 +343,18 @@ describe("selectors and listeners", () => {
       producerComp.click();
     });
 
-    expect(allStoreComp.innerHTML).toContain("nRenders=2");
+    expect(allStoreComp.innerHTML).toContain(nRenderString(2));
     expect(allStoreComp.innerHTML).toContain(
       JSON.stringify({ ...initialStore, a: initialStore.a + plusA })
     );
 
-    expect(aComp.innerHTML).toContain("nRenders=2");
+    expect(aComp.innerHTML).toContain(nRenderString(2));
     expect(aComp.innerHTML).toContain(`A=${initialStore.a + plusA}`);
 
-    expect(bComp.innerHTML).toContain("nRenders=1");
+    expect(bComp.innerHTML).toContain(nRenderString(1));
     expect(bComp.innerHTML).toContain(`B=${initialStore.b}`);
 
-    expect(axbComp.innerHTML).toContain("nRenders=2");
+    expect(axbComp.innerHTML).toContain(nRenderString(2));
     expect(axbComp.innerHTML).toContain(
       `AxB=${(initialStore.a + plusA) * initialStore.b}`
     );
@@ -444,8 +446,8 @@ describe("selectors and listeners", () => {
 
     const producerComp = getByTestId("producer");
 
-    expect(compSlow.innerHTML).toContain("nRenders=1");
-    expect(compFast.innerHTML).toContain("nRenders=1");
+    expect(compSlow.innerHTML).toContain(nRenderString(1));
+    expect(compFast.innerHTML).toContain(nRenderString(1));
     expect(compSlow.innerHTML).toContain(initialListJoin);
     expect(compFast.innerHTML).toContain(initialListJoin);
 
@@ -453,8 +455,8 @@ describe("selectors and listeners", () => {
       producerComp.click();
     });
 
-    expect(compSlow.innerHTML).toContain("nRenders=2");
-    expect(compFast.innerHTML).toContain("nRenders=1");
+    expect(compSlow.innerHTML).toContain(nRenderString(2));
+    expect(compFast.innerHTML).toContain(nRenderString(1));
     expect(compSlow.innerHTML).toContain(initialListJoin);
     expect(compFast.innerHTML).toContain(initialListJoin);
 

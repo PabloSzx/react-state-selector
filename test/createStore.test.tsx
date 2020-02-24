@@ -6,7 +6,7 @@ import waitForExpect from "wait-for-expect";
 import { act, render } from "@testing-library/react";
 
 import { createSelector, createStore } from "../src";
-import { useRenderCount } from "./utils/useRenderCount";
+import { nRenderString, useRenderCount } from "./utils/useRenderCount";
 
 describe("basic createStore", () => {
   const initialStore = Object.freeze({
@@ -30,7 +30,7 @@ describe("basic createStore", () => {
     unmount();
   });
 
-  it("produce works", () => {
+  it("produce works with useStore", () => {
     const { useStore, produce } = createStore(initialStore);
 
     const n = 5;
@@ -57,7 +57,7 @@ describe("basic createStore", () => {
     unmount();
   });
 
-  it("asyncProduce works", async () => {
+  it("asyncProduce works with useStore", async () => {
     const { useStore, asyncProduce } = createStore(initialStore);
 
     const n = 5;
@@ -91,6 +91,8 @@ describe("basic createStore", () => {
     const { getByTestId, unmount, container } = render(
       <AsyncProduceComponent />
     );
+
+    expect(container.innerHTML).toContain(initialStore.a);
 
     getByTestId("button").click();
 
@@ -152,14 +154,14 @@ describe("actions", () => {
       IncrementButton.click();
     });
 
-    expect(container.innerHTML).toContain(initialStore.a + n);
+    expect(container.innerHTML).toContain(initialStore.a + n /* 6 */);
 
     act(() => {
       DecrementButton.click();
       DecrementButton.click();
     });
 
-    expect(container.innerHTML).toContain(initialStore.a + n - n * 2);
+    expect(container.innerHTML).toContain(initialStore.a + n - n * 2 /* -4 */);
 
     unmount();
   });
@@ -285,18 +287,18 @@ describe("selectors and listeners", () => {
     const bComp = render(<OnlyBComp />);
     const axbComp = render(<OnlyAxBComp />);
 
-    expect(allStoreComp.container.innerHTML).toContain("nRenders=1");
+    expect(allStoreComp.container.innerHTML).toContain(nRenderString(1));
     expect(allStoreComp.container.innerHTML).toContain(
       JSON.stringify(initialStore)
     );
 
-    expect(aComp.container.innerHTML).toContain("nRenders=1");
+    expect(aComp.container.innerHTML).toContain(nRenderString(1));
     expect(aComp.container.innerHTML).toContain(`A=${initialStore.a}`);
 
-    expect(bComp.container.innerHTML).toContain("nRenders=1");
+    expect(bComp.container.innerHTML).toContain(nRenderString(1));
     expect(bComp.container.innerHTML).toContain(`B=${initialStore.b}`);
 
-    expect(axbComp.container.innerHTML).toContain("nRenders=1");
+    expect(axbComp.container.innerHTML).toContain(nRenderString(1));
     expect(axbComp.container.innerHTML).toContain(
       `AxB=${initialStore.a * initialStore.b}`
     );
@@ -308,19 +310,19 @@ describe("selectors and listeners", () => {
       });
     });
 
-    expect(allStoreComp.container.innerHTML).toContain("nRenders=2");
+    expect(allStoreComp.container.innerHTML).toContain(nRenderString(2));
     expect(allStoreComp.container.innerHTML).toContain(
       // We can use "produce" as a getState
       JSON.stringify(produce(s => s))
     );
 
-    expect(aComp.container.innerHTML).toContain("nRenders=2");
+    expect(aComp.container.innerHTML).toContain(nRenderString(2));
     expect(aComp.container.innerHTML).toContain(`A=${newA}`);
 
-    expect(bComp.container.innerHTML).toContain("nRenders=1");
+    expect(bComp.container.innerHTML).toContain(nRenderString(1));
     expect(bComp.container.innerHTML).toContain(`B=${initialStore.b}`);
 
-    expect(axbComp.container.innerHTML).toContain("nRenders=2");
+    expect(axbComp.container.innerHTML).toContain(nRenderString(2));
     expect(axbComp.container.innerHTML).toContain(
       `AxB=${newA * initialStore.b}`
     );
@@ -387,8 +389,8 @@ describe("selectors and listeners", () => {
 
     const compFast = render(<CompFast />);
 
-    expect(compSlow.container.innerHTML).toContain("nRenders=1");
-    expect(compFast.container.innerHTML).toContain("nRenders=1");
+    expect(compSlow.container.innerHTML).toContain(nRenderString(1));
+    expect(compFast.container.innerHTML).toContain(nRenderString(1));
     expect(compSlow.container.innerHTML).toContain(initialListJoin);
     expect(compFast.container.innerHTML).toContain(initialListJoin);
 
@@ -398,8 +400,8 @@ describe("selectors and listeners", () => {
       });
     });
 
-    expect(compSlow.container.innerHTML).toContain("nRenders=2");
-    expect(compFast.container.innerHTML).toContain("nRenders=1");
+    expect(compSlow.container.innerHTML).toContain(nRenderString(2));
+    expect(compFast.container.innerHTML).toContain(nRenderString(1));
     expect(compSlow.container.innerHTML).toContain(initialListJoin);
     expect(compFast.container.innerHTML).toContain(initialListJoin);
   });

@@ -1,9 +1,13 @@
 import { useRef } from "react";
 
-export const useRenderCount = () => {
+export function nRenderString(n: number) {
+  return `nRenders=${n}`;
+}
+
+export function useRenderCount() {
   const renderCountRef = useRef(0);
 
   renderCountRef.current += 1;
 
-  return `nRenders=${renderCountRef.current}`;
-};
+  return nRenderString(renderCountRef.current);
+}
