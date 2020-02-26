@@ -258,8 +258,9 @@ describe("selectors and listeners", () => {
     const Comp: FC<{ n: number }> = ({ n }) => {
       const a = useATimesN(() => {
         for (let i = 0; i < 1000; ++i) {
-          i;
+          Math.random();
         }
+
         return n;
       }, [n]);
 

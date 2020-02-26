@@ -37,7 +37,7 @@ describe("server-side-rendering", () => {
         });
       }).toThrow(
         Error(
-          `All hooks should follow the rules of hooks for naming and "${wrongHookName}" doesn\'t`
+          `All hooks should follow the rules of hooks for naming and "${wrongHookName}" doesn't`
         )
       );
     });
@@ -85,7 +85,7 @@ describe("server-side-rendering", () => {
         });
       }).toThrow(
         Error(
-          `All hooks should follow the rules of hooks for naming and "${wrongHookName}" doesn\'t`
+          `All hooks should follow the rules of hooks for naming and "${wrongHookName}" doesn't`
         )
       );
     });
