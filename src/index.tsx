@@ -104,7 +104,7 @@ export function createStore<
   hooks: IHooksObj<TStore, typeof options>;
   actions: IActionsObj<TStore, typeof options>;
 } {
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV !== "production") {
     for (const name in options?.hooks) {
       if (
         name.length < 4 ||
@@ -275,7 +275,7 @@ export function createStoreContext<
   useActions: () => IActionsObj<TStore, typeof options>;
   hooks: IHooksObj<TStore, typeof options>;
 } {
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV !== "producation") {
     for (const name in options?.hooks) {
       if (
         name.length < 4 ||
