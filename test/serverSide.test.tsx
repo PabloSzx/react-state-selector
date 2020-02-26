@@ -28,17 +28,31 @@ describe("server-side-rendering", () => {
     });
 
     it("detect errors on wrong hook names", () => {
+      const wrongHookName = "wrongHookName";
       expect(() => {
+        createStore(initialStore, {
+          hooks: {
+            [wrongHookName]: () => {},
+          },
+        });
+      }).toThrow(
+        Error(
+          `All hooks should follow the rules of hooks for naming and "${wrongHookName}" doesn\'t`
+        )
+      );
+    });
+
+    it("should not detect errors on wrong hook names if in production mode", () => {
+      expect(() => {
+        const previous = process.env.NODE_ENV;
+        process.env.NODE_ENV = "production";
         createStore(initialStore, {
           hooks: {
             wrongHookName: () => {},
           },
         });
-      }).toThrow(
-        Error(
-          'All hooks should follow the rules of hooks for naming and "wrongHookName" doesn\'t'
-        )
-      );
+        process.env.NODE_ENV = previous;
+      }).not.toThrow();
     });
   });
 
@@ -62,17 +76,31 @@ describe("server-side-rendering", () => {
     });
 
     it("detect errors on wrong hook names", () => {
+      const wrongHookName = "wrongHookName";
       expect(() => {
+        createStoreContext(initialStore, {
+          hooks: {
+            [wrongHookName]: () => {},
+          },
+        });
+      }).toThrow(
+        Error(
+          `All hooks should follow the rules of hooks for naming and "${wrongHookName}" doesn\'t`
+        )
+      );
+    });
+
+    it("should not detect errors on wrong hook names if in production mode", () => {
+      expect(() => {
+        const previous = process.env.NODE_ENV;
+        process.env.NODE_ENV = "production";
         createStoreContext(initialStore, {
           hooks: {
             wrongHookName: () => {},
           },
         });
-      }).toThrow(
-        Error(
-          'All hooks should follow the rules of hooks for naming and "wrongHookName" doesn\'t'
-        )
-      );
+        process.env.NODE_ENV = previous;
+      }).not.toThrow();
     });
   });
 });

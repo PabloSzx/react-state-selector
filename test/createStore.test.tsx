@@ -211,6 +211,74 @@ describe("selectors and listeners", () => {
     expect(cComp.container.textContent).toBe(initialStore.c.toString());
   });
 
+  it("selectors accept plain props", () => {
+    const initialStore = Object.freeze({
+      a: 1,
+    });
+    const {
+      hooks: { useATimesN },
+    } = createStore(initialStore, {
+      hooks: {
+        useATimesN: (store, n: number) => {
+          return store.a * n;
+        },
+      },
+    });
+    const Comp: FC<{ n: number }> = ({ n }) => {
+      const a = useATimesN(n);
+
+      return (
+        <div>
+          <span>{a}</span>
+        </div>
+      );
+    };
+
+    const n = 4;
+
+    const { unmount, container } = render(<Comp n={n} />);
+
+    expect(container.innerHTML).toContain(initialStore.a * n);
+
+    unmount();
+  });
+  it("selectors accept complex props", () => {
+    const initialStore = Object.freeze({
+      a: 1,
+    });
+    const {
+      hooks: { useATimesN },
+    } = createStore(initialStore, {
+      hooks: {
+        useATimesN: (store, n: number) => {
+          return store.a * n;
+        },
+      },
+    });
+    const Comp: FC<{ n: number }> = ({ n }) => {
+      const a = useATimesN(() => {
+        for (let i = 0; i < 1000; ++i) {
+          i;
+        }
+        return n;
+      }, [n]);
+
+      return (
+        <div>
+          <span>{a}</span>
+        </div>
+      );
+    };
+
+    const n = 10;
+
+    const { unmount, container } = render(<Comp n={n} />);
+
+    expect(container.innerHTML).toContain(initialStore.a * n);
+
+    unmount();
+  });
+
   it("selectors only re-renders component when needed", () => {
     const initialStore = Object.freeze({
       a: 5,

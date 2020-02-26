@@ -168,6 +168,23 @@ describe("actions", () => {
 
     unmount();
   });
+  it("empty actions options means useActions gives empty object", () => {
+    const initialStore = Object.freeze({
+      a: 1,
+    });
+    const { useActions } = createStoreContext(initialStore);
+
+    const Comp: FC = () => {
+      const actions = useActions();
+
+      return <span>{JSON.stringify(actions)}</span>;
+    };
+
+    const { unmount, container } = render(<Comp />);
+
+    expect(container.innerHTML).toContain("{}");
+    unmount();
+  });
 });
 
 describe("selectors and listeners", () => {
