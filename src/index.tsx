@@ -72,7 +72,7 @@ type IActionsObj<
 > = {
   [ActionName in keyof NN<NN<A>["actions"]>]: (
     ...args: Parameters<NN<NN<A>["actions"]>[ActionName]>
-  ) => ReturnType<ReturnType<NN<NN<A>["actions"]>[ActionName]>>;
+  ) => TStore;
 };
 
 type IUseStore<TStore> = () => Immutable<TStore>;
@@ -182,17 +182,19 @@ export function createStore<
     actionsObj[actionName] = (...args) => {
       const actionDraft = actionFn(...args);
 
-      const storeDraft = createDraft(currentStore as TStore);
+      const produceFn = produce<
+        (draft: Draft<TStore>) => void,
+        [Draft<TStore>],
+        TStore
+      >(actionDraft);
 
-      const ownDraftResult = actionDraft(storeDraft);
-
-      currentStore = (finishDraft(storeDraft) as any) as Immutable<TStore>;
+      currentStore = produceFn(currentStore);
 
       listeners.forEach((props, listener) => {
         listener(currentStore, props);
       });
 
-      return ownDraftResult;
+      return currentStore;
     };
   }
 
@@ -382,21 +384,21 @@ export function createStoreContext<
         options?.actions || {}
       )) {
         actionsObj[actionName] = (...args) => {
-          const storeDraft = createDraft(storeCtx.current.store as TStore);
-
           const actionDraft = actionFn(...args);
 
-          const ownDraftResult = actionDraft(storeDraft);
+          const produceFn = produce<
+            (draft: Draft<TStore>) => void,
+            [Draft<TStore>],
+            TStore
+          >(actionDraft);
 
-          storeCtx.current.store = (finishDraft(
-            storeDraft
-          ) as any) as Immutable<TStore>;
+          storeCtx.current.store = produceFn(storeCtx.current.store);
 
           storeCtx.current.listeners.forEach((props, listener) => {
             listener(storeCtx.current.store, props);
           });
 
-          return ownDraftResult;
+          return storeCtx.current.store;
         };
       }
       return (actionsObj as unknown) as IActionsObj<TStore, typeof options>;
