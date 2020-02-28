@@ -22,7 +22,7 @@ export { createSelector } from "reselect";
 
 export type Selector<
   TState,
-  TProps = any | (() => any),
+  TProps = any,
   TResult = unknown
 > = ParametricSelector<TState, TProps, TResult>;
 

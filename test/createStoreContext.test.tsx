@@ -3,10 +3,12 @@
 import React, { FC, useLayoutEffect } from "react";
 import waitForExpect from "wait-for-expect";
 
-import { act, render } from "@testing-library/react";
+import { act, cleanup, render } from "@testing-library/react";
 
 import { createSelector, createStoreContext } from "../src";
 import { nRenderString, useRenderCount } from "./utils/useRenderCount";
+
+afterEach(cleanup);
 
 describe("basic createStore", () => {
   const initialStore = Object.freeze({
@@ -457,6 +459,118 @@ describe("selectors and listeners", () => {
         <ProducerComp />
       </Provider>
     );
+    const compSlow = getByTestId("compSlow");
+
+    const compFast = getByTestId("compFast");
+
+    const producerComp = getByTestId("producer");
+
+    expect(compSlow.innerHTML).toContain(nRenderString(1));
+    expect(compFast.innerHTML).toContain(nRenderString(1));
+    expect(compSlow.innerHTML).toContain(initialListJoin);
+    expect(compFast.innerHTML).toContain(initialListJoin);
+
+    act(() => {
+      producerComp.click();
+    });
+
+    expect(compSlow.innerHTML).toContain(nRenderString(2));
+    expect(compFast.innerHTML).toContain(nRenderString(1));
+    expect(compSlow.innerHTML).toContain(initialListJoin);
+    expect(compFast.innerHTML).toContain(initialListJoin);
+
+    unmount();
+  });
+
+  it("createSelector with props support and it makes a difference", () => {
+    const initialStore = Object.freeze({
+      list: Object.freeze([1, 3, 5, 7]),
+      otherList: Object.freeze([0, 2, 4, 6]),
+    });
+
+    const {
+      hooks: { useMultiplySlow, useMultiplyFast },
+      useProduce,
+      Provider,
+    } = createStoreContext(initialStore, {
+      hooks: {
+        useMultiplySlow: (store, i: number) => {
+          return store.list.map(n => n * i);
+        },
+        useMultiplyFast: createSelector<
+          { list: readonly number[] },
+          number,
+          readonly number[],
+          number,
+          number[]
+        >(
+          state => state.list,
+          (_, n) => n,
+          (list, n) => {
+            return list.map(i => i * n);
+          }
+        ),
+      },
+      actions: {},
+    });
+
+    const nArg = 4;
+
+    const CompSlow: FC = () => {
+      const list = useMultiplySlow(nArg);
+      const renderCount = useRenderCount();
+
+      return (
+        <div data-testid="compSlow">
+          <span>{renderCount}</span>
+          <br />
+          <span>{list.join("|")}</span>
+        </div>
+      );
+    };
+
+    const CompFast: FC = () => {
+      const list = useMultiplyFast(nArg);
+      const renderCount = useRenderCount();
+
+      return (
+        <div data-testid="compFast">
+          <span>{renderCount}</span>
+          <br />
+          <span>{list.join("|")}</span>
+        </div>
+      );
+    };
+
+    const ProducerComp: FC = () => {
+      const { produce } = useProduce();
+
+      return (
+        <button
+          data-testid="producer"
+          onClick={() => {
+            act(() => {
+              produce(draft => {
+                draft.otherList.push(9);
+              });
+            });
+          }}
+        >
+          Click here!
+        </button>
+      );
+    };
+
+    const initialListJoin = initialStore.list.map(n => n * nArg).join("|");
+
+    const { unmount, getByTestId } = render(
+      <Provider>
+        <CompSlow />
+        <CompFast />
+        <ProducerComp />
+      </Provider>
+    );
+
     const compSlow = getByTestId("compSlow");
 
     const compFast = getByTestId("compFast");

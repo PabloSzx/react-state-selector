@@ -3,10 +3,12 @@
 import React, { FC, useLayoutEffect } from "react";
 import waitForExpect from "wait-for-expect";
 
-import { act, render } from "@testing-library/react";
+import { act, cleanup, render } from "@testing-library/react";
 
 import { createSelector, createStore } from "../src";
 import { nRenderString, useRenderCount } from "./utils/useRenderCount";
+
+afterEach(cleanup);
 
 describe("basic createStore", () => {
   const initialStore = Object.freeze({
@@ -22,12 +24,11 @@ describe("basic createStore", () => {
       return <span>{store.a}</span>;
     };
 
-    const { getByText, unmount } = render(<UseStoreComponent />);
+    const { getByText } = render(<UseStoreComponent />);
 
     const comp = getByText(initialStore.a.toString());
 
     expect(comp).toBeTruthy();
-    unmount();
   });
 
   it("produce works with useStore", () => {
@@ -49,12 +50,11 @@ describe("basic createStore", () => {
       return <span>{store.a}</span>;
     };
 
-    const { getByText, unmount } = render(<ProduceComponent />);
+    const { getByText } = render(<ProduceComponent />);
 
     const comp = getByText((initialStore.a + n).toString());
 
     expect(comp).toBeTruthy();
-    unmount();
   });
 
   it("asyncProduce works with useStore", async () => {
@@ -88,9 +88,7 @@ describe("basic createStore", () => {
       );
     };
 
-    const { getByTestId, unmount, container } = render(
-      <AsyncProduceComponent />
-    );
+    const { getByTestId, container } = render(<AsyncProduceComponent />);
 
     expect(container.innerHTML).toContain(initialStore.a);
 
@@ -103,7 +101,6 @@ describe("basic createStore", () => {
       2000,
       250
     );
-    unmount();
   });
 });
 
@@ -143,7 +140,7 @@ describe("actions", () => {
       );
     };
 
-    const { container, getByTestId, unmount } = render(<ActionsComp />);
+    const { container, getByTestId } = render(<ActionsComp />);
 
     const IncrementButton = getByTestId("increment");
     const DecrementButton = getByTestId("decrement");
@@ -162,8 +159,6 @@ describe("actions", () => {
     });
 
     expect(container.innerHTML).toContain(initialStore.a + n - n * 2 /* -4 */);
-
-    unmount();
   });
 });
 
@@ -236,11 +231,9 @@ describe("selectors and listeners", () => {
 
     const n = 4;
 
-    const { unmount, container } = render(<Comp n={n} />);
+    const { container } = render(<Comp n={n} />);
 
     expect(container.innerHTML).toContain(initialStore.a * n);
-
-    unmount();
   });
   it("selectors accept complex props", () => {
     const initialStore = Object.freeze({
@@ -273,11 +266,9 @@ describe("selectors and listeners", () => {
 
     const n = 10;
 
-    const { unmount, container } = render(<Comp n={n} />);
+    const { container } = render(<Comp n={n} />);
 
     expect(container.innerHTML).toContain(initialStore.a * n);
-
-    unmount();
   });
 
   it("selectors only re-renders component when needed", () => {
@@ -395,11 +386,6 @@ describe("selectors and listeners", () => {
     expect(axbComp.container.innerHTML).toContain(
       `AxB=${newA * initialStore.b}`
     );
-
-    aComp.unmount();
-    bComp.unmount();
-    axbComp.unmount();
-    allStoreComp.unmount();
   });
 
   it("createSelector support and it makes a difference", () => {
@@ -453,6 +439,88 @@ describe("selectors and listeners", () => {
     };
 
     const initialListJoin = initialStore.list.map(n => n * 2).join("|");
+
+    const compSlow = render(<CompSlow />);
+
+    const compFast = render(<CompFast />);
+
+    expect(compSlow.container.innerHTML).toContain(nRenderString(1));
+    expect(compFast.container.innerHTML).toContain(nRenderString(1));
+    expect(compSlow.container.innerHTML).toContain(initialListJoin);
+    expect(compFast.container.innerHTML).toContain(initialListJoin);
+
+    act(() => {
+      produce(draft => {
+        draft.otherList.push(9);
+      });
+    });
+
+    expect(compSlow.container.innerHTML).toContain(nRenderString(2));
+    expect(compFast.container.innerHTML).toContain(nRenderString(1));
+    expect(compSlow.container.innerHTML).toContain(initialListJoin);
+    expect(compFast.container.innerHTML).toContain(initialListJoin);
+  });
+
+  it("createSelector with props support and it makes a difference", () => {
+    const initialStore = Object.freeze({
+      list: Object.freeze([1, 3, 5, 7]),
+      otherList: Object.freeze([0, 2, 4, 6]),
+    });
+
+    const {
+      hooks: { useMultiplySlow, useMultiplyFast },
+      produce,
+    } = createStore(initialStore, {
+      hooks: {
+        useMultiplySlow: (store, i: number) => {
+          return store.list.map(n => n * i);
+        },
+        useMultiplyFast: createSelector<
+          { list: readonly number[] },
+          number,
+          readonly number[],
+          number,
+          number[]
+        >(
+          state => state.list,
+          (_, n) => n,
+          (list, n) => {
+            return list.map(i => i * n);
+          }
+        ),
+      },
+      actions: {},
+    });
+
+    const nArg = 4;
+
+    const CompSlow: FC = () => {
+      const list = useMultiplySlow(nArg);
+      const renderCount = useRenderCount();
+
+      return (
+        <div>
+          <span>{renderCount}</span>
+          <br />
+          <span>{list.join("|")}</span>
+        </div>
+      );
+    };
+
+    const CompFast: FC = () => {
+      const list = useMultiplyFast(nArg);
+      const renderCount = useRenderCount();
+
+      return (
+        <div>
+          <span>{renderCount}</span>
+          <br />
+          <span>{list.join("|")}</span>
+        </div>
+      );
+    };
+
+    const initialListJoin = initialStore.list.map(n => n * nArg).join("|");
 
     const compSlow = render(<CompSlow />);
 
