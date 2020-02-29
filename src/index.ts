@@ -2,9 +2,18 @@
 /* eslint react-hooks/exhaustive-deps: 0 */
 /* eslint no-loop-func: 0 */
 
-import { createDraft, Draft, finishDraft, Immutable, produce } from "immer";
-import React, {
+import {
+  applyPatches,
+  createDraft,
+  Draft,
+  finishDraft,
+  Immutable,
+  produce,
+  produceWithPatches,
+} from "immer";
+import {
   createContext,
+  createElement,
   FC,
   memo,
   MutableRefObject,
@@ -18,7 +27,10 @@ import React, {
 } from "react";
 import { createSelector, ParametricSelector } from "reselect";
 
+import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
+
 export { createSelector } from "reselect";
+export { Immutable, castDraft, castImmutable } from "immer";
 
 export type Selector<
   TState,
@@ -96,7 +108,12 @@ export function createStore<
   TActions extends IActions<TStore>
 >(
   initialStore: Immutable<TStore>,
-  options?: { hooks?: THooks; actions?: TActions }
+  options?: {
+    hooks?: THooks;
+    actions?: TActions;
+    devName?: string;
+    devToolsInProduction?: boolean;
+  }
 ): {
   useStore: IUseStore<TStore>;
   produce: IProduce<TStore>;
@@ -118,9 +135,22 @@ export function createStore<
     }
   }
 
+  let devTools: ReduxDevTools | undefined;
+
+  if (
+    options?.devName &&
+    (options.devToolsInProduction || process.env.NODE_ENV !== "production")
+  ) {
+    devTools = connectDevTools(options.devName);
+  }
+
   const listeners = new Map<Selector<Immutable<TStore>>, unknown /* props */>();
 
   let currentStore = initialStore;
+
+  if (devTools) {
+    devTools.init(currentStore);
+  }
 
   const useStore = () => {
     const update = useUpdate();
@@ -147,14 +177,32 @@ export function createStore<
     asyncProduce: IAsyncProduce<TStore>;
   } = {
     produce: draft => {
-      const produceFn = produce<
-        (draft: Draft<TStore>) => void,
-        [Draft<TStore>],
-        TStore
-      >(draft);
+      if (devTools) {
+        const produceFn = produceWithPatches<
+          (draft: Draft<TStore>) => void,
+          [Draft<TStore>],
+          TStore
+        >(draft);
 
-      currentStore = produceFn(currentStore);
+        const produceResult = produceFn(currentStore);
+        currentStore = produceResult[0];
 
+        devTools.send(
+          {
+            type: "produce",
+            payload: produceResult[1],
+          },
+          currentStore
+        );
+      } else {
+        const produceFn = produce<
+          (draft: Draft<TStore>) => void,
+          [Draft<TStore>],
+          TStore
+        >(draft);
+
+        currentStore = produceFn(currentStore);
+      }
       listeners.forEach((props, listener) => {
         listener(currentStore, props);
       });
@@ -166,7 +214,14 @@ export function createStore<
 
       await Promise.resolve(draft(storeDraft));
 
-      currentStore = (finishDraft(storeDraft) as any) as Immutable<TStore>;
+      currentStore = (finishDraft(storeDraft, changes => {
+        if (devTools) {
+          devTools.send(
+            { type: "asyncProduce", payload: changes },
+            applyPatches(currentStore, changes)
+          );
+        }
+      }) as unknown) as Immutable<TStore>;
 
       listeners.forEach((props, listener) => {
         listener(currentStore, props);
@@ -186,7 +241,17 @@ export function createStore<
 
       const ownDraftResult = actionDraft(storeDraft);
 
-      currentStore = (finishDraft(storeDraft) as any) as Immutable<TStore>;
+      currentStore = (finishDraft(storeDraft, changes => {
+        if (devTools) {
+          devTools.send(
+            {
+              type: actionName,
+              payload: changes,
+            },
+            applyPatches(currentStore, changes)
+          );
+        }
+      }) as unknown) as Immutable<TStore>;
 
       listeners.forEach((props, listener) => {
         listener(currentStore, props);
@@ -267,7 +332,12 @@ export function createStoreContext<
   TActions extends IActions<TStore>
 >(
   initialStore: Immutable<TStore>,
-  options?: { hooks?: THooks; actions?: TActions }
+  options?: {
+    hooks?: THooks;
+    actions?: TActions;
+    devName?: string;
+    devToolsInProduction?: boolean;
+  }
 ): {
   Provider: FC;
   useStore: IUseStore<TStore>;
@@ -296,24 +366,63 @@ export function createStoreContext<
         ParametricSelector<Immutable<TStore>, unknown, unknown>,
         unknown
       >;
+      devTools: ReduxDevTools | undefined;
     }>
   >({
-    current: { store: initialStore, listeners: new Map() },
+    current: {
+      store: initialStore,
+      listeners: new Map(),
+      devTools: (() => {
+        if (
+          options?.devName &&
+          (options.devToolsInProduction ||
+            process.env.NODE_ENV !== "production")
+        ) {
+          const devTools = connectDevTools(options.devName);
+          if (devTools) {
+            devTools.init(initialStore);
+          }
+          return devTools;
+        }
+        return undefined;
+      })(),
+    },
   });
 
-  const Provider: FC = memo(({ children }) => {
-    const initialRef = useMemo(() => {
-      return {
-        store: initialStore,
-        listeners: new Map<Selector<Immutable<TStore>>, unknown /* props */>(),
-      };
-    }, emptyArray);
-    const valueRef = useRef(initialRef);
+  const providerRefCallback = (debugName?: string) => () => {
+    return {
+      store: initialStore,
+      listeners: new Map<Selector<Immutable<TStore>>, unknown /* props */>(),
+      devTools: (() => {
+        if (
+          options?.devName &&
+          (options.devToolsInProduction ||
+            process.env.NODE_ENV !== "production")
+        ) {
+          const devTools = connectDevTools(
+            debugName ? `${options.devName}-${debugName}` : options.devName
+          );
+          if (devTools) {
+            devTools.init(initialStore);
+          }
+          return devTools;
+        }
+        return undefined;
+      })(),
+    };
+  };
 
-    return (
-      <StoreContext.Provider value={valueRef}>{children}</StoreContext.Provider>
-    );
-  });
+  const Provider: FC<{ debugName?: string }> = memo(
+    ({ children, debugName }) => {
+      const initialRef = useMemo(providerRefCallback(debugName), emptyArray);
+      const valueRef = useRef(initialRef);
+
+      return createElement(StoreContext.Provider, {
+        value: valueRef,
+        children,
+      });
+    }
+  );
 
   const useStore = () => {
     const storeCtx = useContext(StoreContext);
@@ -340,13 +449,32 @@ export function createStoreContext<
     const storeCtx = useContext(StoreContext);
     return {
       produce: (draft: (draft: Draft<TStore>) => void) => {
-        const produceFn = produce<
-          (draft: Draft<TStore>) => void,
-          [Draft<TStore>],
-          TStore
-        >(draft);
+        if (storeCtx.current.devTools) {
+          const produceFn = produceWithPatches<
+            (draft: Draft<TStore>) => void,
+            [Draft<TStore>],
+            TStore
+          >(draft);
 
-        storeCtx.current.store = produceFn(storeCtx.current.store);
+          const produceResult = produceFn(storeCtx.current.store);
+
+          storeCtx.current.store = produceResult[0];
+          storeCtx.current.devTools.send(
+            {
+              type: "produce",
+              payload: produceResult[1],
+            },
+            storeCtx.current.store
+          );
+        } else {
+          const produceFn = produce<
+            (draft: Draft<TStore>) => void,
+            [Draft<TStore>],
+            TStore
+          >(draft);
+
+          storeCtx.current.store = produceFn(storeCtx.current.store);
+        }
 
         storeCtx.current.listeners.forEach((props, listener) => {
           listener(storeCtx.current.store, props);
@@ -359,9 +487,17 @@ export function createStoreContext<
 
         await Promise.resolve(draft(storeDraft));
 
-        storeCtx.current.store = (finishDraft(storeDraft) as any) as Immutable<
-          TStore
-        >;
+        storeCtx.current.store = (finishDraft(storeDraft, changes => {
+          if (storeCtx.current.devTools) {
+            storeCtx.current.devTools.send(
+              {
+                type: "asyncProduce",
+                payload: changes,
+              },
+              applyPatches(storeCtx.current.store, changes)
+            );
+          }
+        }) as unknown) as Immutable<TStore>;
 
         storeCtx.current.listeners.forEach((props, listener) => {
           listener(storeCtx.current.store, props);
@@ -388,9 +524,17 @@ export function createStoreContext<
 
           const ownDraftResult = actionDraft(storeDraft);
 
-          storeCtx.current.store = (finishDraft(
-            storeDraft
-          ) as any) as Immutable<TStore>;
+          storeCtx.current.store = (finishDraft(storeDraft, changes => {
+            if (storeCtx.current.devTools) {
+              storeCtx.current.devTools.send(
+                {
+                  type: actionName,
+                  payload: changes,
+                },
+                applyPatches(storeCtx.current.store, changes)
+              );
+            }
+          }) as unknown) as Immutable<TStore>;
 
           storeCtx.current.listeners.forEach((props, listener) => {
             listener(storeCtx.current.store, props);

@@ -2,9 +2,12 @@ import React, { FC } from "react";
 
 import { createSelector, createStoreContext } from "../src";
 
-const { useXD } = createStoreContext(
+const {
+  hooks: { useXD },
+} = createStoreContext(
   { a: 5 },
   {
+    devName: "XD",
     hooks: {
       useXD: createSelector(
         state => {
@@ -16,20 +19,25 @@ const { useXD } = createStoreContext(
         (res, res2) => {
           return res + res2;
         }
-      )
-    }
+      ),
+    },
   }
 );
 
-const { useCount, useProduce, useActions, Provider } = createStoreContext(
+const {
+  hooks: { useCount },
+  useActions,
+  Provider,
+} = createStoreContext(
   {
-    count: 5
+    count: 5,
   },
   {
+    devName: "Count",
     hooks: {
       useCount: ({ count }) => {
         return count;
-      }
+      },
     },
     actions: {
       increment: (a: number) => draft => {
@@ -38,8 +46,8 @@ const { useCount, useProduce, useActions, Provider } = createStoreContext(
       },
       printCurrentStore: () => draft => {
         alert(JSON.stringify(draft));
-      }
-    }
+      },
+    },
   }
 );
 
@@ -104,9 +112,9 @@ export const ContextStory = () => (
 );
 
 export default {
-  title: "Context"
+  title: "Context",
 };
 
 ContextStory.story = {
-  name: "Context"
+  name: "Context",
 };

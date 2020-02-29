@@ -3,18 +3,17 @@ import React, { FC, useState } from "react";
 import { createStore } from "../src";
 
 const {
-  useCountA,
-  useCountB,
+  hooks: { useCountA, useCountB },
+  actions: { incrementA, printCurrentStore },
   produce,
   asyncProduce,
-  incrementA,
-  printCurrentStore,
 } = createStore(
   {
     countA: 5,
     countB: 15,
   },
   {
+    devName: "CountStore",
     hooks: {
       useCountA: ({ countA }, { a, b }: { a: string; b?: string }) => {
         return a + (b || "") + " - " + countA;
