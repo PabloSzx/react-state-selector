@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsdx build",
     "build-storybook": "build-storybook",
-    "lint": "tsdx lint --fix",
+    "lint": "tsdx lint src stories test --fix",
     "prepublishOnly": "tsdx build",
     "start": "tsdx watch",
     "storybook": "start-storybook -p 6006",
@@ -20,7 +20,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "tsdx lint src stories test"
     }
   },
   "jest": {

@@ -1,8 +1,9 @@
 import { Patch } from "immer";
 
+// https://github.com/zalmoxisus/redux-devtools-extension/blob/master/docs/API/Methods.md
 export interface ReduxDevTools {
   subscribe: (cb: (message: any) => void) => void;
-  unsuscribe: () => void;
+  unsubscribe: () => void;
   send: (action: { type: string; payload: Patch[] }, state: any) => void;
   init: (state: any) => void;
   error: (message: string) => void;
@@ -10,9 +11,14 @@ export interface ReduxDevTools {
 
 declare global {
   interface Window {
-    __REDUX_DEVTOOLS_EXTENSION__: {
-      connect: (args: { name: string; serialize: boolean }) => ReduxDevTools;
-    };
+    __REDUX_DEVTOOLS_EXTENSION__:
+      | {
+          connect: (args: {
+            name: string;
+            serialize: boolean;
+          }) => ReduxDevTools;
+        }
+      | undefined;
   }
 }
 

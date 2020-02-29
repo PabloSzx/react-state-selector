@@ -339,7 +339,7 @@ export function createStoreContext<
     devToolsInProduction?: boolean;
   }
 ): {
-  Provider: FC;
+  Provider: FC<{ debugName?: string }>;
   useStore: IUseStore<TStore>;
   useProduce: IUseProduce<TStore>;
   useActions: () => IActionsObj<TStore, typeof options>;
@@ -378,7 +378,7 @@ export function createStoreContext<
           (options.devToolsInProduction ||
             process.env.NODE_ENV !== "production")
         ) {
-          const devTools = connectDevTools(options.devName);
+          const devTools = connectDevTools(options.devName + "-noProvider");
           if (devTools) {
             devTools.init(initialStore);
           }
@@ -400,7 +400,7 @@ export function createStoreContext<
             process.env.NODE_ENV !== "production")
         ) {
           const devTools = connectDevTools(
-            debugName ? `${options.devName}-${debugName}` : options.devName
+            debugName ? options.devName + "-" + debugName : options.devName
           );
           if (devTools) {
             devTools.init(initialStore);
@@ -447,71 +447,76 @@ export function createStoreContext<
 
   const useProduce = () => {
     const storeCtx = useContext(StoreContext);
-    return {
-      produce: (draft: (draft: Draft<TStore>) => void) => {
-        if (storeCtx.current.devTools) {
-          const produceFn = produceWithPatches<
-            (draft: Draft<TStore>) => void,
-            [Draft<TStore>],
-            TStore
-          >(draft);
 
-          const produceResult = produceFn(storeCtx.current.store);
-
-          storeCtx.current.store = produceResult[0];
-          storeCtx.current.devTools.send(
-            {
-              type: "produce",
-              payload: produceResult[1],
-            },
-            storeCtx.current.store
-          );
-        } else {
-          const produceFn = produce<
-            (draft: Draft<TStore>) => void,
-            [Draft<TStore>],
-            TStore
-          >(draft);
-
-          storeCtx.current.store = produceFn(storeCtx.current.store);
-        }
-
-        storeCtx.current.listeners.forEach((props, listener) => {
-          listener(storeCtx.current.store, props);
-        });
-
-        return storeCtx.current.store;
-      },
-      asyncProduce: async (draft: (draft: Draft<TStore>) => Promise<void>) => {
-        const storeDraft = createDraft(storeCtx.current.store as TStore);
-
-        await Promise.resolve(draft(storeDraft));
-
-        storeCtx.current.store = (finishDraft(storeDraft, changes => {
+    return useMemo(() => {
+      return {
+        produce: (draft: (draft: Draft<TStore>) => void) => {
           if (storeCtx.current.devTools) {
+            const produceFn = produceWithPatches<
+              (draft: Draft<TStore>) => void,
+              [Draft<TStore>],
+              TStore
+            >(draft);
+
+            const produceResult = produceFn(storeCtx.current.store);
+
+            storeCtx.current.store = produceResult[0];
             storeCtx.current.devTools.send(
               {
-                type: "asyncProduce",
-                payload: changes,
+                type: "produce",
+                payload: produceResult[1],
               },
-              applyPatches(storeCtx.current.store, changes)
+              storeCtx.current.store
             );
+          } else {
+            const produceFn = produce<
+              (draft: Draft<TStore>) => void,
+              [Draft<TStore>],
+              TStore
+            >(draft);
+
+            storeCtx.current.store = produceFn(storeCtx.current.store);
           }
-        }) as unknown) as Immutable<TStore>;
 
-        storeCtx.current.listeners.forEach((props, listener) => {
-          listener(storeCtx.current.store, props);
-        });
+          storeCtx.current.listeners.forEach((props, listener) => {
+            listener(storeCtx.current.store, props);
+          });
 
-        return storeCtx.current.store;
-      },
-    };
+          return storeCtx.current.store;
+        },
+        asyncProduce: async (
+          draft: (draft: Draft<TStore>) => Promise<void>
+        ) => {
+          const storeDraft = createDraft(storeCtx.current.store as TStore);
+
+          await Promise.resolve(draft(storeDraft));
+
+          storeCtx.current.store = (finishDraft(storeDraft, changes => {
+            if (storeCtx.current.devTools) {
+              storeCtx.current.devTools.send(
+                {
+                  type: "asyncProduce",
+                  payload: changes,
+                },
+                applyPatches(storeCtx.current.store, changes)
+              );
+            }
+          }) as unknown) as Immutable<TStore>;
+
+          storeCtx.current.listeners.forEach((props, listener) => {
+            listener(storeCtx.current.store, props);
+          });
+
+          return storeCtx.current.store;
+        },
+      };
+    }, [storeCtx]);
   };
 
   const useActions = () => {
     const storeCtx = useContext(StoreContext);
 
-    const actions = useMemo(() => {
+    return useMemo(() => {
       const actionsObj: Record<string, (...args: unknown[]) => unknown> = {};
 
       for (const [actionName, actionFn] of Object.entries(
@@ -545,8 +550,6 @@ export function createStoreContext<
       }
       return (actionsObj as unknown) as IActionsObj<TStore, typeof options>;
     }, emptyArray);
-
-    return actions;
   };
 
   const hooksObj: Record<
