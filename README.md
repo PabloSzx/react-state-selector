@@ -31,7 +31,8 @@ const {
   {
     hooks: {
       useCountA: ({ countA }) => {
-        // Here reselect will automatically memoize this selector and only rerender the component when absolutely needed
+        // Here reselect will automatically memoize this selector
+        // and only rerender the component when absolutely needed
         return countA;
       },
       useCountB: ({ countB }) => {
@@ -40,7 +41,8 @@ const {
     },
     actions: {
       incrementA: (n: number) => draft => {
-        // Here you can mutate "draft", and immer will automatically make the immutable equivalent
+        // Here you can mutate "draft", and immer will
+        // automatically make the immutable equivalent
         draft.countA += n;
       },
       incrementB: (n: number) => draft => {
