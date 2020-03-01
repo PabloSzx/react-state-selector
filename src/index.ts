@@ -14,7 +14,7 @@ import {
 import {
   createContext,
   createElement,
-  FC,
+  FunctionComponent,
   memo,
   MutableRefObject,
   useCallback,
@@ -30,7 +30,7 @@ import { createSelector, ParametricSelector } from "reselect";
 import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
 
 export { createSelector } from "reselect";
-export { Immutable, castDraft, castImmutable } from "immer";
+export { Immutable, Draft, castDraft, castImmutable, original } from "immer";
 
 export type Selector<
   TState,
@@ -102,6 +102,35 @@ type IUseProduce<TStore> = () => {
   produce: IProduce<TStore>;
 };
 
+/**
+ *  Create **react-state-selector** global store
+ *
+ * @export
+ * @template TStore
+ * Any object, including array or complex objects like Map, Set or Classes. Even primitives would work.
+ * @template THooks
+ * Object that defines the custom hooks of the store.
+ * @template TActions
+ * Object that defines the custom actions of the store.
+ * @param {Immutable<TStore>} initialStore
+ * Initial state of the store
+ * @param {{
+ *     hooks?: THooks;
+ *     actions?: TActions;
+ *     devName?: string;
+ *     devToolsInProduction?: boolean;
+ *   }} [options]
+ * Options object.
+ *
+ * @returns {{
+ *   useStore: IUseStore<TStore>;
+ *   produce: IProduce<TStore>;
+ *   asyncProduce: IAsyncProduce<TStore>;
+ *   hooks: IHooksObj<TStore, typeof options>;
+ *   actions: IActionsObj<TStore, typeof options>;
+ * }}
+ * Resulting object of the store.
+ */
 export function createStore<
   TStore,
   THooks extends IHooks<TStore>,
@@ -109,16 +138,61 @@ export function createStore<
 >(
   initialStore: Immutable<TStore>,
   options?: {
+    /**
+     * Custom hooks.
+     *
+     * @type {Record<string, (store: Immutable<TStore>, props: any) => unknown>}
+     */
     hooks?: THooks;
+    /**
+     * Custom actions.
+     *
+     * @type {Record<string, (...args: any[]) => (draft: Draft<TStore>) => unknown>}
+     */
     actions?: TActions;
+    /**
+     * Name used to activate Redux DevTools.
+     *
+     * @type {string}
+     */
     devName?: string;
+    /**
+     * Flag to manually activate the usage of the Redux DevTools in production.
+     *
+     * @type {boolean}
+     */
     devToolsInProduction?: boolean;
   }
 ): {
+  /**
+   * useStore: default hook that listens for any change in the store.
+   *
+   * @type {() => Immutable<TStore>}
+   */
   useStore: IUseStore<TStore>;
+  /**
+   * direct function to mutate the store
+   *
+   * @type {(draft: (draft: Draft<TStore>) => void) => Immutable<TStore>}
+   */
   produce: IProduce<TStore>;
+  /**
+   * Async version of produce
+   *
+   * @type {(draft: (draft: Draft<TStore>) => Promise<void>) => Promise<Immutable<TStore>>}
+   */
   asyncProduce: IAsyncProduce<TStore>;
+  /**
+   * Object containing the custom hooks specified in the options
+   *
+   * @type {Record<string, (props?: any, propsDeps?: any[]) => unknown>}
+   */
   hooks: IHooksObj<TStore, typeof options>;
+  /**
+   * Object containing the custom actions specified in the options
+   *
+   * @type {Record<string, (...props:any[]) => unknown>}
+   */
   actions: IActionsObj<TStore, typeof options>;
 } {
   if (process.env.NODE_ENV !== "production") {
@@ -326,6 +400,38 @@ export function createStore<
   };
 }
 
+/**
+ * Create React Context version of a **react-state-selector** global store
+ *
+ * @export
+ * @template TStore
+ * Any object, including array or complex objects like Map, Set or Classes. Even primitives would work.
+ * @template THooks
+ * Object that defines the custom hooks of the store.
+ * @template TActions
+ * Object that defines the custom actions of the store.
+ * @param {Immutable<TStore>} initialStore
+ * Initial state of the store
+ * @param {{
+ *     hooks?: THooks;
+ *     actions?: TActions;
+ *     devName?: string;
+ *     devToolsInProduction?: boolean;
+ *   }} [options]
+ * Options object that may contain:
+ * hooks: custom hooks;
+ * actions: custom actions;
+ * devName: name used to activate Redux DevTools;
+ * devToolsInProduction: flag to manually activate the usage of the Redux DevTools in production
+ * @returns {{
+ *   Provider: FunctionComponent<{ debugName?: string }>;
+ *   useStore: IUseStore<TStore>;
+ *   useProduce: IUseProduce<TStore>;
+ *   useActions: () => IActionsObj<TStore, typeof options>;
+ *   hooks: IHooksObj<TStore, typeof options>;
+ * }}
+ * Resulting object containing of the store.
+ */
 export function createStoreContext<
   TStore,
   THooks extends IHooks<TStore>,
@@ -333,16 +439,63 @@ export function createStoreContext<
 >(
   initialStore: Immutable<TStore>,
   options?: {
+    /**
+     * Custom hooks.
+     *
+     * @type {Record<string, (store: Immutable<TStore>, props: any) => unknown>}
+     */
     hooks?: THooks;
+    /**
+     * Custom actions.
+     *
+     * @type {Record<string, (...args: any[]) => (draft: Draft<TStore>) => unknown>}
+     */
     actions?: TActions;
+    /**
+     * Name used to activate Redux DevTools.
+     *
+     * @type {string}
+     */
     devName?: string;
+    /**
+     * Flag to manually activate the usage of the Redux DevTools in production.
+     *
+     * @type {boolean}
+     */
     devToolsInProduction?: boolean;
   }
 ): {
-  Provider: FC<{ debugName?: string }>;
+  /**
+   * React Context Provider of an instance of the global store
+   *
+   * @type {FunctionComponent<{ debugName?: string }>}
+   */
+  Provider: FunctionComponent<{ debugName?: string }>;
+  /**
+   * Default hook that listens for any change in the store.
+   *
+   * @type {() => Immutable<TStore>}
+   */
   useStore: IUseStore<TStore>;
+  /**
+   * Default hook that contains "produce" direct function to mutate the store and "asyncProduce" async version of produce
+   *
+   * @type {() => {
+   *  produce: (draft: (draft: Draft<TStore>) => void) => Immutable<TStore>
+   *  asyncProduce: (draft: (draft: Draft<TStore>) => Promise<void>) => Promise<Immutable<TStore>>
+   * }}
+   */
   useProduce: IUseProduce<TStore>;
+  /**
+   * Hook that contains the custom actions specified in the options
+   *
+   */
   useActions: () => IActionsObj<TStore, typeof options>;
+  /**
+   * Object containing the custom hooks specified in the options
+   *
+   * @type {Record<string, (...props:any[]) => unknown>}
+   */
   hooks: IHooksObj<TStore, typeof options>;
 } {
   if (process.env.NODE_ENV !== "production") {
@@ -412,7 +565,7 @@ export function createStoreContext<
     };
   };
 
-  const Provider: FC<{ debugName?: string }> = memo(
+  const Provider: FunctionComponent<{ debugName?: string }> = memo(
     ({ children, debugName }) => {
       const initialRef = useMemo(providerRefCallback(debugName), emptyArray);
       const valueRef = useRef(initialRef);

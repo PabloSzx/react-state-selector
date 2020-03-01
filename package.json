@@ -13,10 +13,10 @@
     "build": "tsdx build",
     "build-storybook": "rm -rf ./dist && build-storybook -o docs",
     "lint": "tsdx lint src stories test --fix",
-    "prepublishOnly": "tsdx build",
+    "prepublishOnly": "tsdx lint src test --fix && tsdx test && tsdx build",
     "start": "tsdx watch",
     "storybook": "start-storybook -p 6006",
-    "test": "tsdx test --passWithNoTests"
+    "test": "tsdx test"
   },
   "husky": {
     "hooks": {
