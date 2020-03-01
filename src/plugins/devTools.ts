@@ -17,6 +17,9 @@ declare global {
             name: string;
             serialize: boolean;
           }) => ReduxDevTools;
+          open: (
+            position: "left" | "right" | "bottom" | "panel" | "remote"
+          ) => void;
         }
       | undefined;
   }

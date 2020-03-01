@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.js": "/main.cffa5ecd3ec5ef269b1f.bundle.js",
+    "main.js.map": "/main.cffa5ecd3ec5ef269b1f.bundle.js.map",
+    "runtime~main.js": "/runtime~main.cffa5ecd3ec5ef269b1f.bundle.js",
+    "runtime~main.js.map": "/runtime~main.cffa5ecd3ec5ef269b1f.bundle.js.map",
+    "vendors~main.js": "/vendors~main.cffa5ecd3ec5ef269b1f.bundle.js",
+    "vendors~main.js.map": "/vendors~main.cffa5ecd3ec5ef269b1f.bundle.js.map",
+    "../dist/index.d.ts/.storybook/config.d.ts": "/../dist/index.d.ts/.storybook/config.d.ts",
+    "../dist/index.d.ts/src/index.d.ts": "/../dist/index.d.ts/src/index.d.ts",
+    "../dist/index.d.ts/src/plugins/devTools.d.ts": "/../dist/index.d.ts/src/plugins/devTools.d.ts",
+    "../dist/index.d.ts/stories/createStoreContext/basicUsageContext.stories.d.ts": "/../dist/index.d.ts/stories/createStoreContext/basicUsageContext.stories.d.ts",
+    "../dist/index.d.ts/stories/createStore/basicUsage.stories.d.ts": "/../dist/index.d.ts/stories/createStore/basicUsage.stories.d.ts",
+    "../dist/index.d.ts/stories/devTools/createStore.stories.d.ts": "/../dist/index.d.ts/stories/devTools/createStore.stories.d.ts",
+    "../dist/index.d.ts/stories/devTools/createStoreContext.stories.d.ts": "/../dist/index.d.ts/stories/devTools/createStoreContext.stories.d.ts",
+    "../dist/index.d.ts/stories/utils/devTools.d.ts": "/../dist/index.d.ts/stories/utils/devTools.d.ts",
+    "iframe.html": "/iframe.html",
+    "precache-manifest.d4fb671416b9e850cd23b21f2025f98b.js": "/precache-manifest.d4fb671416b9e850cd23b21f2025f98b.js",
+    "service-worker.js": "/service-worker.js",
+    "vendors~main.cffa5ecd3ec5ef269b1f.bundle.js.LICENSE.txt": "/vendors~main.cffa5ecd3ec5ef269b1f.bundle.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "runtime~main.cffa5ecd3ec5ef269b1f.bundle.js",
+    "vendors~main.cffa5ecd3ec5ef269b1f.bundle.js",
+    "main.cffa5ecd3ec5ef269b1f.bundle.js"
+  ]
+}

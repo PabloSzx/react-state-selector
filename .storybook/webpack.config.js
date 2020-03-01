@@ -6,14 +6,15 @@ module.exports = ({ config }) => {
       {
         loader: require.resolve("ts-loader"),
         options: {
-          reportFiles: ["./stories/**/*.{ts|tsx}"]
-        }
-      }
-    ]
+          reportFiles: ["./stories/**/*.{ts|tsx}"],
+        },
+      },
+      require.resolve("react-docgen-typescript-loader"),
+    ],
   });
   config.resolve.extensions.push(".ts", ".tsx");
   config.resolve.alias = Object.assign(config.resolve.alias, {
-    "@": path.resolve(__dirname, "..")
+    "@": path.resolve(__dirname, ".."),
   });
   return config;
 };

@@ -11,7 +11,7 @@ const mockDevTools = () => {
   const devState: { current: any } = { current: undefined };
   const devActions: { type: string; payload: any }[] = [];
 
-  const connectMock = { connect: jest.fn() };
+  const connectMock = { connect: jest.fn(), open: jest.fn() };
 
   window.__REDUX_DEVTOOLS_EXTENSION__ = connectMock;
 
@@ -302,6 +302,104 @@ describe("with redux dev tools", () => {
     ]);
 
     unmount();
+  });
+
+  it("createStore in production by default should not connect to devTools", () => {
+    const { devToolsMock } = mockDevTools();
+    const previous = process.env.NODE_ENV;
+    process.env.NODE_ENV = "production";
+
+    createStore(
+      {
+        a: 1,
+      },
+      {
+        devName: "test",
+      }
+    );
+
+    expect(devToolsMock.init).toHaveBeenCalledTimes(0);
+
+    expect(window.__REDUX_DEVTOOLS_EXTENSION__?.connect).toHaveBeenCalledTimes(
+      0
+    );
+
+    process.env.NODE_ENV = previous;
+  });
+
+  it("createStore in production with it's config should connect to devTools", () => {
+    const { devToolsMock, devState } = mockDevTools();
+    const previous = process.env.NODE_ENV;
+    process.env.NODE_ENV = "production";
+
+    createStore(
+      {
+        a: 1,
+      },
+      {
+        devName: "test",
+        devToolsInProduction: true,
+      }
+    );
+
+    expect(devToolsMock.init).toHaveBeenCalledTimes(1);
+
+    expect(window.__REDUX_DEVTOOLS_EXTENSION__?.connect).toHaveBeenCalledTimes(
+      1
+    );
+
+    expect(devState.current).toEqual({ a: 1 });
+
+    process.env.NODE_ENV = previous;
+  });
+
+  it("createStoreContext in production by default should not connect to devTools", () => {
+    const { devToolsMock } = mockDevTools();
+    const previous = process.env.NODE_ENV;
+    process.env.NODE_ENV = "production";
+
+    createStoreContext(
+      {
+        a: 1,
+      },
+      {
+        devName: "test",
+      }
+    );
+
+    expect(devToolsMock.init).toHaveBeenCalledTimes(0);
+
+    expect(window.__REDUX_DEVTOOLS_EXTENSION__?.connect).toHaveBeenCalledTimes(
+      0
+    );
+
+    process.env.NODE_ENV = previous;
+  });
+
+  it("createStoreContext in production with it's config should connect to devTools", () => {
+    const { devToolsMock, devState } = mockDevTools();
+    const previous = process.env.NODE_ENV;
+    process.env.NODE_ENV = "production";
+
+    createStoreContext(
+      {
+        a: 1,
+      },
+      {
+        devName: "test",
+        devToolsInProduction: true,
+      }
+    );
+
+    expect(devToolsMock.init).toHaveBeenCalledTimes(1);
+
+    expect(window.__REDUX_DEVTOOLS_EXTENSION__?.connect).toHaveBeenCalledTimes(
+      1
+    );
+
+    expect(devState.current).toEqual({ a: 1 });
+
+    process.env.NODE_ENV = previous;
   });
 });
 
