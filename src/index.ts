@@ -64,7 +64,7 @@ export type IHooks<TStore> = Record<string, Selector<Immutable<TStore>>>;
 
 export type IActions<TStore> = Record<
   string,
-  (...args: any[]) => (draft: Draft<TStore>) => unknown
+  (...args: any[]) => (draft: Draft<TStore>) => void | TStore
 >;
 
 type IHooksObj<TStore, A extends { hooks?: IHooks<TStore> } | undefined> = {
@@ -84,7 +84,7 @@ type IActionsObj<
 > = {
   [ActionName in keyof NN<NN<A>["actions"]>]: (
     ...args: Parameters<NN<NN<A>["actions"]>[ActionName]>
-  ) => ReturnType<ReturnType<NN<NN<A>["actions"]>[ActionName]>>;
+  ) => Immutable<TStore>;
 };
 
 type IUseStore<TStore> = () => Immutable<TStore>;
@@ -94,7 +94,7 @@ type IAsyncProduce<TStore> = (
 ) => Promise<Immutable<TStore>>;
 
 type IProduce<TStore> = (
-  draft: (draft: Draft<TStore>) => void
+  draft?: (draft: Draft<TStore>) => void | TStore
 ) => Immutable<TStore>;
 
 type IUseProduce<TStore> = () => {
@@ -147,7 +147,7 @@ export function createStore<
     /**
      * Custom actions.
      *
-     * @type {Record<string, (...args: any[]) => (draft: Draft<TStore>) => unknown>}
+     * @type {Record<string, (...args: any[]) => (draft: Draft<TStore>) => void | TStore>}
      */
     actions?: TActions;
     /**
@@ -173,7 +173,7 @@ export function createStore<
   /**
    * direct function to mutate the store
    *
-   * @type {(draft: (draft: Draft<TStore>) => void) => Immutable<TStore>}
+   * @type {(draft: (draft: Draft<TStore>) => void | TStore) => Immutable<TStore>}
    */
   produce: IProduce<TStore>;
   /**
@@ -191,7 +191,7 @@ export function createStore<
   /**
    * Object containing the custom actions specified in the options
    *
-   * @type {Record<string, (...props:any[]) => unknown>}
+   * @type {Record<string, (...props:any[]) => TStore>}
    */
   actions: IActionsObj<TStore, typeof options>;
 } {
@@ -251,6 +251,8 @@ export function createStore<
     asyncProduce: IAsyncProduce<TStore>;
   } = {
     produce: draft => {
+      if (typeof draft !== "function") return currentStore;
+
       if (devTools) {
         const produceFn = produceWithPatches<
           (draft: Draft<TStore>) => void,
@@ -305,33 +307,47 @@ export function createStore<
     },
   };
 
-  const actionsObj: Record<string, (...args: unknown[]) => unknown> = {};
+  const actionsObj: Record<
+    string,
+    (...args: unknown[]) => Immutable<TStore>
+  > = {};
 
   for (const [actionName, actionFn] of Object.entries(options?.actions || {})) {
     actionsObj[actionName] = (...args) => {
       const actionDraft = actionFn(...args);
 
-      const storeDraft = createDraft(currentStore as TStore);
+      if (devTools) {
+        const produceFn = produceWithPatches<
+          (draft: Draft<TStore>) => void,
+          [Draft<TStore>],
+          TStore
+        >(actionDraft);
 
-      const ownDraftResult = actionDraft(storeDraft);
+        const produceResult = produceFn(currentStore);
+        currentStore = produceResult[0];
 
-      currentStore = (finishDraft(storeDraft, changes => {
-        if (devTools) {
-          devTools.send(
-            {
-              type: actionName,
-              payload: changes,
-            },
-            applyPatches(currentStore, changes)
-          );
-        }
-      }) as unknown) as Immutable<TStore>;
+        devTools.send(
+          {
+            type: actionName,
+            payload: produceResult[1],
+          },
+          currentStore
+        );
+      } else {
+        const produceFn = produce<
+          (draft: Draft<TStore>) => void,
+          [Draft<TStore>],
+          TStore
+        >(actionDraft);
+
+        currentStore = produceFn(currentStore);
+      }
 
       listeners.forEach((props, listener) => {
         listener(currentStore, props);
       });
 
-      return ownDraftResult;
+      return currentStore;
     };
   }
 
@@ -448,7 +464,7 @@ export function createStoreContext<
     /**
      * Custom actions.
      *
-     * @type {Record<string, (...args: any[]) => (draft: Draft<TStore>) => unknown>}
+     * @type {Record<string, (...args: any[]) => (draft: Draft<TStore>) => void | TStore>}
      */
     actions?: TActions;
     /**
@@ -481,7 +497,7 @@ export function createStoreContext<
    * Default hook that contains "produce" direct function to mutate the store and "asyncProduce" async version of produce
    *
    * @type {() => {
-   *  produce: (draft: (draft: Draft<TStore>) => void) => Immutable<TStore>
+   *  produce: (draft: (draft: Draft<TStore>) => void | TStore) => Immutable<TStore>
    *  asyncProduce: (draft: (draft: Draft<TStore>) => Promise<void>) => Promise<Immutable<TStore>>
    * }}
    */
@@ -603,7 +619,9 @@ export function createStoreContext<
 
     return useMemo(() => {
       return {
-        produce: (draft: (draft: Draft<TStore>) => void) => {
+        produce: (draft?: (draft: Draft<TStore>) => void) => {
+          if (typeof draft !== "function") return storeCtx.current.store;
+
           if (storeCtx.current.devTools) {
             const produceFn = produceWithPatches<
               (draft: Draft<TStore>) => void,
@@ -670,35 +688,48 @@ export function createStoreContext<
     const storeCtx = useContext(StoreContext);
 
     return useMemo(() => {
-      const actionsObj: Record<string, (...args: unknown[]) => unknown> = {};
+      const actionsObj: Record<
+        string,
+        (...args: unknown[]) => Immutable<TStore>
+      > = {};
 
       for (const [actionName, actionFn] of Object.entries(
         options?.actions || {}
       )) {
         actionsObj[actionName] = (...args) => {
-          const storeDraft = createDraft(storeCtx.current.store as TStore);
-
           const actionDraft = actionFn(...args);
 
-          const ownDraftResult = actionDraft(storeDraft);
+          if (storeCtx.current.devTools) {
+            const produceFn = produceWithPatches<
+              (draft: Draft<TStore>) => void,
+              [Draft<TStore>],
+              TStore
+            >(actionDraft);
 
-          storeCtx.current.store = (finishDraft(storeDraft, changes => {
-            if (storeCtx.current.devTools) {
-              storeCtx.current.devTools.send(
-                {
-                  type: actionName,
-                  payload: changes,
-                },
-                applyPatches(storeCtx.current.store, changes)
-              );
-            }
-          }) as unknown) as Immutable<TStore>;
+            const produceResult = produceFn(storeCtx.current.store);
 
+            storeCtx.current.store = produceResult[0];
+            storeCtx.current.devTools.send(
+              {
+                type: actionName,
+                payload: produceResult[1],
+              },
+              storeCtx.current.store
+            );
+          } else {
+            const produceFn = produce<
+              (draft: Draft<TStore>) => void,
+              [Draft<TStore>],
+              TStore
+            >(actionDraft);
+
+            storeCtx.current.store = produceFn(storeCtx.current.store);
+          }
           storeCtx.current.listeners.forEach((props, listener) => {
             listener(storeCtx.current.store, props);
           });
 
-          return ownDraftResult;
+          return storeCtx.current.store;
         };
       }
       return (actionsObj as unknown) as IActionsObj<TStore, typeof options>;

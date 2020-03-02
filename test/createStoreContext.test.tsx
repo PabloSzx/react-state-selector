@@ -1,9 +1,10 @@
 /* eslint react-hooks/exhaustive-deps: 0 */
 
-import React, { FC, useLayoutEffect } from "react";
+import React, { FC, useEffect, useLayoutEffect } from "react";
 import waitForExpect from "wait-for-expect";
 
 import { act, cleanup, render } from "@testing-library/react";
+import { renderHook } from "@testing-library/react-hooks";
 
 import { createSelector, createStoreContext } from "../src";
 import { nRenderString, useRenderCount } from "./utils/useRenderCount";
@@ -661,5 +662,51 @@ describe("context providers", () => {
 
     ContextA.unmount();
     ContextB.unmount();
+  });
+
+  it("produce gives new instance of store", () => {
+    const initialStore = Object.freeze({
+      a: 1,
+      b: 2,
+    });
+    const newStore = Object.freeze({
+      a: 4,
+      b: 5,
+    });
+    const Store = createStoreContext(initialStore, {
+      actions: {
+        newStore: () => () => {
+          return newStore;
+        },
+      },
+      hooks: {},
+    });
+    const { unmount, result, rerender } = renderHook(
+      (n?: typeof newStore) => {
+        const store = Store.useStore();
+        const { produce } = Store.useProduce();
+        useEffect(() => {
+          if (n) {
+            act(() => {
+              produce(() => newStore);
+            });
+          }
+        }, [n, produce]);
+        return { store, produceGetterResult: produce() };
+      },
+      {
+        wrapper: Store.Provider,
+      }
+    );
+
+    expect(result.current.store).toBe(initialStore);
+    expect(result.current.produceGetterResult).toBe(initialStore);
+
+    rerender(newStore);
+
+    expect(result.current.store).toBe(newStore);
+    expect(result.current.produceGetterResult).toBe(newStore);
+
+    unmount();
   });
 });

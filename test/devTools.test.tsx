@@ -91,14 +91,9 @@ describe("with redux dev tools", () => {
       payload: [{ op: "replace", path: ["a"], value: 2 }],
     });
 
-    expect(Store.produce(() => {})).toEqual({ a: 2 });
+    expect(Store.produce()).toEqual({ a: 2 });
 
-    expect(devActions).toHaveLength(2);
-
-    expect(devActions[1]).toEqual({
-      type: "produce",
-      payload: [],
-    });
+    expect(devActions).toHaveLength(1);
 
     const newAsyncA = 10;
 
@@ -112,9 +107,9 @@ describe("with redux dev tools", () => {
 
     expect(devState.current).toEqual({ a: newAsyncA });
 
-    expect(devActions).toHaveLength(3);
+    expect(devActions).toHaveLength(2);
 
-    expect(devActions[2]).toEqual({
+    expect(devActions[1]).toEqual({
       type: "asyncProduce",
       payload: [{ op: "replace", path: ["a"], value: newAsyncA }],
     });
@@ -125,21 +120,16 @@ describe("with redux dev tools", () => {
 
     expect(devState.current).toEqual({ a: newAsyncA + plusA });
 
-    expect(devActions).toHaveLength(4);
+    expect(devActions).toHaveLength(3);
 
-    expect(devActions[3]).toEqual({
+    expect(devActions[2]).toEqual({
       type: "increment",
       payload: [{ op: "replace", path: ["a"], value: newAsyncA + plusA }],
     });
 
-    expect(Store.produce(() => {})).toEqual({ a: newAsyncA + plusA });
+    expect(Store.produce()).toEqual({ a: newAsyncA + plusA });
 
-    expect(devActions).toHaveLength(5);
-
-    expect(devActions[4]).toEqual({
-      type: "produce",
-      payload: [],
-    });
+    expect(devActions).toHaveLength(3);
   });
   it("createStoreContext with devName works", async () => {
     const { devToolsMock, devState, devActions } = mockDevTools();

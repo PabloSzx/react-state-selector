@@ -542,4 +542,56 @@ describe("selectors and listeners", () => {
     expect(compSlow.container.innerHTML).toContain(initialListJoin);
     expect(compFast.container.innerHTML).toContain(initialListJoin);
   });
+
+  describe("draft function returns new instance of store", () => {
+    it("actions gives new instance of store", () => {
+      const initialStore = Object.freeze({
+        a: 1,
+        b: 2,
+      });
+      const newStore = Object.freeze({
+        a: 4,
+        b: 5,
+      });
+      const Store = createStore(initialStore, {
+        actions: {
+          newStore: () => () => {
+            return newStore;
+          },
+        },
+        hooks: {},
+      });
+
+      expect(Store.produce()).toBe(initialStore);
+
+      expect(Store.actions.newStore()).toBe(newStore);
+
+      expect(Store.produce()).toBe(newStore);
+    });
+
+    it("produce gives new instance of store", () => {
+      const initialStore = Object.freeze({
+        a: 1,
+        b: 2,
+      });
+      const newStore = Object.freeze({
+        a: 4,
+        b: 5,
+      });
+      const Store = createStore(initialStore, {
+        actions: {
+          newStore: () => () => {
+            return newStore;
+          },
+        },
+        hooks: {},
+      });
+
+      expect(Store.produce()).toBe(initialStore);
+
+      expect(Store.produce(() => newStore)).toBe(newStore);
+
+      expect(Store.produce()).toBe(newStore);
+    });
+  });
 });
