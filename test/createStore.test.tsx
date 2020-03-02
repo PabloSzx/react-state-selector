@@ -5,7 +5,7 @@ import waitForExpect from "wait-for-expect";
 
 import { act, cleanup, render } from "@testing-library/react";
 
-import { createSelector, createStore } from "../src";
+import { createSelector, createStore, Draft } from "../src";
 import { nRenderString, useRenderCount } from "./utils/useRenderCount";
 
 afterEach(cleanup);
@@ -159,6 +159,65 @@ describe("actions", () => {
     });
 
     expect(container.innerHTML).toContain(initialStore.a + n - n * 2 /* -4 */);
+  });
+
+  it("async actions work", async () => {
+    const initialStore = Object.freeze({
+      a: 1,
+    });
+
+    const Store = createStore(initialStore, {
+      hooks: {},
+      actions: {
+        asyncIncrement: async (n: number) => {
+          await new Promise(resolve => setTimeout(resolve, 500));
+
+          return (draft: Draft<typeof initialStore>) => {
+            draft.a += n;
+          };
+        },
+        increment: (n: number) => draft => {
+          draft.a += n;
+        },
+      },
+    });
+
+    expect(Store.produce()).toBe(initialStore);
+
+    const a = Store.actions.asyncIncrement(10);
+    const b = Store.actions.increment(20);
+
+    expect(a).toHaveProperty("then");
+    expect(b).toEqual({ a: 21 });
+
+    await waitForExpect(async () => {
+      expect(Store.produce()).toEqual({ a: 31 });
+    }, 1000);
+  });
+
+  it("async actions handle errors", async () => {
+    const initialStore = Object.freeze({
+      a: 1,
+    });
+
+    const SampleError = new Error("test error");
+
+    const Store = createStore(initialStore, {
+      hooks: {},
+      actions: {
+        asyncError: async (n: number) => {
+          await new Promise((_resolve, reject) =>
+            setTimeout(() => reject(SampleError), 500)
+          );
+
+          return (draft: Draft<typeof initialStore>) => {
+            draft.a += n;
+          };
+        },
+      },
+    });
+
+    await expect(Store.actions.asyncError(10)).rejects.toBe(SampleError);
   });
 });
 

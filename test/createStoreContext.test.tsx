@@ -4,9 +4,9 @@ import React, { FC, useEffect, useLayoutEffect } from "react";
 import waitForExpect from "wait-for-expect";
 
 import { act, cleanup, render } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { act as actHooks, renderHook } from "@testing-library/react-hooks";
 
-import { createSelector, createStoreContext } from "../src";
+import { createSelector, createStoreContext, Draft } from "../src";
 import { nRenderString, useRenderCount } from "./utils/useRenderCount";
 
 afterEach(cleanup);
@@ -186,6 +186,95 @@ describe("actions", () => {
     const { unmount, container } = render(<Comp />);
 
     expect(container.innerHTML).toContain("{}");
+    unmount();
+  });
+
+  it("async actions work", async () => {
+    const initialStore = Object.freeze({
+      a: 1,
+    });
+
+    const Store = createStoreContext(initialStore, {
+      hooks: {},
+      actions: {
+        asyncIncrement: async (n: number) => {
+          await new Promise(resolve => setTimeout(resolve, 500));
+
+          return (draft: Draft<typeof initialStore>) => {
+            draft.a += n;
+          };
+        },
+        increment: (n: number) => draft => {
+          draft.a += n;
+        },
+      },
+    });
+
+    const { unmount, result } = renderHook(
+      () => {
+        const store = Store.useStore();
+        const actions = Store.useActions();
+
+        return { store, actions };
+      },
+      {
+        wrapper: Store.Provider,
+      }
+    );
+
+    actHooks(() => {
+      result.current.actions.increment(20);
+    });
+
+    expect(result.current.store).toEqual({ a: 21 });
+
+    await actHooks(async () => {
+      await result.current.actions.asyncIncrement(10);
+    });
+
+    expect(result.current.store).toEqual({ a: 31 });
+
+    unmount();
+  });
+
+  it("async actions handle errors", async () => {
+    const initialStore = Object.freeze({
+      a: 1,
+    });
+
+    const SampleError = new Error("test error");
+
+    const Store = createStoreContext(initialStore, {
+      hooks: {},
+      actions: {
+        asyncError: async (n: number) => {
+          await new Promise((_resolve, reject) =>
+            setTimeout(() => reject(SampleError), 500)
+          );
+
+          return (draft: Draft<typeof initialStore>) => {
+            draft.a += n;
+          };
+        },
+      },
+    });
+
+    const { unmount, result } = renderHook(
+      () => {
+        const store = Store.useStore();
+        const actions = Store.useActions();
+
+        return { store, actions };
+      },
+      {
+        wrapper: Store.Provider,
+      }
+    );
+
+    await expect(result.current.actions.asyncError(10)).rejects.toBe(
+      SampleError
+    );
+
     unmount();
   });
 });

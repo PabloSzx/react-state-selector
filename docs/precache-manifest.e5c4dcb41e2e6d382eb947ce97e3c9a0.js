@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "..\\dist\\index.d.ts\\.storybook\\config.d.ts"
   },
   {
-    "revision": "386371349bd42d49b2c32f64621a0c94",
+    "revision": "f891321e1c6eba1ec911c2dfdb4753f9",
     "url": "..\\dist\\index.d.ts\\src\\index.d.ts"
   },
   {
