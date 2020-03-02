@@ -63,7 +63,7 @@
     "react-dom": "^16.13.0",
     "react-is": "^16.13.0",
     "react-scripts": "^3.4.0",
-    "react-state-selector": "^0.2.4",
+    "react-state-selector": "latest",
     "react-test-renderer": "^16.13.0",
     "regenerator-runtime": "^0.13.3",
     "ts-loader": "^6.2.1",

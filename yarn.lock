@@ -11971,10 +11971,10 @@ react-sizeme@^2.6.7:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-state-selector@^0.2.4:
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/react-state-selector/-/react-state-selector-0.2.4.tgz#2c040b3e218d651cc629845caab47886d1013954"
-  integrity sha512-IzGP/h9zTNngdXgRZWDnD9PlFeFOkoB6JStD0hDy/PXSFVShxcg/Gaw9ucTcnxnXk1a55n1U+znjh5GknViUhA==
+react-state-selector@latest:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/react-state-selector/-/react-state-selector-0.2.5.tgz#ea216795b5aa4df387aabb82f0b6c593f58c8e4b"
+  integrity sha512-3+bblpIkOd9TLAPq2nUVCxxDZQ+1obWS1ycApYCIxjPecUDMp7Ch1qNQaZ4Ih5w8X8c7zZBCY3fqSoFwJ+RuSQ==
   dependencies:
     immer "^5.3.6"
     reselect "^4.0.0"
