@@ -199,8 +199,8 @@ console.log(produce() === state); // true
 #### asyncProduce: _function(async draft => void | TStore): Promise TStore_
 
 - Asynchronous change to the store state, you should give it an async function that will mutate the state and it will give a promise of the resulting global state after the transformation.
-- It is often better to use custom actions for dealing with asynchronous requests, since here when you start the async function, you might had received a stale draft state after the request is done.
-- You shouldn't rely on this feature to transform the entire state as with [produce](#produce-functiondraft--void--tstore-tstore) or custom actions;
+- It is often better to use [custom actions](#custom-actions) for dealing with asynchronous requests, since here when you start the async function, you might had received a stale draft state after the request is done.
+- You shouldn't rely on this feature to transform the entire state as with [produce](#produce-functiondraft--void--tstore-tstore) or [custom actions](#custom-actions);
 
 ```ts
 const state = await asyncProduce(async draft => {
@@ -253,6 +253,127 @@ const IncrementComp = () => {
     >
       Increment
     </button>
+  );
+};
+```
+
+## Custom API
+
+This is where this library aims to work the best using type inference, memoization and mutability **with** immutability seemlessly without any boilerplate needed.
+
+### Custom Hooks
+
+In both **createStore** and **createStoreContext** the functionality is **the same**.
+
+You should specify an object inside the options object _(**second parameter**)_ called **hooks**.
+
+Inside this object you have to follow the [**custom hooks naming rule**](https://reactjs.org/docs/hooks-custom.html#extracting-a-custom-hook) for every custom hook, and inside you give a function that will receive **two parameters**, the first one will be the **state** of the store, and the second one will be the _optional_ **custom props** of the hook.
+
+In the resulting store object you will get an object field called **hooks**, which will have all the custom hooks specified in the creation.
+
+```tsx
+// const ABStore = createStoreContext(
+const ABStore = createStore(
+  { a: 1, b: 2 },
+  {
+    hooks: {
+      useA: ({ a, b }) => {
+        return a;
+      },
+      useB: ({ a, b }) => {
+        return b;
+      },
+      useMultiplyAxN: (
+        { a, b },
+        n: number
+        /* Only if you are using TypeScript 
+      you have to specify the type of the props */
+      ) => {
+        return a * n;
+      },
+    },
+  }
+);
+
+const { useA, useB } = ABStore.hooks;
+// You can destructure the hooks if you want
+
+const A = () => {
+  const a = useA();
+
+  return <p>{a}</p>;
+};
+const B = () => {
+  const b = useB();
+
+  return <p>{b}</p>;
+};
+const AxN = () => {
+  // Or you can just call the hook from
+  // the store object itself
+  const axn = ABStore.hooks.useMultiplyAxN(10);
+
+  return <p>{axn}</p>;
+};
+```
+
+> Check **https://pabloszx.github.io/react-state-selector** for more advanced usage, like giving **multiple props** to a custom hook or returning a **new instance of data** based on the state and props, all of those, efficiently.
+
+### Custom Actions
+
+A very important feature of any global state is being able to modify it based on arguments given to a function and/or based on the current state, and using a reducer and dispatching action types and payload is a possible solution, but in this library the proposed solution is to specify the action types **explicitly** in the function names and it's payload in it's arguments.
+
+In both **createStore** and **createStoreContext** the functionality is the same but the usage in **createStoreContext** is a bit different due to **React Context API** constraints.
+
+You should specify an object inside the options object _(**second parameter**)_ called **actions**.
+
+Inside that object you have to give a function called whatever you want, which will receive the custom arguments of the action, and this function should **return another function** which will receive the **state draft**, and that one should either return nothing or a new instance of the store state, just like [produce](#produce-functiondraft--void--tstore-tstore).
+
+The resulting object store will have either:
+
+- **actions** object field in **createStore**.
+- **useActions** hook that returns the custom actions in **createStoreContext**
+
+```tsx
+const Store = createStore(
+  { a: 1 },
+  {
+    actions: {
+      increment: (n: number) => draft => {
+        draft.a += n;
+      },
+    },
+  }
+);
+const StoreCtx = createStore(
+  { b: 1 },
+  {
+    actions: {
+      decrement: (n: number) => draft => {
+        draft.b -= n;
+      },
+    },
+  }
+);
+const A = () => {
+  const { a } = Store.useStore();
+
+  return (
+    <div>
+      <button onClick={() => Store.increment(5)}>Increment</button>
+      <p>{a}</p>
+    </div>
+  );
+};
+const B = () => {
+  const { b } = Store.useStore();
+  const { decrement } = Store.useActions();
+
+  return (
+    <div>
+      <button onClick={() => decrement(5)}>Decrement</button>
+      <p>{b}</p>
+    </div>
   );
 };
 ```
