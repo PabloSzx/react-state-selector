@@ -569,6 +569,7 @@ export function createStoreContext<
         unknown
       >;
       devTools: ReduxDevTools | undefined;
+      actions?: IActionsObj<TStore, typeof options>;
     }>
   >({
     current: {
@@ -730,66 +731,73 @@ export function createStoreContext<
     const storeCtx = useContext(StoreContext);
 
     return useMemo(() => {
-      const actionsObj: Record<
-        string,
-        (...args: unknown[]) => Immutable<TStore> | Promise<Immutable<TStore>>
-      > = {};
+      if (storeCtx.current.actions === undefined) {
+        const actionsObj: Record<
+          string,
+          (...args: unknown[]) => Immutable<TStore> | Promise<Immutable<TStore>>
+        > = {};
 
-      for (const [actionName, actionFn] of Object.entries(
-        options?.actions || {}
-      )) {
-        actionsObj[actionName] = (...args) => {
-          const actionDraft = actionFn(...args);
+        for (const [actionName, actionFn] of Object.entries(
+          options?.actions || {}
+        )) {
+          actionsObj[actionName] = (...args) => {
+            const actionDraft = actionFn(...args);
 
-          const actionProduce = (
-            draft: (draft: Draft<TStore>) => void | TStore
-          ) => {
-            if (storeCtx.current.devTools) {
-              const produceFn = produceWithPatches<
-                (draft: Draft<TStore>) => void,
-                [Draft<TStore>],
-                TStore
-              >(draft);
+            const actionProduce = (
+              draft: (draft: Draft<TStore>) => void | TStore
+            ) => {
+              if (storeCtx.current.devTools) {
+                const produceFn = produceWithPatches<
+                  (draft: Draft<TStore>) => void,
+                  [Draft<TStore>],
+                  TStore
+                >(draft);
 
-              const produceResult = produceFn(storeCtx.current.store);
+                const produceResult = produceFn(storeCtx.current.store);
 
-              storeCtx.current.store = produceResult[0];
-              storeCtx.current.devTools.send(
-                {
-                  type: actionName,
-                  payload: produceResult[1],
-                },
-                storeCtx.current.store
-              );
-            } else {
-              const produceFn = produce<
-                (draft: Draft<TStore>) => void,
-                [Draft<TStore>],
-                TStore
-              >(draft);
+                storeCtx.current.store = produceResult[0];
+                storeCtx.current.devTools.send(
+                  {
+                    type: actionName,
+                    payload: produceResult[1],
+                  },
+                  storeCtx.current.store
+                );
+              } else {
+                const produceFn = produce<
+                  (draft: Draft<TStore>) => void,
+                  [Draft<TStore>],
+                  TStore
+                >(draft);
 
-              storeCtx.current.store = produceFn(storeCtx.current.store);
-            }
-            storeCtx.current.listeners.forEach((props, listener) => {
-              listener(storeCtx.current.store, props);
-            });
-
-            return storeCtx.current.store;
-          };
-
-          if (isPromise(actionDraft)) {
-            return new Promise<Immutable<TStore>>(async (resolve, reject) => {
-              try {
-                resolve(actionProduce(await actionDraft));
-              } catch (err) {
-                reject(err);
+                storeCtx.current.store = produceFn(storeCtx.current.store);
               }
-            });
-          }
-          return actionProduce(actionDraft);
-        };
+              storeCtx.current.listeners.forEach((props, listener) => {
+                listener(storeCtx.current.store, props);
+              });
+
+              return storeCtx.current.store;
+            };
+
+            if (isPromise(actionDraft)) {
+              return new Promise<Immutable<TStore>>(async (resolve, reject) => {
+                try {
+                  resolve(actionProduce(await actionDraft));
+                } catch (err) {
+                  reject(err);
+                }
+              });
+            }
+            return actionProduce(actionDraft);
+          };
+        }
+        storeCtx.current.actions = (actionsObj as unknown) as IActionsObj<
+          TStore,
+          typeof options
+        >;
       }
-      return (actionsObj as unknown) as IActionsObj<TStore, typeof options>;
+
+      return storeCtx.current.actions;
     }, emptyArray);
   };
 

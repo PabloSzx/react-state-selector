@@ -162,11 +162,21 @@ describe("actions", () => {
 
     const ActionsComp: FC = () => {
       const { a } = useStore();
-      const { increment, decrement } = useActions();
+      const Actions1 = useActions();
+      // Check if the memoization of the actions is working
+      const Actions2 = useActions();
+      expect(Actions1).toBe(Actions2);
+
       return (
         <div>
-          <button data-testid="increment" onClick={() => increment(n)} />
-          <button data-testid="decrement" onClick={() => decrement(n)} />
+          <button
+            data-testid="increment"
+            onClick={() => Actions1.increment(n)}
+          />
+          <button
+            data-testid="decrement"
+            onClick={() => Actions2.decrement(n)}
+          />
           <span>{a}</span>
         </div>
       );
