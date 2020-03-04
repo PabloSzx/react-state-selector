@@ -187,7 +187,7 @@ By default every created store gives a couple of out of the box functionality, i
 
 - Synchronous change to the store state, you should give it a function that will mutate the state and it will give the resulting global state after the transformation. Don't worry about mutating the draft, immer will do the transformations. At first it might feel weird if you are used to making the immutable equivalent of every mutation and using ~~_(abusing)_~~ the spread syntax.
 - If you **return** something in the draft function, it will transform the entire global state into that value. [_Read more_](https://immerjs.github.io/immer/docs/return).
-- If you **don't** give it a function, it will work simply as a **state getter**, so you can check the global state anytime.
+- If you **don't** give it a function, it will work simply as a **state getter**, so you can check the global state anytime without any restriction.
 
 ```ts
 const state = produce(draft => {
@@ -199,8 +199,8 @@ console.log(produce() === state); // true
 #### asyncProduce: _function(async draft => void | TStore): Promise TStore_
 
 - Asynchronous change to the store state, you should give it an async function that will mutate the state and it will give a promise of the resulting global state after the transformation.
-- It is often better to use custom actions for dealing with asynchronous requests, since here when you start the async function, you might have a stale state after the request is done.
-- You shouldn't rely on this feature to transform the entire state as with [produce](#createstore) or custom actions;
+- It is often better to use custom actions for dealing with asynchronous requests, since here when you start the async function, you might had received a stale draft state after the request is done.
+- You shouldn't rely on this feature to transform the entire state as with [produce](#produce-functiondraft--void--tstore-tstore) or custom actions;
 
 ```ts
 const state = await asyncProduce(async draft => {
@@ -237,7 +237,7 @@ const CompStore = () => {
 
 #### useProduce: _function(): { produce, asyncProduce }_
 
-- Hook that gives an object containing the same functions [produce](#produce-functiondraft--void--tstore-tstore) and [asyncProduce](#asyncproduce-functionasync-draft--void--tstore-promisetstore) from [createStore](#createstore)
+- Hook that gives an object containing the same functions [produce](#produce-functiondraft--void--tstore-tstore) and [asyncProduce](#asyncproduce-functionasync-draft--void--tstore-promise-tstore) from [createStore](#createstore)
 
 ```tsx
 const IncrementComp = () => {
@@ -256,12 +256,6 @@ const IncrementComp = () => {
   );
 };
 ```
-
----
-
-> This library has 100% code test coverage so you can use it confidently
-
-![coverage](https://i.imgur.com/ZnijpSm.png)
 
 ---
 

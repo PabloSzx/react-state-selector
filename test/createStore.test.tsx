@@ -102,6 +102,16 @@ describe("basic createStore", () => {
       250
     );
   });
+
+  it("asyncProduce works as getter", () => {
+    const { asyncProduce, produce } = createStore({ a: 1 });
+
+    expect(produce()).toEqual({ a: 1 });
+
+    expect(asyncProduce()).resolves.toEqual({ a: 1 });
+
+    expect(asyncProduce(async () => {})).resolves.toEqual({ a: 1 });
+  });
 });
 
 describe("actions", () => {

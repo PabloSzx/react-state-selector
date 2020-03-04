@@ -112,6 +112,31 @@ describe("basic createStore", () => {
     );
     unmount();
   });
+
+  it("asyncProduce works as getter", () => {
+    const { useProduce, useStore } = createStoreContext({ a: 1 });
+
+    const { result, unmount } = renderHook(() => {
+      const store = useStore();
+      const produceObj = useProduce();
+
+      return { ...produceObj, store };
+    });
+    expect(result.current.produce()).toEqual({ a: 1 });
+    expect(result.current.store).toEqual({ a: 1 });
+
+    expect(result.current.asyncProduce()).resolves.toEqual({
+      a: 1,
+    });
+    expect(result.current.store).toEqual({ a: 1 });
+
+    expect(result.current.asyncProduce(async () => {})).resolves.toEqual({
+      a: 1,
+    });
+    expect(result.current.store).toEqual({ a: 1 });
+
+    unmount();
+  });
 });
 
 describe("actions", () => {

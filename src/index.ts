@@ -100,7 +100,7 @@ type IActionsObj<
 type IUseStore<TStore> = () => Immutable<TStore>;
 
 type IAsyncProduce<TStore> = (
-  draft: (draft: Draft<TStore>) => Promise<void>
+  draft?: (draft: Draft<TStore>) => Promise<void>
 ) => Promise<Immutable<TStore>>;
 
 type IProduce<TStore> = (
@@ -296,21 +296,27 @@ export function createStore<
       return currentStore;
     },
     asyncProduce: async draft => {
+      if (typeof draft !== "function") return currentStore;
+
       const storeDraft = createDraft(currentStore as TStore);
 
       await Promise.resolve(draft(storeDraft));
 
-      currentStore = (finishDraft(storeDraft, changes => {
-        if (devTools) {
-          devTools.send(
-            { type: "asyncProduce", payload: changes },
-            applyPatches(currentStore, changes)
-          );
-        }
-      }) as unknown) as Immutable<TStore>;
+      finishDraft(storeDraft, changes => {
+        if (changes.length) {
+          currentStore = applyPatches(currentStore, changes);
 
-      listeners.forEach((props, listener) => {
-        listener(currentStore, props);
+          if (devTools) {
+            devTools.send(
+              { type: "asyncProduce", payload: changes },
+              currentStore
+            );
+          }
+
+          listeners.forEach((props, listener) => {
+            listener(currentStore, props);
+          });
+        }
       });
 
       return currentStore;
@@ -683,26 +689,35 @@ export function createStoreContext<
           return storeCtx.current.store;
         },
         asyncProduce: async (
-          draft: (draft: Draft<TStore>) => Promise<void>
+          draft?: (draft: Draft<TStore>) => Promise<void>
         ) => {
+          if (typeof draft !== "function") return storeCtx.current.store;
+
           const storeDraft = createDraft(storeCtx.current.store as TStore);
 
           await Promise.resolve(draft(storeDraft));
 
-          storeCtx.current.store = (finishDraft(storeDraft, changes => {
-            if (storeCtx.current.devTools) {
-              storeCtx.current.devTools.send(
-                {
-                  type: "asyncProduce",
-                  payload: changes,
-                },
-                applyPatches(storeCtx.current.store, changes)
+          finishDraft(storeDraft, changes => {
+            if (changes.length) {
+              storeCtx.current.store = applyPatches(
+                storeCtx.current.store,
+                changes
               );
-            }
-          }) as unknown) as Immutable<TStore>;
 
-          storeCtx.current.listeners.forEach((props, listener) => {
-            listener(storeCtx.current.store, props);
+              if (storeCtx.current.devTools) {
+                storeCtx.current.devTools.send(
+                  {
+                    type: "asyncProduce",
+                    payload: changes,
+                  },
+                  storeCtx.current.store
+                );
+              }
+
+              storeCtx.current.listeners.forEach((props, listener) => {
+                listener(storeCtx.current.store, props);
+              });
+            }
           });
 
           return storeCtx.current.store;
