@@ -6,6 +6,7 @@ import {
   applyPatches,
   createDraft,
   Draft,
+  enableAllPlugins,
   finishDraft,
   Immutable,
   produce,
@@ -31,6 +32,8 @@ import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
 
 export { createSelector } from "reselect";
 export { Immutable, Draft, castDraft, castImmutable, original } from "immer";
+
+enableAllPlugins();
 
 export type Selector<
   TState,

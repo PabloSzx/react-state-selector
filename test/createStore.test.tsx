@@ -664,3 +664,54 @@ describe("selectors and listeners", () => {
     });
   });
 });
+
+describe("map inside object", () => {
+  const obj1 = { a: 1, b: "asd" };
+  const obj2 = { zxc: "8234" };
+
+  const initialStore = {
+    mapInside: new Map<object, boolean>(),
+  };
+  initialStore.mapInside.set(obj2, true);
+
+  const Store = createStore(initialStore, {
+    hooks: {
+      useIsCheckedInside: ({ mapInside }, obj: object) => {
+        return !!mapInside.get(obj);
+      },
+    },
+    actions: {
+      toggleInside: (obj: object) => draft => {
+        draft.mapInside.set(obj, !draft.mapInside.get(obj));
+      },
+    },
+  });
+
+  const CheckInsideComp: FC<{ obj: object; testId: string }> = ({
+    testId,
+    obj,
+  }) => {
+    const isChecked = Store.hooks.useIsCheckedInside(obj);
+
+    return <div data-testid={testId}>{isChecked ? "yes" : "no"}</div>;
+  };
+
+  const { getByTestId } = render(
+    <>
+      <CheckInsideComp testId="obj1" obj={obj1} />
+      <CheckInsideComp testId="obj2" obj={obj2} />
+    </>
+  );
+
+  const CompObj1 = getByTestId("obj1");
+  const CompObj2 = getByTestId("obj2");
+
+  expect(CompObj1.textContent).toBe("no");
+  expect(CompObj2.textContent).toBe("yes");
+
+  act(() => {
+    Store.actions.toggleInside(obj1);
+  });
+
+  expect(CompObj1.textContent).toBe("yes");
+});

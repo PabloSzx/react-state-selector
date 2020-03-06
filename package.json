@@ -28,7 +28,7 @@
     "coverageDirectory": "./coverage/"
   },
   "dependencies": {
-    "immer": "^5.3.6",
+    "immer": "^6.0.1",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
