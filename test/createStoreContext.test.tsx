@@ -224,22 +224,35 @@ describe("actions", () => {
     unmount();
   });
 
+  enum AsyncState {
+    waiting,
+    loading,
+    error,
+    complete,
+  }
+
   it("async actions work", async () => {
     const initialStore = Object.freeze({
       a: 1,
+      state: AsyncState.waiting,
     });
 
     const Store = createStoreContext(initialStore, {
       hooks: {},
-      actions: {
-        asyncIncrement: async function(n: number, ...rest) {
+      asyncActions: {
+        asyncIncrement: produce => async (n: number) => {
+          produce(draft => {
+            draft.state = AsyncState.loading;
+          });
           await new Promise(resolve => setTimeout(resolve, 500));
 
-          console.log(238, this);
-          rest[0]((draft: any) => {
+          produce(draft => {
+            draft.state = AsyncState.complete;
             draft.a += n;
           });
         },
+      },
+      actions: {
         increment: (n: number) => draft => {
           draft.a += n;
         },
@@ -258,17 +271,28 @@ describe("actions", () => {
       }
     );
 
+    expect(result.current.store).toEqual({
+      a: 1,
+      state: AsyncState.waiting,
+    });
+
     actHooks(() => {
       result.current.actions.increment(20);
     });
 
-    expect(result.current.store).toEqual({ a: 21 });
+    expect(result.current.store).toEqual({ a: 21, state: AsyncState.waiting });
 
-    await actHooks(async () => {
+    const promiseIncrement = actHooks(async () => {
       await result.current.actions.asyncIncrement(10);
     });
+    expect(result.current.store).toEqual({
+      a: 21,
+      state: AsyncState.loading,
+    });
 
-    expect(result.current.store).toEqual({ a: 31 });
+    await promiseIncrement;
+
+    expect(result.current.store).toEqual({ a: 31, state: AsyncState.complete });
 
     unmount();
   });
@@ -276,18 +300,28 @@ describe("actions", () => {
   it("async actions handle errors", async () => {
     const initialStore = Object.freeze({
       a: 1,
+      state: AsyncState.waiting,
     });
 
     const SampleError = new Error("test error");
 
     const Store = createStoreContext(initialStore, {
       hooks: {},
-      actions: {
-        asyncError: async (_n: number, ...rest) => {
-          console.log(286, rest);
-          await new Promise((_resolve, reject) =>
-            setTimeout(() => reject(SampleError), 500)
-          );
+      asyncActions: {
+        asyncError: produce => async (_n: number) => {
+          await actHooks(async () => {
+            produce(draft => {
+              draft.state = AsyncState.loading;
+            });
+            await new Promise((_resolve, reject) =>
+              setTimeout(() => {
+                produce(draft => {
+                  draft.state = AsyncState.error;
+                });
+                reject(SampleError);
+              }, 500)
+            );
+          });
         },
       },
     });
@@ -304,11 +338,65 @@ describe("actions", () => {
       }
     );
 
-    await expect(result.current.actions.asyncError(10)).rejects.toBe(
-      SampleError
-    );
+    expect(result.current.store).toEqual({
+      a: 1,
+      state: AsyncState.waiting,
+    });
+
+    const promiseIncrement = expect(
+      result.current.actions.asyncError(10)
+    ).rejects.toBe(SampleError);
+
+    expect(result.current.store).toEqual({
+      a: 1,
+      state: AsyncState.loading,
+    });
+
+    await promiseIncrement;
+
+    expect(result.current.store).toEqual({
+      a: 1,
+      state: AsyncState.error,
+    });
 
     unmount();
+  });
+
+  it("should detect the same name on actions and asyncActions", () => {
+    expect(() => {
+      createStoreContext(
+        {},
+        {
+          actions: {
+            sameName: () => () => {},
+          },
+          asyncActions: {
+            sameName: () => async () => {},
+          },
+        }
+      );
+    }).toThrowError(
+      'All the actions and asyncActions should have different names and "sameName" exists in both objects!'
+    );
+  });
+
+  it("should ignore the same name on actions and asyncActions in production", () => {
+    expect(() => {
+      const beforeEnv = process.env.NODE_ENV;
+      process.env.NODE_ENV = "production";
+      createStoreContext(
+        {},
+        {
+          actions: {
+            sameName: () => () => {},
+          },
+          asyncActions: {
+            sameName: () => async () => {},
+          },
+        }
+      );
+      process.env.NODE_ENV = beforeEnv;
+    }).not.toThrow();
   });
 });
 

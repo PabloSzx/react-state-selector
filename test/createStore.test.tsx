@@ -188,17 +188,19 @@ describe("actions", () => {
 
     const Store = createStore(initialStore, {
       hooks: {},
-      actions: {
-        asyncIncrement: async (n: number) => {
-          Store.produce(draft => {
+      asyncActions: {
+        asyncIncrement: produce => async (n: number) => {
+          produce(draft => {
             draft.state = AsyncState.loading;
           });
           await new Promise(resolve => setTimeout(resolve, 500));
-          Store.produce(draft => {
+          produce(draft => {
             draft.state = AsyncState.complete;
             draft.a += n;
           });
         },
+      },
+      actions: {
         increment: (n: number) => draft => {
           draft.a += n;
         },
@@ -207,15 +209,25 @@ describe("actions", () => {
 
     expect(Store.produce()).toBe(initialStore);
 
-    const a = Store.actions.asyncIncrement(10);
-    const b = Store.actions.increment(20);
+    const inc = Store.actions.increment(20);
 
-    expect(a).toHaveProperty("then");
-    expect(b).toEqual({ a: 21, state: AsyncState.loading });
+    expect(inc).toEqual({ a: 21, state: AsyncState.waiting });
 
-    await waitForExpect(async () => {
-      expect(Store.produce()).toEqual({ a: 31, state: AsyncState.complete });
-    }, 1000);
+    const promiseIncrement = expect(
+      Store.actions.asyncIncrement(10)
+    ).resolves.toEqual({
+      a: 31,
+      state: AsyncState.complete,
+    });
+
+    expect(Store.produce()).toEqual({ a: 21, state: AsyncState.loading });
+
+    await promiseIncrement;
+
+    expect(Store.produce()).toEqual({
+      a: 31,
+      state: AsyncState.complete,
+    });
   });
 
   it("async actions handle errors", async () => {
@@ -228,14 +240,14 @@ describe("actions", () => {
 
     const Store = createStore(initialStore, {
       hooks: {},
-      actions: {
-        asyncError: async (_n: number) => {
+      asyncActions: {
+        asyncError: produce => async (_n: number) => {
           await new Promise((_resolve, reject) => {
-            Store.produce(draft => {
+            produce(draft => {
               draft.state = AsyncState.loading;
             });
             setTimeout(() => {
-              Store.produce(draft => {
+              produce(draft => {
                 draft.state = AsyncState.error;
               });
               reject(SampleError);
@@ -252,6 +264,43 @@ describe("actions", () => {
     expect(Store.produce().state).toBe(AsyncState.loading);
     await rejectPromise;
     expect(Store.produce().state).toBe(AsyncState.error);
+  });
+
+  it("should detect the same name on actions and asyncActions", () => {
+    expect(() => {
+      createStore(
+        {},
+        {
+          actions: {
+            sameName: () => () => {},
+          },
+          asyncActions: {
+            sameName: () => async () => {},
+          },
+        }
+      );
+    }).toThrowError(
+      'All the actions and asyncActions should have different names and "sameName" exists in both objects!'
+    );
+  });
+
+  it("should ignore the same name on actions and asyncActions in production", () => {
+    expect(() => {
+      const beforeEnv = process.env.NODE_ENV;
+      process.env.NODE_ENV = "production";
+      createStore(
+        {},
+        {
+          actions: {
+            sameName: () => () => {},
+          },
+          asyncActions: {
+            sameName: () => async () => {},
+          },
+        }
+      );
+      process.env.NODE_ENV = beforeEnv;
+    }).not.toThrow();
   });
 });
 
