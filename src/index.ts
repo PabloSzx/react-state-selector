@@ -6,7 +6,7 @@ import {
   applyPatches,
   createDraft,
   Draft,
-  enableAllPlugins,
+  enablePatches,
   finishDraft,
   Immutable,
   produce,
@@ -33,7 +33,7 @@ import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
 export { createSelector } from "reselect";
 export { Immutable, Draft, castDraft, castImmutable, original } from "immer";
 
-enableAllPlugins();
+enablePatches();
 
 export type Selector<
   TState,
@@ -51,13 +51,13 @@ function toAnonFunction(arg: unknown): () => typeof arg {
   return () => arg;
 }
 
-function isPromise<T>(val: T | Promise<T>): val is Promise<T> {
-  return val && (val as Promise<T>).then !== undefined;
+function isPromise(val: unknown): val is Promise<unknown> {
+  return val && (val as Promise<unknown>).then !== undefined;
 }
 
 const incrementParameter = (num: number) => ++num;
 
-const emptyArray = Object.freeze([]);
+const emptyArray: [] = [];
 
 const useUpdate = () => {
   const [, setState] = useState(0);

@@ -1,5 +1,6 @@
 /* eslint react-hooks/exhaustive-deps: 0 */
 
+import { enableMapSet } from "immer";
 import React, { FC, useLayoutEffect } from "react";
 import waitForExpect from "wait-for-expect";
 
@@ -8,6 +9,7 @@ import { act, cleanup, render } from "@testing-library/react";
 import { createSelector, createStore, Draft } from "../src";
 import { nRenderString, useRenderCount } from "./utils/useRenderCount";
 
+enableMapSet();
 afterEach(cleanup);
 
 describe("basic createStore", () => {
