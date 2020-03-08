@@ -6,7 +6,7 @@ import waitForExpect from "wait-for-expect";
 import { act, cleanup, render } from "@testing-library/react";
 import { act as actHooks, renderHook } from "@testing-library/react-hooks";
 
-import { createSelector, createStoreContext, Draft } from "../src";
+import { createSelector, createStoreContext } from "../src";
 import { nRenderString, useRenderCount } from "./utils/useRenderCount";
 
 afterEach(cleanup);
@@ -232,12 +232,13 @@ describe("actions", () => {
     const Store = createStoreContext(initialStore, {
       hooks: {},
       actions: {
-        asyncIncrement: async (n: number) => {
+        asyncIncrement: async function(n: number, ...rest) {
           await new Promise(resolve => setTimeout(resolve, 500));
 
-          return (draft: Draft<typeof initialStore>) => {
+          console.log(238, this);
+          rest[0]((draft: any) => {
             draft.a += n;
-          };
+          });
         },
         increment: (n: number) => draft => {
           draft.a += n;
@@ -282,14 +283,11 @@ describe("actions", () => {
     const Store = createStoreContext(initialStore, {
       hooks: {},
       actions: {
-        asyncError: async (n: number) => {
+        asyncError: async (_n: number, ...rest) => {
+          console.log(286, rest);
           await new Promise((_resolve, reject) =>
             setTimeout(() => reject(SampleError), 500)
           );
-
-          return (draft: Draft<typeof initialStore>) => {
-            draft.a += n;
-          };
         },
       },
     });

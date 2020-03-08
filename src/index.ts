@@ -71,11 +71,7 @@ export type IHooks<TStore> = Record<string, Selector<Immutable<TStore>>>;
 
 export type IActions<TStore> = Record<
   string,
-  (
-    ...args: any[]
-  ) =>
-    | ((draft: Draft<TStore>) => void | TStore)
-    | Promise<(draft: Draft<TStore>) => void | TStore>
+  (...args: any[]) => ((draft: Draft<TStore>) => void | TStore) | Promise<void>
 >;
 
 type IHooksObj<TStore, A extends { hooks?: IHooks<TStore> } | undefined> = {
@@ -376,7 +372,8 @@ export function createStore<
       if (isPromise(actionDraft)) {
         return new Promise<Immutable<TStore>>(async (resolve, reject) => {
           try {
-            resolve(actionProduce(await actionDraft));
+            await actionDraft;
+            resolve(currentStore);
           } catch (err) {
             reject(err);
           }
@@ -732,6 +729,7 @@ export function createStoreContext<
 
   const useActions = () => {
     const storeCtx = useContext(StoreContext);
+    const produceObj = useProduce();
 
     return useMemo(() => {
       if (storeCtx.current.actions === undefined) {
@@ -744,7 +742,7 @@ export function createStoreContext<
           options?.actions || {}
         )) {
           actionsObj[actionName] = (...args) => {
-            const actionDraft = actionFn(...args);
+            const actionDraft = actionFn(...args, produceObj.produce);
 
             const actionProduce = (
               draft: (draft: Draft<TStore>) => void | TStore
@@ -785,7 +783,8 @@ export function createStoreContext<
             if (isPromise(actionDraft)) {
               return new Promise<Immutable<TStore>>(async (resolve, reject) => {
                 try {
-                  resolve(actionProduce(await actionDraft));
+                  await actionDraft;
+                  resolve(storeCtx.current.store);
                 } catch (err) {
                   reject(err);
                 }

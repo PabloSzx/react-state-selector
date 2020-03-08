@@ -6,7 +6,7 @@ import waitForExpect from "wait-for-expect";
 
 import { act, cleanup, render } from "@testing-library/react";
 
-import { createSelector, createStore, Draft } from "../src";
+import { createSelector, createStore } from "../src";
 import { nRenderString, useRenderCount } from "./utils/useRenderCount";
 
 enableMapSet();
@@ -173,20 +173,31 @@ describe("actions", () => {
     expect(container.innerHTML).toContain(initialStore.a + n - n * 2 /* -4 */);
   });
 
+  enum AsyncState {
+    waiting,
+    loading,
+    error,
+    complete,
+  }
+
   it("async actions work", async () => {
     const initialStore = Object.freeze({
       a: 1,
+      state: AsyncState.waiting,
     });
 
     const Store = createStore(initialStore, {
       hooks: {},
       actions: {
         asyncIncrement: async (n: number) => {
+          Store.produce(draft => {
+            draft.state = AsyncState.loading;
+          });
           await new Promise(resolve => setTimeout(resolve, 500));
-
-          return (draft: Draft<typeof initialStore>) => {
+          Store.produce(draft => {
+            draft.state = AsyncState.complete;
             draft.a += n;
-          };
+          });
         },
         increment: (n: number) => draft => {
           draft.a += n;
@@ -200,16 +211,17 @@ describe("actions", () => {
     const b = Store.actions.increment(20);
 
     expect(a).toHaveProperty("then");
-    expect(b).toEqual({ a: 21 });
+    expect(b).toEqual({ a: 21, state: AsyncState.loading });
 
     await waitForExpect(async () => {
-      expect(Store.produce()).toEqual({ a: 31 });
+      expect(Store.produce()).toEqual({ a: 31, state: AsyncState.complete });
     }, 1000);
   });
 
   it("async actions handle errors", async () => {
     const initialStore = Object.freeze({
       a: 1,
+      state: AsyncState.waiting,
     });
 
     const SampleError = new Error("test error");
@@ -217,19 +229,29 @@ describe("actions", () => {
     const Store = createStore(initialStore, {
       hooks: {},
       actions: {
-        asyncError: async (n: number) => {
-          await new Promise((_resolve, reject) =>
-            setTimeout(() => reject(SampleError), 500)
-          );
-
-          return (draft: Draft<typeof initialStore>) => {
-            draft.a += n;
-          };
+        asyncError: async (_n: number) => {
+          await new Promise((_resolve, reject) => {
+            Store.produce(draft => {
+              draft.state = AsyncState.loading;
+            });
+            setTimeout(() => {
+              Store.produce(draft => {
+                draft.state = AsyncState.error;
+              });
+              reject(SampleError);
+            }, 500);
+          });
         },
       },
     });
 
-    await expect(Store.actions.asyncError(10)).rejects.toBe(SampleError);
+    expect(Store.produce().state).toBe(AsyncState.waiting);
+    const rejectPromise = expect(Store.actions.asyncError(10)).rejects.toBe(
+      SampleError
+    );
+    expect(Store.produce().state).toBe(AsyncState.loading);
+    await rejectPromise;
+    expect(Store.produce().state).toBe(AsyncState.error);
   });
 });
 
