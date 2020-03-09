@@ -31,7 +31,16 @@ import { createSelector, ParametricSelector } from "reselect";
 import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
 
 export { createSelector } from "reselect";
-export { Immutable, Draft, castDraft, castImmutable, original } from "immer";
+export {
+  Immutable,
+  Draft,
+  castDraft,
+  castImmutable,
+  original,
+  enableAllPlugins,
+  enableES5,
+  enableMapSet,
+} from "immer";
 
 enablePatches();
 
