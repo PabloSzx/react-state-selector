@@ -323,11 +323,13 @@ const AxN = () => {
 
 A very important feature of any global state is being able to modify it based on arguments given to a function and/or based on the current state, and using a reducer and dispatching action types and payload is a possible solution, but in this library the proposed solution is to specify the action types **explicitly** in the function names and it's payload in it's arguments.
 
-In both **createStore** and **createStoreContext** the functionality is the same but the usage in **createStoreContext** is a bit different due to **React Context API** constraints.
+In both **createStore** and **createStoreContext** the functionality is the same, but the usage in **createStoreContext** is a bit different due to **React Context API** constraints.
 
-You should specify an object inside the options object _(**second parameter**)_ called **actions**.
+You should specify an object inside the options object _(**second parameter**)_ called **actions** and/or **asyncActions**.
 
-Inside that object you have to give a function called whatever you want, which will receive the custom arguments of the action, and this function should **return another function** which will receive the **state draft**, and that one should either return nothing or a new instance of the store state, just like [produce](#produce-functiondraft--void--tstore-tstore).
+#### Actions
+
+Inside the **actions** object you have to give functions called whatever you want, which will receive the custom arguments of the action, and this function should **return another function** which will receive the **state draft**, and that one should either return nothing or a new instance of the store state, just like [produce](#produce-functiondraft--void--tstore-tstore).
 
 The resulting object store will have either:
 
@@ -377,6 +379,96 @@ const B = () => {
   );
 };
 ```
+
+#### Async Actions
+
+Async actions need to be defined in another object inside the **options object** called **asyncActions**, and the first function should **not** be _async_ itself since it receives a **_dispatch like_** function which works just like [produce](#produce-functiondraft--void--tstore-tstore), and after that you should define the **async function** which will receive the parameters you expect in the action. The actions are returned merged inside the same **actions object** result of the [synchronous actions](#actions).
+
+```tsx
+enum State {
+  waiting,
+  loading,
+  complete,
+  error,
+}
+
+// const Store = createStoreContext(
+const Store = createStore(
+  {
+    data: undefined,
+    state: State.waiting,
+  },
+  {
+    asyncActions: {
+      getData: produce => async bodyArgs => {
+        produce(draft => {
+          draft.state = State.loading;
+        });
+
+        try {
+          const response = await axios.post("/data", bodyArgs);
+
+          produce(draft => {
+            draft.state = State.complete;
+            draft.data = response.data;
+          });
+        } catch (err) {
+          console.error(err);
+          produce(draft => {
+            draft.state = State.error;
+          });
+        }
+      },
+    },
+  }
+);
+
+const Data = () => {
+  const storeData = Store.useStore();
+
+  // const {getData} = Store.useActions();
+  const { getData } = Store.actions;
+
+  switch (storeData.state) {
+    case State.loading:
+      return <p>Loading...</p>;
+    case State.complete:
+      return <p>{JSON.stringify(storeData.data)}</p>;
+    case State.waiting:
+      return (
+        <button
+          onClick={async () => {
+            const newStore = await getData();
+            console.log("newStore", newStore);
+          }}
+        >
+          Get Data
+        </button>
+      );
+    case State.error:
+    default:
+      return <p>ERROR! Check the console</p>;
+  }
+};
+```
+
+> Keep in mind that you can mix common synchronous actions and async actions in a single store, but you should not repeat the action names in both objects.
+
+### **Map / Set** support _and/or_ **old browsers / React Native** support
+
+In [Immer](https://immerjs.github.io/immer) latest version in order to reduce bundle size if you need support for **Map**, **Set**, **old browsers** and **React Native** you need to call some specific Immer functions as early as possible in your application.
+
+```tsx
+import { enableES5, enableMapSet } from "immer";
+
+// Import and call as needed
+
+enableES5();
+
+enableMapSet();
+```
+
+> [Immer documentation](https://immerjs.github.io/immer/docs/installation#pick-your-immer-version)
 
 ---
 
