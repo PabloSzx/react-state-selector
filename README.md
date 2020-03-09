@@ -382,7 +382,9 @@ const B = () => {
 
 #### Async Actions
 
-Async actions need to be defined in another object inside the **options object** called **asyncActions**, and the first function should **not** be _async_ itself since it receives a **_dispatch like_** function which works just like [produce](#produce-functiondraft--void--tstore-tstore), and after that you should define the **async function** which will receive the parameters you expect in the action. The actions are returned merged inside the same **actions object** result of the [synchronous actions](#actions).
+Async actions need to be defined in another object inside the **options object** called **asyncActions**, and the first function should **not** be _async_ itself since it receives a **_dispatch like_** function which works just like [produce](#produce-functiondraft--void--tstore-tstore), and after that you should define the **async function** which will receive the parameters you expect in the action.
+
+Both action types are merged inside the same **actions object** result of the [synchronous actions](#actions).
 
 ```tsx
 enum State {

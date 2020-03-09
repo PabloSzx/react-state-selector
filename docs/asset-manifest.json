@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.js": "/main.57f578945c79544dd559.bundle.js",
-    "main.js.map": "/main.57f578945c79544dd559.bundle.js.map",
-    "runtime~main.js": "/runtime~main.57f578945c79544dd559.bundle.js",
-    "runtime~main.js.map": "/runtime~main.57f578945c79544dd559.bundle.js.map",
-    "vendors~main.js": "/vendors~main.57f578945c79544dd559.bundle.js",
-    "vendors~main.js.map": "/vendors~main.57f578945c79544dd559.bundle.js.map",
+    "main.js": "/main.06bb7fd777df7884f526.bundle.js",
+    "main.js.map": "/main.06bb7fd777df7884f526.bundle.js.map",
+    "runtime~main.js": "/runtime~main.06bb7fd777df7884f526.bundle.js",
+    "runtime~main.js.map": "/runtime~main.06bb7fd777df7884f526.bundle.js.map",
+    "vendors~main.js": "/vendors~main.06bb7fd777df7884f526.bundle.js",
+    "vendors~main.js.map": "/vendors~main.06bb7fd777df7884f526.bundle.js.map",
     "../dist/index.d.ts/.storybook/config.d.ts": "/../dist/index.d.ts/.storybook/config.d.ts",
     "../dist/index.d.ts/src/index.d.ts": "/../dist/index.d.ts/src/index.d.ts",
     "../dist/index.d.ts/src/plugins/devTools.d.ts": "/../dist/index.d.ts/src/plugins/devTools.d.ts",
-    "../dist/index.d.ts/stories/createStoreContext/basicUsageContext.stories.d.ts": "/../dist/index.d.ts/stories/createStoreContext/basicUsageContext.stories.d.ts",
     "../dist/index.d.ts/stories/createStore/basicUsage.stories.d.ts": "/../dist/index.d.ts/stories/createStore/basicUsage.stories.d.ts",
+    "../dist/index.d.ts/stories/createStoreContext/basicUsageContext.stories.d.ts": "/../dist/index.d.ts/stories/createStoreContext/basicUsageContext.stories.d.ts",
     "../dist/index.d.ts/stories/devTools/createStore.stories.d.ts": "/../dist/index.d.ts/stories/devTools/createStore.stories.d.ts",
     "../dist/index.d.ts/stories/devTools/createStoreContext.stories.d.ts": "/../dist/index.d.ts/stories/devTools/createStoreContext.stories.d.ts",
     "../dist/index.d.ts/stories/utils/devTools.d.ts": "/../dist/index.d.ts/stories/utils/devTools.d.ts",
     "iframe.html": "/iframe.html",
-    "precache-manifest.6c562743147cc66bd62f0456667aa61d.js": "/precache-manifest.6c562743147cc66bd62f0456667aa61d.js",
+    "precache-manifest.92423290872ce595fb72d55838fa8a50.js": "/precache-manifest.92423290872ce595fb72d55838fa8a50.js",
     "service-worker.js": "/service-worker.js",
-    "vendors~main.57f578945c79544dd559.bundle.js.LICENSE.txt": "/vendors~main.57f578945c79544dd559.bundle.js.LICENSE.txt"
+    "vendors~main.06bb7fd777df7884f526.bundle.js.LICENSE.txt": "/vendors~main.06bb7fd777df7884f526.bundle.js.LICENSE.txt"
   },
   "entrypoints": [
-    "runtime~main.57f578945c79544dd559.bundle.js",
-    "vendors~main.57f578945c79544dd559.bundle.js",
-    "main.57f578945c79544dd559.bundle.js"
+    "runtime~main.06bb7fd777df7884f526.bundle.js",
+    "vendors~main.06bb7fd777df7884f526.bundle.js",
+    "main.06bb7fd777df7884f526.bundle.js"
   ]
 }
