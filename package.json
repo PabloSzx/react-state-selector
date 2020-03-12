@@ -1,14 +1,24 @@
 {
   "name": "react-state-selector",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "keywords": [
+    "react",
+    "immer",
+    "immerjs",
+    "redux",
+    "state",
+    "reselect",
+    "selector",
+    "react-state"
+  ],
   "license": "MIT",
   "author": "PabloSzx",
-  "files": [
-    "dist"
-  ],
   "main": "dist/index.js",
   "module": "dist/react-state-selector.esm.js",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsdx build -i ./src/index.ts",
     "build-storybook": "rm -rf ./dist && build-storybook -o docs  -s stories/utils/public",
@@ -27,10 +37,12 @@
     "collectCoverage": true,
     "coverageDirectory": "./coverage/"
   },
+  "resolutions": {
+    "@types/react": "16.9.23"
+  },
   "dependencies": {
     "immer": "^6.0.1",
-    "reselect": "^4.0.0",
-    "skmeans": "^0.11.3"
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
@@ -77,8 +89,5 @@
   },
   "peerDependencies": {
     "react": ">=16.8"
-  },
-  "resolutions": {
-    "@types/react": "16.9.23"
   }
 }
