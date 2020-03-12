@@ -1,7 +1,12 @@
 # React State Selector
 
+![logo](https://i.imgur.com/dIeukBc.png)
+
 [![codecov](https://codecov.io/gh/PabloSzx/react-state-selector/branch/master/graph/badge.svg?token=86B359Hwdw)](https://codecov.io/gh/PabloSzx/react-state-selector)
 [![npm version](https://badge.fury.io/js/react-state-selector.svg)](https://badge.fury.io/js/react-state-selector)
+[![bundlephobia](https://badgen.net/bundlephobia/minzip/react-state-selector)](https://bundlephobia.com/result?p=react-state-selector)
+[![license](https://badgen.net/github/license/pabloszx/react-state-selector)](https://github.com/pabloszx/react-state-selector)
+[![combined statuses](https://badgen.net/github/status//pabloszx/react-state-selector)](https://github.com/pabloszx/react-state-selector)
 
 ## **React global state management**, the performant, type safe and easy way
 
@@ -17,11 +22,11 @@ yarn add react-state-selector
 
 > Check **https://pabloszx.github.io/react-state-selector** for more detailed examples and use cases.
 
-### Features
+### TODOs
 
 - [x] Redux DevTools
 - [x] async actions
-- [x] TypeScript first class support
+- [x] **TypeScript** first class support
 - [x] **_reselect_** createSelector support
 - [ ] **More** examples and use cases (In progress...)
 
@@ -91,7 +96,7 @@ const CounterB = () => {
 };
 ```
 
-This library uses type inference to automatically help you with auto-completion and type-safety, **even if you only use JavaScript and not TypeScript !**.
+This library uses type inference to automatically help you with auto-completion and type-safety, **even if you only use JavaScript and not TypeScript!**.
 
 ### Basic Context Usage
 
@@ -259,7 +264,7 @@ const IncrementComp = () => {
 
 ## Custom API
 
-This is where this library aims to work the best using type inference, memoization and mutability **with** immutability seemlessly without any boilerplate needed.
+This is where this library aims to work the best using **type inference**, **memoization** and **mutability _with_ immutability** seemlessly without any boilerplate needed.
 
 ### Custom Hooks
 
@@ -267,7 +272,7 @@ In both **createStore** and **createStoreContext** the functionality is **the sa
 
 You should specify an object inside the options object _(**second parameter**)_ called **hooks**.
 
-Inside this object you have to follow the [**custom hooks naming rule**](https://reactjs.org/docs/hooks-custom.html#extracting-a-custom-hook) for every custom hook, and inside you give a function that will receive **two parameters**, the first one will be the **state** of the store, and the second one will be the _optional_ **custom props** of the hook.
+Inside this object you have to follow the [**custom hooks naming rule**](https://reactjs.org/docs/hooks-custom.html#extracting-a-custom-hook) for every custom hook, and inside, you give a function that will receive **two parameters**, the first one will be the **state** of the store, and the second one will be the _optional_ **custom props** of the hook.
 
 In the resulting store object you will get an object field called **hooks**, which will have all the custom hooks specified in the creation.
 
@@ -458,10 +463,13 @@ const Data = () => {
 
 ### **Map / Set** support _and/or_ **old browsers / React Native** support
 
-In [Immer](https://immerjs.github.io/immer) latest version in order to reduce bundle size if you need support for **Map**, **Set**, **old browsers** and **React Native** you need to call some specific Immer functions as early as possible in your application.
+In [Immer](https://immerjs.github.io/immer) latest version in order to reduce bundle size if you need support for **Map**, **Set**, **old browsers** or **React Native** you need to call some specific Immer functions as early as possible in your application.
 
 ```tsx
-import { enableES5, enableMapSet } from "immer";
+// You can import from either immer or react-state-selector
+
+// import { enableES5, enableMapSet } from "immer";
+import { enableES5, enableMapSet } from "react-state-selector";
 
 // Import and call as needed
 

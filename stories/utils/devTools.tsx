@@ -1,4 +1,5 @@
 import "../../src/plugins/devTools";
+import "./public/style.css";
 
 import React, { FC, useEffect, useMemo } from "react";
 
