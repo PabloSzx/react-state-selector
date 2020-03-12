@@ -24,7 +24,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "..\\dist\\index.d.ts\\src\\plugins\\devTools.d.ts"
   },
   {
-    "revision": "6df78cf6279176526c1ce0d1a8553e12",
+    "revision": "201576986157d2a3439af701a0b4b9d6",
     "url": "..\\dist\\index.d.ts\\stories\\createStoreContext\\asyncActionsContext.stories.d.ts"
   },
   {
@@ -32,7 +32,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "..\\dist\\index.d.ts\\stories\\createStoreContext\\basicUsageContext.stories.d.ts"
   },
   {
-    "revision": "6407b9dfc173b7f41c8a08c1615cc9d1",
+    "revision": "762d6bbc8765dfd9d09df984ff9d86ef",
     "url": "..\\dist\\index.d.ts\\stories\\createStore\\asyncActions.stories.d.ts"
   },
   {
@@ -60,23 +60,23 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "..\\dist\\index.d.ts\\stories\\utils\\devTools.d.ts"
   },
   {
-    "revision": "88a2b323e468aa1ac6fb1ceffcc7ec86",
+    "revision": "691b506b178386819b93366cbe06fd10",
     "url": "iframe.html"
   },
   {
-    "url": "main.fed7177bf84d00b0f7fe.bundle.js"
+    "url": "main.4a1b863f3ba43285f966.bundle.js"
   },
   {
-    "url": "runtime~main.fed7177bf84d00b0f7fe.bundle.js"
+    "url": "runtime~main.4a1b863f3ba43285f966.bundle.js"
   },
   {
-    "revision": "f84a2b162468614c529c",
+    "revision": "97c4e93b96579c739b28",
     "url": "static/css/main.b148d59f.chunk.css"
   },
   {
-    "url": "vendors~main.fed7177bf84d00b0f7fe.bundle.js"
+    "url": "vendors~main.4a1b863f3ba43285f966.bundle.js"
   },
   {
-    "url": "vendors~main.fed7177bf84d00b0f7fe.bundle.js.LICENSE.txt"
+    "url": "vendors~main.4a1b863f3ba43285f966.bundle.js.LICENSE.txt"
   }
 ]);
