@@ -8,6 +8,7 @@ addons.setConfig({
     textColor: "white",
     brandTitle: "react-state-selector",
     brandUrl: "https://github.com/PabloSzx/react-state-selector",
-    brandImage: "/android-chrome-512x512.png",
+    brandImage:
+      "https://pabloszx.github.io/react-state-selector/android-chrome-512x512.png",
   }),
 });
