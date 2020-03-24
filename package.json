@@ -1,6 +1,6 @@
 {
   "name": "react-state-selector",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "keywords": [
     "react",
     "immer",
@@ -15,7 +15,7 @@
   "author": "PabloSzx",
   "main": "dist/index.js",
   "module": "dist/react-state-selector.esm.js",
-  "typings": "dist/index.d.ts",
+  "typings": "dist/index.d.ts/src/index.d.ts",
   "files": [
     "dist"
   ],
