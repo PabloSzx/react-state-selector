@@ -323,7 +323,7 @@ export function createStoreContext<
 
             await Promise.resolve(draft(storeDraft));
 
-            finishDraft(storeDraft, changes => {
+            finishDraft(storeDraft, (changes) => {
               if (changes.length) {
                 storeCtx.current.store = applyPatches(
                   storeCtx.current.store,
@@ -457,7 +457,7 @@ export function createStoreContext<
 
       const { updateSelector, initialStateRef } = useMemo(() => {
         return {
-          updateSelector: createSelector(hookSelector, result => {
+          updateSelector: createSelector(hookSelector, (result) => {
             stateRef.current = result;
 
             if (!isMountedRef.current) {
