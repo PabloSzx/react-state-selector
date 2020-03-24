@@ -20,17 +20,17 @@ const Store = createStore(
        * in the store due to that in every call
        * the "map" function is giving a new array.
        */
-      useMultiply2DataWithoutSelector: state => {
-        return state.data.map(n => n * 2);
+      useMultiply2DataWithoutSelector: (state) => {
+        return state.data.map((n) => n * 2);
       },
       /**
        * This hook is only going to be listening to changes
        * to "data" inside the store
        */
       useMultiply2Data: createSelector(
-        state => state.data,
-        data => {
-          return data.map(n => n * 2);
+        (state) => state.data,
+        (data) => {
+          return data.map((n) => n * 2);
         }
       ),
       /**
@@ -44,15 +44,15 @@ const Store = createStore(
         (state: Immutable<typeof initialState>, _n: number) => state.data,
         (_state, nMultiply) => nMultiply,
         (data, nMultiply) => {
-          return data.map(n => nMultiply * n);
+          return data.map((n) => nMultiply * n);
         }
       ),
     },
     actions: {
-      newData: () => draft => {
+      newData: () => (draft) => {
         draft.data = genData();
       },
-      newN: () => draft => {
+      newN: () => (draft) => {
         draft.n = Math.round(Math.random() * 10000);
       },
     },

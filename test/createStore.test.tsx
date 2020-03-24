@@ -43,7 +43,7 @@ describe("basic createStore", () => {
 
       useLayoutEffect(() => {
         act(() => {
-          produce(draft => {
+          produce((draft) => {
             draft.a += n;
           });
         });
@@ -73,8 +73,8 @@ describe("basic createStore", () => {
             data-testid="button"
             onClick={async () => {
               await act(async () => {
-                await asyncProduce(async draft => {
-                  draft.a += await new Promise<number>(resolve => {
+                await asyncProduce(async (draft) => {
+                  draft.a += await new Promise<number>((resolve) => {
                     setTimeout(() => {
                       resolve(n);
                     }, 500);
@@ -123,10 +123,10 @@ describe("actions", () => {
     });
     const { actions, useStore } = createStore(initialStore, {
       actions: {
-        increment: (n: number) => draft => {
+        increment: (n: number) => (draft) => {
           draft.a += n;
         },
-        decrement: (n: number) => draft => {
+        decrement: (n: number) => (draft) => {
           draft.a -= n;
         },
       },
@@ -189,19 +189,19 @@ describe("actions", () => {
     const Store = createStore(initialStore, {
       hooks: {},
       asyncActions: {
-        asyncIncrement: produce => async (n: number) => {
-          produce(draft => {
+        asyncIncrement: (produce) => async (n: number) => {
+          produce((draft) => {
             draft.state = AsyncState.loading;
           });
-          await new Promise(resolve => setTimeout(resolve, 500));
-          produce(draft => {
+          await new Promise((resolve) => setTimeout(resolve, 500));
+          produce((draft) => {
             draft.state = AsyncState.complete;
             draft.a += n;
           });
         },
       },
       actions: {
-        increment: (n: number) => draft => {
+        increment: (n: number) => (draft) => {
           draft.a += n;
         },
       },
@@ -241,13 +241,13 @@ describe("actions", () => {
     const Store = createStore(initialStore, {
       hooks: {},
       asyncActions: {
-        asyncError: produce => async (_n: number) => {
+        asyncError: (produce) => async (_n: number) => {
           await new Promise((_resolve, reject) => {
-            produce(draft => {
+            produce((draft) => {
               draft.state = AsyncState.loading;
             });
             setTimeout(() => {
-              produce(draft => {
+              produce((draft) => {
                 draft.state = AsyncState.error;
               });
               reject(SampleError);
@@ -316,9 +316,9 @@ describe("selectors and listeners", () => {
       hooks: { useA, useB, useC },
     } = createStore(initialStore, {
       hooks: {
-        useA: store => store.a,
-        useB: store => store.b,
-        useC: store => store.c,
+        useA: (store) => store.a,
+        useB: (store) => store.b,
+        useC: (store) => store.c,
       },
       actions: {},
     });
@@ -425,13 +425,13 @@ describe("selectors and listeners", () => {
       produce,
     } = createStore(initialStore, {
       hooks: {
-        useA: store => {
+        useA: (store) => {
           return store.a;
         },
-        useB: store => {
+        useB: (store) => {
           return store.b;
         },
-        useAxB: store => store.a * store.b,
+        useAxB: (store) => store.a * store.b,
       },
       actions: {},
     });
@@ -507,7 +507,7 @@ describe("selectors and listeners", () => {
 
     const newA = 20;
     act(() => {
-      produce(store => {
+      produce((store) => {
         store.a = newA;
       });
     });
@@ -515,7 +515,7 @@ describe("selectors and listeners", () => {
     expect(allStoreComp.container.innerHTML).toContain(nRenderString(2));
     expect(allStoreComp.container.innerHTML).toContain(
       // We can use "produce" as a getState
-      JSON.stringify(produce(s => s))
+      JSON.stringify(produce((s) => s))
     );
 
     expect(aComp.container.innerHTML).toContain(nRenderString(2));
@@ -541,13 +541,13 @@ describe("selectors and listeners", () => {
       produce,
     } = createStore(initialStore, {
       hooks: {
-        useMultiplySlow: store => {
-          return store.list.map(n => n * 2);
+        useMultiplySlow: (store) => {
+          return store.list.map((n) => n * 2);
         },
         useMultiplyFast: createSelector(
-          state => state.list,
-          list => {
-            return list.map(n => n * 2);
+          (state) => state.list,
+          (list) => {
+            return list.map((n) => n * 2);
           }
         ),
       },
@@ -580,7 +580,7 @@ describe("selectors and listeners", () => {
       );
     };
 
-    const initialListJoin = initialStore.list.map(n => n * 2).join("|");
+    const initialListJoin = initialStore.list.map((n) => n * 2).join("|");
 
     const compSlow = render(<CompSlow />);
 
@@ -592,7 +592,7 @@ describe("selectors and listeners", () => {
     expect(compFast.container.innerHTML).toContain(initialListJoin);
 
     act(() => {
-      produce(draft => {
+      produce((draft) => {
         draft.otherList.push(9);
       });
     });
@@ -615,7 +615,7 @@ describe("selectors and listeners", () => {
     } = createStore(initialStore, {
       hooks: {
         useMultiplySlow: (store, i: number) => {
-          return store.list.map(n => n * i);
+          return store.list.map((n) => n * i);
         },
         useMultiplyFast: createSelector<
           { list: readonly number[] },
@@ -624,10 +624,10 @@ describe("selectors and listeners", () => {
           number,
           number[]
         >(
-          state => state.list,
+          (state) => state.list,
           (_, n) => n,
           (list, n) => {
-            return list.map(i => i * n);
+            return list.map((i) => i * n);
           }
         ),
       },
@@ -662,7 +662,7 @@ describe("selectors and listeners", () => {
       );
     };
 
-    const initialListJoin = initialStore.list.map(n => n * nArg).join("|");
+    const initialListJoin = initialStore.list.map((n) => n * nArg).join("|");
 
     const compSlow = render(<CompSlow />);
 
@@ -674,7 +674,7 @@ describe("selectors and listeners", () => {
     expect(compFast.container.innerHTML).toContain(initialListJoin);
 
     act(() => {
-      produce(draft => {
+      produce((draft) => {
         draft.otherList.push(9);
       });
     });
@@ -754,7 +754,7 @@ describe("map inside object", () => {
       },
     },
     actions: {
-      toggleInside: (obj: object) => draft => {
+      toggleInside: (obj: object) => (draft) => {
         draft.mapInside.set(obj, !draft.mapInside.get(obj));
       },
     },

@@ -24,6 +24,7 @@ import {
   IHooks,
   IHooksObj,
   IProduce,
+  isClientSide,
   IUseStore,
   Selector,
   toAnonFunction,
@@ -31,6 +32,10 @@ import {
   useUpdate,
 } from "./common";
 import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
+import {
+  connectLocalStorage,
+  LocalStoragePlugin,
+} from "./plugins/localStorage";
 
 export { createSelector } from "reselect";
 export {
@@ -113,6 +118,12 @@ export function createStore<
      * @type {boolean}
      */
     devToolsInProduction?: boolean;
+    /**
+     * Flag to activate localStorage persistence method
+     *
+     * @type {boolean}
+     */
+    localStoragePersistence?: boolean;
   }
 ): {
   /**
@@ -176,6 +187,7 @@ export function createStore<
   }
 
   let devTools: ReduxDevTools | undefined;
+  let localStoragePlugin: LocalStoragePlugin<TStore> | undefined;
 
   if (
     options?.devName &&
@@ -216,7 +228,7 @@ export function createStore<
     produce: IProduce<TStore>;
     asyncProduce: IAsyncProduce<TStore>;
   } = {
-    produce: draft => {
+    produce: (draft) => {
       if (typeof draft !== "function") return currentStore;
 
       if (devTools) {
@@ -245,20 +257,23 @@ export function createStore<
 
         currentStore = produceFn(currentStore);
       }
+
       listeners.forEach((props, listener) => {
         listener(currentStore, props);
       });
 
+      localStoragePlugin?.setState(currentStore as TStore);
+
       return currentStore;
     },
-    asyncProduce: async draft => {
+    asyncProduce: async (draft) => {
       if (typeof draft !== "function") return currentStore;
 
       const storeDraft = createDraft(currentStore as TStore);
 
       await Promise.resolve(draft(storeDraft));
 
-      finishDraft(storeDraft, changes => {
+      finishDraft(storeDraft, (changes) => {
         if (changes.length) {
           currentStore = applyPatches(currentStore, changes);
 
@@ -275,9 +290,27 @@ export function createStore<
         }
       });
 
+      localStoragePlugin?.setState(currentStore as TStore);
+
       return currentStore;
     },
   };
+
+  if (options?.localStoragePersistence && options.devName) {
+    if (typeof initialStore !== "object") {
+      throw new Error(
+        "For local storage persistence your store has to be an object"
+      );
+    }
+    localStoragePlugin = connectLocalStorage(
+      options.devName,
+      initialStore as TStore,
+      produceObj.produce
+    );
+    if (isClientSide) {
+      localStoragePlugin.getState();
+    }
+  }
 
   const actionsObj: Record<
     string,
@@ -325,6 +358,8 @@ export function createStore<
         listener(currentStore, props);
       });
 
+      localStoragePlugin?.setState(currentStore as TStore);
+
       return currentStore;
     };
   }
@@ -335,6 +370,7 @@ export function createStore<
     asyncActionsObj[actionName] = async (...args) => {
       await actionFn(produceObj.produce)(...args);
 
+      localStoragePlugin?.setState(currentStore as TStore);
       return currentStore;
     };
   }
@@ -363,7 +399,7 @@ export function createStore<
 
       const { updateSelector, initialStateRef } = useMemo(() => {
         return {
-          updateSelector: createSelector(hookSelector, result => {
+          updateSelector: createSelector(hookSelector, (result) => {
             stateRef.current = result;
 
             if (!isMountedRef.current) {

@@ -33,10 +33,10 @@ const {
       },
     },
     actions: {
-      incrementA: (n: number) => draft => {
+      incrementA: (n: number) => (draft) => {
         draft.a += n;
       },
-      incrementB: (n: number) => draft => {
+      incrementB: (n: number) => (draft) => {
         draft.b += n;
       },
     },

@@ -32,6 +32,8 @@ export const useUpdate = () => {
   return useCallback(() => setState(incrementParameter), emptyArray);
 };
 
+export const isClientSide = typeof window !== "undefined";
+
 type NN<T> = NonNullable<T>;
 
 export type IProduce<TStore> = (

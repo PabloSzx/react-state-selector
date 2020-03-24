@@ -25,7 +25,7 @@ const Store = createStore(
        */
       useGetElement: (state, arg: { color: string; n: number }) => {
         return state.data.find(
-          value => value.color === arg.color || value.n === arg.n
+          (value) => value.color === arg.color || value.n === arg.n
         );
       },
     },

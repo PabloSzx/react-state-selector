@@ -46,7 +46,7 @@ describe("basic createStore", () => {
 
       useLayoutEffect(() => {
         act(() => {
-          produce(draft => {
+          produce((draft) => {
             draft.a += n;
           });
         });
@@ -79,8 +79,8 @@ describe("basic createStore", () => {
             data-testid="button"
             onClick={async () => {
               await act(async () => {
-                await asyncProduce(async draft => {
-                  draft.a += await new Promise<number>(resolve => {
+                await asyncProduce(async (draft) => {
+                  draft.a += await new Promise<number>((resolve) => {
                     setTimeout(() => {
                       resolve(n);
                     }, 500);
@@ -148,10 +148,10 @@ describe("actions", () => {
       initialStore,
       {
         actions: {
-          increment: (n: number) => draft => {
+          increment: (n: number) => (draft) => {
             draft.a += n;
           },
-          decrement: (n: number) => draft => {
+          decrement: (n: number) => (draft) => {
             draft.a -= n;
           },
         },
@@ -240,20 +240,20 @@ describe("actions", () => {
     const Store = createStoreContext(initialStore, {
       hooks: {},
       asyncActions: {
-        asyncIncrement: produce => async (n: number) => {
-          produce(draft => {
+        asyncIncrement: (produce) => async (n: number) => {
+          produce((draft) => {
             draft.state = AsyncState.loading;
           });
-          await new Promise(resolve => setTimeout(resolve, 500));
+          await new Promise((resolve) => setTimeout(resolve, 500));
 
-          produce(draft => {
+          produce((draft) => {
             draft.state = AsyncState.complete;
             draft.a += n;
           });
         },
       },
       actions: {
-        increment: (n: number) => draft => {
+        increment: (n: number) => (draft) => {
           draft.a += n;
         },
       },
@@ -308,14 +308,14 @@ describe("actions", () => {
     const Store = createStoreContext(initialStore, {
       hooks: {},
       asyncActions: {
-        asyncError: produce => async (_n: number) => {
+        asyncError: (produce) => async (_n: number) => {
           await actHooks(async () => {
-            produce(draft => {
+            produce((draft) => {
               draft.state = AsyncState.loading;
             });
             await new Promise((_resolve, reject) =>
               setTimeout(() => {
-                produce(draft => {
+                produce((draft) => {
                   draft.state = AsyncState.error;
                 });
                 reject(SampleError);
@@ -412,9 +412,9 @@ describe("selectors and listeners", () => {
       hooks: { useA, useB, useC },
     } = createStoreContext(initialStore, {
       hooks: {
-        useA: store => store.a,
-        useB: store => store.b,
-        useC: store => store.c,
+        useA: (store) => store.a,
+        useB: (store) => store.b,
+        useC: (store) => store.c,
       },
     });
 
@@ -460,13 +460,13 @@ describe("selectors and listeners", () => {
       Provider,
     } = createStoreContext(initialStore, {
       hooks: {
-        useA: store => {
+        useA: (store) => {
           return store.a;
         },
-        useB: store => {
+        useB: (store) => {
           return store.b;
         },
-        useAxB: store => store.a * store.b,
+        useAxB: (store) => store.a * store.b,
       },
     });
 
@@ -528,7 +528,7 @@ describe("selectors and listeners", () => {
           data-testid="producer"
           onClick={() => {
             act(() => {
-              produce(draft => {
+              produce((draft) => {
                 draft.a += plusA;
               });
             });
@@ -604,13 +604,13 @@ describe("selectors and listeners", () => {
       Provider,
     } = createStoreContext(initialStore, {
       hooks: {
-        useMultiplySlow: store => {
-          return store.list.map(n => n * 2);
+        useMultiplySlow: (store) => {
+          return store.list.map((n) => n * 2);
         },
         useMultiplyFast: createSelector(
-          state => state.list,
-          list => {
-            return list.map(n => n * 2);
+          (state) => state.list,
+          (list) => {
+            return list.map((n) => n * 2);
           }
         ),
       },
@@ -650,7 +650,7 @@ describe("selectors and listeners", () => {
           data-testid="producer"
           onClick={() => {
             act(() => {
-              produce(draft => {
+              produce((draft) => {
                 draft.otherList.push(9);
               });
             });
@@ -661,7 +661,7 @@ describe("selectors and listeners", () => {
       );
     };
 
-    const initialListJoin = initialStore.list.map(n => n * 2).join("|");
+    const initialListJoin = initialStore.list.map((n) => n * 2).join("|");
 
     const { unmount, getByTestId } = render(
       <Provider>
@@ -706,7 +706,7 @@ describe("selectors and listeners", () => {
     } = createStoreContext(initialStore, {
       hooks: {
         useMultiplySlow: (store, i: number) => {
-          return store.list.map(n => n * i);
+          return store.list.map((n) => n * i);
         },
         useMultiplyFast: createSelector<
           { list: readonly number[] },
@@ -715,10 +715,10 @@ describe("selectors and listeners", () => {
           number,
           number[]
         >(
-          state => state.list,
+          (state) => state.list,
           (_, n) => n,
           (list, n) => {
-            return list.map(i => i * n);
+            return list.map((i) => i * n);
           }
         ),
       },
@@ -761,7 +761,7 @@ describe("selectors and listeners", () => {
           data-testid="producer"
           onClick={() => {
             act(() => {
-              produce(draft => {
+              produce((draft) => {
                 draft.otherList.push(9);
               });
             });
@@ -772,7 +772,7 @@ describe("selectors and listeners", () => {
       );
     };
 
-    const initialListJoin = initialStore.list.map(n => n * nArg).join("|");
+    const initialListJoin = initialStore.list.map((n) => n * nArg).join("|");
 
     const { unmount, getByTestId } = render(
       <Provider>
@@ -829,7 +829,7 @@ describe("context providers", () => {
           data-testid={id}
           onClick={() => {
             act(() => {
-              produce(draft => {
+              produce((draft) => {
                 draft.a *= 2;
                 draft.b *= 2;
               });
