@@ -4,6 +4,8 @@ import { Draft, enablePatches, Immutable } from "immer";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { ParametricSelector } from "reselect";
 
+import { LocalStoragePlugin } from "./plugins/localStorage";
+
 enablePatches();
 
 export type Selector<
@@ -26,8 +28,12 @@ const incrementParameter = (num: number) => ++num;
 
 export const emptyArray: [] = [];
 
-export const useUpdate = () => {
+export const useUpdate = (persistencePlugin?: LocalStoragePlugin<any>) => {
   const [, setState] = useState(0);
+
+  useEffect(() => {
+    persistencePlugin?.getState();
+  }, emptyArray);
 
   return useCallback(() => setState(incrementParameter), emptyArray);
 };

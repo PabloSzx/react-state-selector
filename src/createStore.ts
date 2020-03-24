@@ -24,7 +24,6 @@ import {
   IHooks,
   IHooksObj,
   IProduce,
-  isClientSide,
   IUseStore,
   Selector,
   toAnonFunction,
@@ -205,7 +204,7 @@ export function createStore<
   }
 
   const useStore = () => {
-    const update = useUpdate();
+    const update = useUpdate(localStoragePlugin);
 
     useIsomorphicLayoutEffect(() => {
       const globalListener = createSelector(
@@ -304,12 +303,8 @@ export function createStore<
     }
     localStoragePlugin = connectLocalStorage(
       options.devName,
-      initialStore as TStore,
       produceObj.produce
     );
-    if (isClientSide) {
-      localStoragePlugin.getState();
-    }
   }
 
   const actionsObj: Record<
@@ -388,7 +383,7 @@ export function createStore<
       hooksProps?: (() => unknown) | unknown,
       hookPropsDeps?: unknown[]
     ) => {
-      const update = useUpdate();
+      const update = useUpdate(localStoragePlugin);
 
       const props = useMemo(
         toAnonFunction(hooksProps),

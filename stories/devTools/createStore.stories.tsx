@@ -1,6 +1,7 @@
 import React, { CSSProperties, FC, useState } from "react";
 import { createStore } from "react-state-selector";
-import { DevTools } from "stories/utils/devTools";
+
+import { DevTools } from "../../stories/utils/devTools";
 
 const boxStyle = (color: string): CSSProperties => {
   return {

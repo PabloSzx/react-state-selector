@@ -7,8 +7,7 @@
     "importHelpers": true,
     "declaration": true,
     "sourceMap": true,
-    "rootDir": "./",
-    "declarationDir": "./dist/index.d.ts",
+    "declarationDir": "./dist",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -21,7 +20,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "node",
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "jsx": "react",
     "esModuleInterop": true
   }

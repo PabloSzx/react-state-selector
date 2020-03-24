@@ -1,15 +1,12 @@
-import { Immutable } from "immer";
-
 import { IProduce, isClientSide } from "../common";
 
 export type LocalStoragePlugin<T> = {
-  getState: () => Immutable<T>;
+  getState: () => void;
   setState: (state: T) => void;
 };
 
 export const connectLocalStorage = <T>(
   persistenceName: string,
-  defaultInitialState: T,
   produce: IProduce<T>,
   wait = 3000,
   persistenceMethod = isClientSide ? window.localStorage : undefined
@@ -35,21 +32,22 @@ export const connectLocalStorage = <T>(
 
   return {
     getState: () => {
-      if (isConnected) return produce();
+      if (isConnected) return;
 
       try {
         const state = persistenceMethod?.getItem(persistenceName);
-
-        if (state != null) {
-          const connectedState = produce(() => ({
+        if (state === undefined) {
+          isConnected = true;
+        } else if (state != null) {
+          produce(() => ({
             ...produce(),
             ...JSON.parse(state),
           }));
           isConnected = true;
-          return connectedState;
+          return;
         }
       } catch (err) {}
-      return defaultInitialState as Immutable<T>;
+      return;
     },
     setState,
   };

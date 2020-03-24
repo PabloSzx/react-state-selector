@@ -1,6 +1,6 @@
 {
   "name": "react-state-selector",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "keywords": [
     "react",
     "immer",
@@ -15,7 +15,7 @@
   "author": "PabloSzx",
   "main": "dist/index.js",
   "module": "dist/react-state-selector.esm.js",
-  "typings": "dist/index.d.ts/src/index.d.ts",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -38,7 +38,7 @@
     "coverageDirectory": "./coverage/"
   },
   "resolutions": {
-    "@types/react": "16.9.25",
+    "@types/react": "^16.9.25",
     "prettier": "^2.0.2"
   },
   "dependencies": {
