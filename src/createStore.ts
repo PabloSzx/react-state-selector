@@ -23,6 +23,7 @@ import {
   IAsyncProduce,
   IHooks,
   IHooksObj,
+  IPersistenceMethod,
   IProduce,
   IUseStore,
   Selector,
@@ -32,9 +33,9 @@ import {
 } from "./common";
 import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
 import {
-  connectLocalStorage,
+  connectPersistenceStorage,
   LocalStoragePlugin,
-} from "./plugins/localStorage";
+} from "./plugins/persistenceStorage";
 
 export { createSelector } from "reselect";
 export {
@@ -117,12 +118,60 @@ export function createStore<
      * @type {boolean}
      */
     devToolsInProduction?: boolean;
+
     /**
-     * Flag to activate localStorage persistence method
+     * Storage persistence for the store.
+     * By default uses window.localStorage
      *
-     * @type {boolean}
+     * @type {{
+     *       debounceWait?: number;
+     *       persistenceKey?: string;
+     *       active?: boolean;
+     *     }}
      */
-    localStoragePersistence?: boolean;
+    storagePersistence?: {
+      /**
+       * The amount of milliseconds for the
+       * the debouncing of the calls to the
+       * persistence method, by default 3000 ms
+       *
+       * @type {number}
+       */
+      debounceWait?: number;
+      /**
+       * The key used in the persistence method.
+       * If not specified, it uses the "devName"
+       *
+       * @type {string}
+       */
+      persistenceKey?: string;
+      /**
+       * Flag to activate or deactivate the
+       * persistence.
+       * "false" by default.
+       *
+       * @type {boolean}
+       */
+      isActive?: boolean;
+      /**
+       * Persistence method used, by default it
+       * uses localStorage
+       *
+       * @type {IPersistenceMethod}
+       */
+      persistenceMethod?: IPersistenceMethod;
+      /**
+       * Flag used to specify that this store
+       * is going to be used in server side
+       * rendering context, this flag prevents
+       * client/server mismatched html
+       * on client side hydration
+       *
+       * "false" by default.
+       * @type {boolean}
+       */
+      isSSR?: boolean;
+    };
   }
 ): {
   /**
@@ -295,16 +344,25 @@ export function createStore<
     },
   };
 
-  if (options?.localStoragePersistence && options.devName) {
-    if (typeof initialStore !== "object") {
+  if (options?.storagePersistence?.isActive) {
+    if (typeof initialStore !== "object" || Array.isArray(initialStore))
       throw new Error(
         "For local storage persistence your store has to be an object"
       );
-    }
-    localStoragePlugin = connectLocalStorage(
-      options.devName,
-      produceObj.produce
-    );
+
+    const persistenceKey =
+      options.storagePersistence.persistenceKey || options.devName;
+
+    if (!persistenceKey)
+      throw new Error("You have to specify persistence key or devName");
+
+    localStoragePlugin = connectPersistenceStorage({
+      persistenceKey,
+      produce: produceObj.produce,
+      debounceWait: options.storagePersistence.debounceWait,
+      persistenceMethod: options.storagePersistence.persistenceMethod,
+      isSSR: options.storagePersistence.isSSR,
+    });
   }
 
   const actionsObj: Record<
