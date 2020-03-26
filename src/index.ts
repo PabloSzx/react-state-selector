@@ -19,4 +19,5 @@ export {
   IHooks,
   IActions,
   IAsyncActions,
+  IPersistenceMethod,
 } from "./common";

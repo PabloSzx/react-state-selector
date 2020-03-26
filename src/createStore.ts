@@ -23,7 +23,6 @@ import {
   IAsyncProduce,
   IHooks,
   IHooksObj,
-  IPersistenceMethod,
   IProduce,
   IUseStore,
   Selector,
@@ -34,7 +33,8 @@ import {
 import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
 import {
   connectPersistenceStorage,
-  LocalStoragePlugin,
+  IPersistenceOptions,
+  PersistenceStoragePlugin,
 } from "./plugins/persistenceStorage";
 
 export { createSelector } from "reselect";
@@ -123,55 +123,9 @@ export function createStore<
      * Storage persistence for the store.
      * By default uses window.localStorage
      *
-     * @type {{
-     *       debounceWait?: number;
-     *       persistenceKey?: string;
-     *       active?: boolean;
-     *     }}
+     * @type {IPersistenceOptions}
      */
-    storagePersistence?: {
-      /**
-       * The amount of milliseconds for the
-       * the debouncing of the calls to the
-       * persistence method, by default 3000 ms
-       *
-       * @type {number}
-       */
-      debounceWait?: number;
-      /**
-       * The key used in the persistence method.
-       * If not specified, it uses the "devName"
-       *
-       * @type {string}
-       */
-      persistenceKey?: string;
-      /**
-       * Flag to activate or deactivate the
-       * persistence.
-       * "false" by default.
-       *
-       * @type {boolean}
-       */
-      isActive?: boolean;
-      /**
-       * Persistence method used, by default it
-       * uses localStorage
-       *
-       * @type {IPersistenceMethod}
-       */
-      persistenceMethod?: IPersistenceMethod;
-      /**
-       * Flag used to specify that this store
-       * is going to be used in server side
-       * rendering context, this flag prevents
-       * client/server mismatched html
-       * on client side hydration
-       *
-       * "false" by default.
-       * @type {boolean}
-       */
-      isSSR?: boolean;
-    };
+    storagePersistence?: IPersistenceOptions;
   }
 ): {
   /**
@@ -235,7 +189,7 @@ export function createStore<
   }
 
   let devTools: ReduxDevTools | undefined;
-  let localStoragePlugin: LocalStoragePlugin<TStore> | undefined;
+  let localStoragePlugin: PersistenceStoragePlugin<TStore> | undefined | null;
 
   if (
     options?.devName &&
@@ -423,7 +377,6 @@ export function createStore<
     asyncActionsObj[actionName] = async (...args) => {
       await actionFn(produceObj.produce)(...args);
 
-      localStoragePlugin?.setState(currentStore as TStore);
       return currentStore;
     };
   }

@@ -1,15 +1,16 @@
+import { createElement } from "react";
 import waitForExpect from "wait-for-expect";
 
-import { cleanup, renderHook } from "@testing-library/react-hooks";
+import { act, cleanup, renderHook } from "@testing-library/react-hooks";
 
-import { createStore } from "../src";
+import { createStore, createStoreContext } from "../src";
 import { mockLocalStorage } from "./utils/localStorage";
 
 afterEach(async () => {
   await cleanup();
 });
 
-describe("default persistence on localStorage works", () => {
+describe("createStore", () => {
   test("gets data from localStorage", () => {
     const initialState = { a: 1 };
     const rememberedInitialState = { a: 2 };
@@ -132,14 +133,6 @@ describe("default persistence on localStorage works", () => {
 
     expect(Case1.result.current).toEqual({ a: 1 });
     expect(Case2.result.current).toEqual({ a: 1 });
-
-    // const StoreSSR = createStore({a: 1}, {
-    //   storagePersistence: {
-    //     persistenceKey,
-    //     isActive: true,
-    //     isSSR: true
-    //   }
-    // })
   });
 
   test("work with asyncProduce, actions and asyncActions", async () => {
@@ -244,5 +237,191 @@ describe("default persistence on localStorage works", () => {
         }
       );
     }).toThrowError("You have to specify persistence key or devName");
+  });
+});
+
+describe("createStoreContext", () => {
+  test("correct usage", async () => {
+    const persistenceKey = "createStoreCtx";
+
+    localStorage.setItem(persistenceKey, JSON.stringify({ a: 4 }));
+
+    const StoreRemember = createStoreContext(
+      {
+        a: 1,
+      },
+      {
+        devName: persistenceKey,
+        storagePersistence: {
+          persistenceKey,
+          isActive: true,
+        },
+      }
+    );
+
+    const StoreNoRemember = createStoreContext(
+      {
+        a: 1,
+      },
+      {
+        devName: persistenceKey,
+        storagePersistence: {
+          persistenceKey,
+          isActive: false,
+          debounceWait: 1000,
+        },
+      }
+    );
+
+    const wrapper = (debugName: string, store: typeof StoreRemember) => (
+      props: any
+    ) => {
+      return createElement(store.Provider, {
+        debugName,
+        ...props,
+      });
+    };
+
+    const rememberedState = renderHook(
+      () => {
+        const store = StoreRemember.useStore();
+        const produce = StoreRemember.useProduce();
+
+        return { store, produce };
+      },
+      {
+        wrapper: wrapper(persistenceKey, StoreRemember),
+      }
+    );
+
+    const notRememberedState = renderHook(
+      () => {
+        const store = StoreNoRemember.useStore();
+        const produce = StoreNoRemember.useProduce();
+
+        return { store, produce };
+      },
+      {
+        wrapper: wrapper(persistenceKey, StoreNoRemember),
+      }
+    );
+
+    expect(rememberedState.result.current.store).toEqual({ a: 4 });
+    expect(notRememberedState.result.current.store).toEqual({ a: 1 });
+
+    act(() => {
+      rememberedState.result.current.produce.produce((draft) => {
+        draft.a = 10;
+      });
+
+      notRememberedState.result.current.produce.produce((draft) => {
+        draft.a = 20;
+      });
+    });
+
+    expect(rememberedState.result.current.store).toEqual({ a: 10 });
+    expect(notRememberedState.result.current.store).toEqual({ a: 20 });
+
+    await act(async () => {
+      rememberedState.result.current.produce.asyncProduce(async (draft) => {
+        draft.a = 100;
+      });
+
+      notRememberedState.result.current.produce.asyncProduce(async (draft) => {
+        draft.a = 200;
+      });
+    });
+
+    expect(rememberedState.result.current.store).toEqual({ a: 100 });
+    expect(notRememberedState.result.current.store).toEqual({ a: 200 });
+
+    expect(localStorage.getItem(persistenceKey)).toEqual(
+      JSON.stringify({ a: 4 })
+    );
+
+    await waitForExpect(async () => {
+      expect(localStorage.getItem(persistenceKey)).toEqual(
+        JSON.stringify({ a: 100 })
+      );
+    });
+
+    expect(localStorage.getItem(persistenceKey)).toEqual(
+      JSON.stringify({ a: 100 })
+    );
+  });
+
+  test("no provider should work anyway", async () => {
+    const persistenceKey = "noProviderStoreCtx";
+
+    localStorage.setItem(persistenceKey, JSON.stringify({ a: 10 }));
+
+    const Store = createStoreContext(
+      {
+        a: 1,
+      },
+      {
+        storagePersistence: {
+          debounceWait: 1000,
+          persistenceKey,
+          isActive: true,
+        },
+      }
+    );
+
+    const HookResult = renderHook(() => {
+      const store = Store.useStore();
+      const produce = Store.useProduce();
+
+      return {
+        store,
+        produce,
+      };
+    });
+
+    expect(HookResult.result.current.store).toEqual({ a: 10 });
+
+    act(() => {
+      HookResult.result.current.produce.produce((draft) => {
+        draft.a = 20;
+      });
+    });
+
+    expect(HookResult.result.current.store).toEqual({ a: 20 });
+
+    expect(localStorage.getItem(persistenceKey)).toBe(
+      JSON.stringify({ a: 10 })
+    );
+
+    await waitForExpect(() => {
+      expect(localStorage.getItem(persistenceKey)).toBe(
+        JSON.stringify({ a: 20 })
+      );
+    });
+  });
+
+  test("find wrong usage", () => {
+    expect(() => {
+      createStoreContext([], {
+        storagePersistence: {
+          isActive: true,
+          persistenceKey: "asd",
+        },
+      });
+    }).toThrowError(
+      "For local storage persistence your store has to be an object"
+    );
+
+    expect(() => {
+      createStoreContext(
+        {},
+        {
+          storagePersistence: {
+            isActive: true,
+          },
+        }
+      );
+    }).toThrowError(
+      "You have to specify persistence key, debugName or devName"
+    );
   });
 });

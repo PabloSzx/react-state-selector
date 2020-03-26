@@ -4,7 +4,7 @@ import { Draft, enablePatches, Immutable } from "immer";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { ParametricSelector } from "reselect";
 
-import { LocalStoragePlugin } from "./plugins/persistenceStorage";
+import { PersistenceStoragePlugin } from "./plugins/persistenceStorage";
 
 enablePatches();
 
@@ -27,7 +27,9 @@ const incrementParameter = (num: number) => ++num;
 
 export const emptyArray: [] = [];
 
-export const useUpdate = (persistencePlugin?: LocalStoragePlugin) => {
+export const useUpdate = (
+  persistencePlugin?: PersistenceStoragePlugin | null
+) => {
   const [, setState] = useState(0);
 
   useEffect(() => {
