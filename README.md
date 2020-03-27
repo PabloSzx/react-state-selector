@@ -461,9 +461,9 @@ const Data = () => {
 
 > Keep in mind that you can mix common synchronous actions and async actions in a single store, but you should not repeat the action names in both objects.
 
-### **localStorage** data persistence and \*_DevTools_
+### **localStorage** data persistence and **DevTools**
 
-When creating an store via **createStore** or **createStoreContext** you can specify some field that enable some useful features:
+When creating an store via **createStore** or **createStoreContext** you can specify some fields that enable some useful features:
 
 ```tsx
 //createStoreContext(
@@ -509,7 +509,7 @@ createStore(
        * debounceWait
        *
        * Calling an external store like localStorage every time
-       * any change to the store is very computationally expensive
+       * any change is made to the store is computationally expensive,
        * and that's why by default this functionality is being debounced
        * to be called only when needed, after X amount of milliseconds
        * since the last change to the store.
