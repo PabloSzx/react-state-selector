@@ -4,6 +4,8 @@ import { Draft, enablePatches, Immutable } from "immer";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { ParametricSelector } from "reselect";
 
+import { PersistenceStoragePlugin } from "./plugins/persistenceStorage";
+
 enablePatches();
 
 export type Selector<
@@ -16,9 +18,8 @@ export const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export function toAnonFunction(arg: unknown): () => typeof arg {
-  if (typeof arg === "function") {
-    return arg as () => typeof arg;
-  }
+  if (typeof arg === "function") return arg as () => typeof arg;
+
   return () => arg;
 }
 
@@ -26,11 +27,21 @@ const incrementParameter = (num: number) => ++num;
 
 export const emptyArray: [] = [];
 
-export const useUpdate = () => {
+export const useUpdate = (
+  persistencePlugin?: PersistenceStoragePlugin | null
+) => {
   const [, setState] = useState(0);
+
+  useEffect(() => {
+    if (persistencePlugin?.current.isSSR) {
+      persistencePlugin.getState();
+    }
+  }, emptyArray);
 
   return useCallback(() => setState(incrementParameter), emptyArray);
 };
+
+export const isClientSide = typeof window !== "undefined";
 
 type NN<T> = NonNullable<T>;
 
@@ -91,4 +102,9 @@ export type IUseStore<TStore> = () => Immutable<TStore>;
 export type IUseProduce<TStore> = () => {
   asyncProduce: IAsyncProduce<TStore>;
   produce: IProduce<TStore>;
+};
+
+export type IPersistenceMethod = {
+  setItem(key: string, data: any): any;
+  getItem(key: string): string | null;
 };

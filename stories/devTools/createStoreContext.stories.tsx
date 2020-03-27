@@ -1,6 +1,7 @@
 import React, { CSSProperties, FC, useState } from "react";
 import { createStoreContext } from "react-state-selector";
-import { DevTools } from "stories/utils/devTools";
+
+import { DevTools } from "../../stories/utils/devTools";
 
 const boxStyle = (color: string): CSSProperties => {
   return {
@@ -33,10 +34,10 @@ const {
       },
     },
     actions: {
-      incrementA: (n: number) => draft => {
+      incrementA: (n: number) => (draft) => {
         draft.a += n;
       },
-      incrementB: (n: number) => draft => {
+      incrementB: (n: number) => (draft) => {
         draft.b += n;
       },
     },

@@ -67,7 +67,7 @@ describe("with redux dev tools", () => {
       {
         devName: "test",
         actions: {
-          increment: (n: number) => draft => {
+          increment: (n: number) => (draft) => {
             draft.a += n;
           },
         },
@@ -78,7 +78,7 @@ describe("with redux dev tools", () => {
     );
     expect(devToolsMock.init).toHaveBeenCalledTimes(1);
 
-    Store.produce(draft => {
+    Store.produce((draft) => {
       draft.a += 1;
     });
 
@@ -97,8 +97,8 @@ describe("with redux dev tools", () => {
 
     const newAsyncA = 10;
 
-    await Store.asyncProduce(async draft => {
-      draft.a = await new Promise<number>(resolve => {
+    await Store.asyncProduce(async (draft) => {
+      draft.a = await new Promise<number>((resolve) => {
         setTimeout(() => {
           resolve(newAsyncA);
         }, 500);
@@ -141,7 +141,7 @@ describe("with redux dev tools", () => {
     const Store = createStoreContext(initialStore, {
       devName: "test",
       actions: {
-        increment: (n: number) => draft => {
+        increment: (n: number) => (draft) => {
           draft.a += n;
         },
       },
@@ -167,8 +167,8 @@ describe("with redux dev tools", () => {
         useEffect(() => {
           if (newA) {
             if (asyncNew) {
-              asyncProduce(async draft => {
-                draft.a = await new Promise<number>(resolve => {
+              asyncProduce(async (draft) => {
+                draft.a = await new Promise<number>((resolve) => {
                   setTimeout(() => {
                     resolve(newA);
                   }, 500);
@@ -176,7 +176,7 @@ describe("with redux dev tools", () => {
               });
             } else {
               act(() => {
-                produce(draft => {
+                produce((draft) => {
                   draft.a = newA;
                 });
               });

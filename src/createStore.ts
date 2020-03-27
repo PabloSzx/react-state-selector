@@ -31,6 +31,11 @@ import {
   useUpdate,
 } from "./common";
 import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
+import {
+  connectPersistenceStorage,
+  IPersistenceOptions,
+  PersistenceStoragePlugin,
+} from "./plugins/persistenceStorage";
 
 export { createSelector } from "reselect";
 export {
@@ -113,6 +118,14 @@ export function createStore<
      * @type {boolean}
      */
     devToolsInProduction?: boolean;
+
+    /**
+     * Storage persistence for the store.
+     * By default uses window.localStorage
+     *
+     * @type {IPersistenceOptions}
+     */
+    storagePersistence?: IPersistenceOptions;
   }
 ): {
   /**
@@ -176,6 +189,7 @@ export function createStore<
   }
 
   let devTools: ReduxDevTools | undefined;
+  let localStoragePlugin: PersistenceStoragePlugin<TStore> | undefined | null;
 
   if (
     options?.devName &&
@@ -193,7 +207,7 @@ export function createStore<
   }
 
   const useStore = () => {
-    const update = useUpdate();
+    const update = useUpdate(localStoragePlugin);
 
     useIsomorphicLayoutEffect(() => {
       const globalListener = createSelector(
@@ -216,7 +230,7 @@ export function createStore<
     produce: IProduce<TStore>;
     asyncProduce: IAsyncProduce<TStore>;
   } = {
-    produce: draft => {
+    produce: (draft) => {
       if (typeof draft !== "function") return currentStore;
 
       if (devTools) {
@@ -245,20 +259,23 @@ export function createStore<
 
         currentStore = produceFn(currentStore);
       }
+
       listeners.forEach((props, listener) => {
         listener(currentStore, props);
       });
 
+      localStoragePlugin?.setState(currentStore as TStore);
+
       return currentStore;
     },
-    asyncProduce: async draft => {
+    asyncProduce: async (draft) => {
       if (typeof draft !== "function") return currentStore;
 
       const storeDraft = createDraft(currentStore as TStore);
 
       await Promise.resolve(draft(storeDraft));
 
-      finishDraft(storeDraft, changes => {
+      finishDraft(storeDraft, (changes) => {
         if (changes.length) {
           currentStore = applyPatches(currentStore, changes);
 
@@ -275,9 +292,32 @@ export function createStore<
         }
       });
 
+      localStoragePlugin?.setState(currentStore as TStore);
+
       return currentStore;
     },
   };
+
+  if (options?.storagePersistence?.isActive) {
+    if (typeof initialStore !== "object" || Array.isArray(initialStore))
+      throw new Error(
+        "For local storage persistence your store has to be an object"
+      );
+
+    const persistenceKey =
+      options.storagePersistence.persistenceKey || options.devName;
+
+    if (!persistenceKey)
+      throw new Error("You have to specify persistence key or devName");
+
+    localStoragePlugin = connectPersistenceStorage({
+      persistenceKey,
+      produce: produceObj.produce,
+      debounceWait: options.storagePersistence.debounceWait,
+      persistenceMethod: options.storagePersistence.persistenceMethod,
+      isSSR: options.storagePersistence.isSSR,
+    });
+  }
 
   const actionsObj: Record<
     string,
@@ -325,6 +365,8 @@ export function createStore<
         listener(currentStore, props);
       });
 
+      localStoragePlugin?.setState(currentStore as TStore);
+
       return currentStore;
     };
   }
@@ -352,7 +394,7 @@ export function createStore<
       hooksProps?: (() => unknown) | unknown,
       hookPropsDeps?: unknown[]
     ) => {
-      const update = useUpdate();
+      const update = useUpdate(localStoragePlugin);
 
       const props = useMemo(
         toAnonFunction(hooksProps),
@@ -363,7 +405,7 @@ export function createStore<
 
       const { updateSelector, initialStateRef } = useMemo(() => {
         return {
-          updateSelector: createSelector(hookSelector, result => {
+          updateSelector: createSelector(hookSelector, (result) => {
             stateRef.current = result;
 
             if (!isMountedRef.current) {

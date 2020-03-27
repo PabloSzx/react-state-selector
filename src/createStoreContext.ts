@@ -42,6 +42,11 @@ import {
   useUpdate,
 } from "./common";
 import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
+import {
+  connectPersistenceStorage,
+  IPersistenceOptions,
+  PersistenceStoragePlugin,
+} from "./plugins/persistenceStorage";
 
 /**
  * Create React Context version of a **react-state-selector** global store
@@ -115,6 +120,14 @@ export function createStoreContext<
      * @type {boolean}
      */
     devToolsInProduction?: boolean;
+
+    /**
+     * Storage persistence options for the store.
+     * By default uses window.localStorage
+     *
+     * @type {IPersistenceOptions}
+     */
+    storagePersistence?: IPersistenceOptions;
   }
 ): {
   /**
@@ -180,72 +193,194 @@ export function createStoreContext<
     }
   }
 
-  const StoreContext = createContext<
-    MutableRefObject<{
-      store: Immutable<TStore>;
-      listeners: Map<
-        ParametricSelector<Immutable<TStore>, unknown, unknown>,
-        unknown
-      >;
-      devTools: ReduxDevTools | undefined;
-      actions?: IActionsObj<TStore, typeof options> &
-        IAsyncActionsObj<TStore, typeof options>;
-      produce?: {
-        produce: IProduce<TStore>;
-        asyncProduce: IAsyncProduce<TStore>;
-      };
-    }>
-  >({
-    current: {
-      store: initialStore,
-      listeners: new Map(),
-      devTools: (() => {
-        if (
-          options?.devName &&
-          (options.devToolsInProduction ||
-            process.env.NODE_ENV !== "production")
-        ) {
-          const devTools = connectDevTools(options.devName + "-noProvider");
-          if (devTools) {
-            devTools.init(initialStore);
-          }
-          return devTools;
-        }
-        return undefined;
-      })(),
-    },
-  });
+  const createStoragePersistenceInstance = (
+    produceStore: IProduce<TStore>,
+    debugName?: string | null
+  ) => {
+    if (options?.storagePersistence?.isActive) {
+      if (typeof initialStore !== "object" || Array.isArray(initialStore))
+        throw new Error(
+          "For local storage persistence your store has to be an object"
+        );
 
-  const providerRefCallback = (debugName?: string) => () => {
+      let persistenceKey: string | undefined;
+      if (options.storagePersistence.persistenceKey) {
+        persistenceKey = options.storagePersistence.persistenceKey;
+      } else if (options.devName) {
+        persistenceKey = options.devName;
+      }
+
+      if (!persistenceKey)
+        throw new Error("You have to specify persistence key or devName");
+
+      if (debugName) {
+        persistenceKey += "-" + debugName;
+      } else if (debugName === null) {
+        persistenceKey += "-noProvider";
+      }
+
+      return connectPersistenceStorage({
+        persistenceKey,
+        produce: produceStore,
+        debounceWait: options.storagePersistence.debounceWait,
+        persistenceMethod: options.storagePersistence.persistenceMethod,
+        isSSR: options.storagePersistence.isSSR,
+      });
+    }
+    return null;
+  };
+
+  const createDevToolsInstance = (debugName?: string | null) => {
+    if (
+      options?.devName &&
+      (options.devToolsInProduction || process.env.NODE_ENV !== "production")
+    ) {
+      let devToolsName: string;
+      if (debugName) {
+        devToolsName = options.devName + "-" + debugName;
+      } else if (debugName === null) {
+        devToolsName = options.devName + "-noProvider";
+      } else {
+        devToolsName = options.devName;
+      }
+      const devTools = connectDevTools(devToolsName);
+      if (devTools) {
+        devTools.init(initialStore);
+      }
+      return devTools;
+    }
+    return undefined;
+  };
+
+  type IStore = {
+    store: Immutable<TStore>;
+    listeners: Map<
+      ParametricSelector<Immutable<TStore>, unknown, unknown>,
+      unknown
+    >;
+    devTools: ReduxDevTools | undefined;
+    actions?: IActionsObj<TStore, typeof options> &
+      IAsyncActionsObj<TStore, typeof options>;
+    produce: {
+      produce: IProduce<TStore>;
+      asyncProduce: IAsyncProduce<TStore>;
+    };
+    storagePersistence?: PersistenceStoragePlugin | null;
+  };
+
+  const createProduceObj = (
+    storeRef: Pick<
+      IStore,
+      "devTools" | "store" | "listeners" | "storagePersistence"
+    >
+  ) => {
     return {
-      store: initialStore,
-      listeners: new Map<Selector<Immutable<TStore>>, unknown /* props */>(),
-      devTools: (() => {
-        if (
-          options?.devName &&
-          (options.devToolsInProduction ||
-            process.env.NODE_ENV !== "production")
-        ) {
-          const devTools = connectDevTools(
-            debugName ? options.devName + "-" + debugName : options.devName
+      produce: (draft?: (draft: Draft<TStore>) => void) => {
+        if (typeof draft !== "function") return storeRef.store;
+
+        if (storeRef.devTools) {
+          const produceFn = produceWithPatches<
+            (draft: Draft<TStore>) => void,
+            [Draft<TStore>],
+            TStore
+          >(draft);
+
+          const produceResult = produceFn(storeRef.store);
+
+          storeRef.store = produceResult[0];
+          storeRef.devTools.send(
+            {
+              type: "produce",
+              payload: produceResult[1],
+            },
+            storeRef.store
           );
-          if (devTools) {
-            devTools.init(initialStore);
-          }
-          return devTools;
+        } else {
+          const produceFn = produce<
+            (draft: Draft<TStore>) => void,
+            [Draft<TStore>],
+            TStore
+          >(draft);
+
+          storeRef.store = produceFn(storeRef.store);
         }
-        return undefined;
-      })(),
+
+        storeRef.listeners.forEach((props, listener) => {
+          listener(storeRef.store, props);
+        });
+
+        storeRef.storagePersistence?.setState(storeRef.store);
+
+        return storeRef.store;
+      },
+      asyncProduce: async (draft?: (draft: Draft<TStore>) => Promise<void>) => {
+        if (typeof draft !== "function") return storeRef.store;
+
+        const storeDraft = createDraft(storeRef.store as TStore);
+
+        await Promise.resolve(draft(storeDraft));
+
+        finishDraft(storeDraft, (changes) => {
+          if (changes.length) {
+            storeRef.store = applyPatches(storeRef.store, changes);
+
+            if (storeRef.devTools) {
+              storeRef.devTools.send(
+                {
+                  type: "asyncProduce",
+                  payload: changes,
+                },
+                storeRef.store
+              );
+            }
+
+            storeRef.listeners.forEach((props, listener) => {
+              listener(storeRef.store, props);
+            });
+          }
+        });
+
+        storeRef.storagePersistence?.setState(storeRef.store);
+
+        return storeRef.store;
+      },
     };
   };
+
+  const providerRefCallback = (debugName?: string | null) => () => {
+    const storeRef: Pick<
+      IStore,
+      "store" | "listeners" | "devTools" | "storagePersistence"
+    > &
+      Partial<Pick<IStore, "produce">> = {
+      store: initialStore,
+      listeners: new Map<Selector<Immutable<TStore>>, unknown /* props */>(),
+      devTools: createDevToolsInstance(debugName),
+    };
+
+    const produceObj = createProduceObj(storeRef);
+
+    storeRef.produce = produceObj;
+
+    storeRef.storagePersistence = createStoragePersistenceInstance(
+      produceObj.produce,
+      debugName
+    );
+
+    return Object.assign(storeRef, { produce: produceObj });
+  };
+
+  const StoreContext = createContext<MutableRefObject<IStore>>({
+    current: providerRefCallback(null)(),
+  });
 
   const Provider: FunctionComponent<{ debugName?: string }> = memo(
     ({ children, debugName }) => {
       const initialRef = useMemo(providerRefCallback(debugName), emptyArray);
-      const valueRef = useRef(initialRef);
+      const value = useRef(initialRef);
 
       return createElement(StoreContext.Provider, {
-        value: valueRef,
+        value,
         children,
       });
     }
@@ -253,7 +388,7 @@ export function createStoreContext<
 
   const useStore = () => {
     const storeCtx = useContext(StoreContext);
-    const update = useUpdate();
+    const update = useUpdate(storeCtx.current.storagePersistence);
 
     useIsomorphicLayoutEffect(() => {
       const globalListener = createSelector(
@@ -275,84 +410,7 @@ export function createStoreContext<
   const useProduce = () => {
     const storeCtx = useContext(StoreContext);
 
-    return useMemo(() => {
-      if (storeCtx.current.produce === undefined) {
-        storeCtx.current.produce = {
-          produce: (draft?: (draft: Draft<TStore>) => void) => {
-            if (typeof draft !== "function") return storeCtx.current.store;
-
-            if (storeCtx.current.devTools) {
-              const produceFn = produceWithPatches<
-                (draft: Draft<TStore>) => void,
-                [Draft<TStore>],
-                TStore
-              >(draft);
-
-              const produceResult = produceFn(storeCtx.current.store);
-
-              storeCtx.current.store = produceResult[0];
-              storeCtx.current.devTools.send(
-                {
-                  type: "produce",
-                  payload: produceResult[1],
-                },
-                storeCtx.current.store
-              );
-            } else {
-              const produceFn = produce<
-                (draft: Draft<TStore>) => void,
-                [Draft<TStore>],
-                TStore
-              >(draft);
-
-              storeCtx.current.store = produceFn(storeCtx.current.store);
-            }
-
-            storeCtx.current.listeners.forEach((props, listener) => {
-              listener(storeCtx.current.store, props);
-            });
-
-            return storeCtx.current.store;
-          },
-          asyncProduce: async (
-            draft?: (draft: Draft<TStore>) => Promise<void>
-          ) => {
-            if (typeof draft !== "function") return storeCtx.current.store;
-
-            const storeDraft = createDraft(storeCtx.current.store as TStore);
-
-            await Promise.resolve(draft(storeDraft));
-
-            finishDraft(storeDraft, changes => {
-              if (changes.length) {
-                storeCtx.current.store = applyPatches(
-                  storeCtx.current.store,
-                  changes
-                );
-
-                if (storeCtx.current.devTools) {
-                  storeCtx.current.devTools.send(
-                    {
-                      type: "asyncProduce",
-                      payload: changes,
-                    },
-                    storeCtx.current.store
-                  );
-                }
-
-                storeCtx.current.listeners.forEach((props, listener) => {
-                  listener(storeCtx.current.store, props);
-                });
-              }
-            });
-
-            return storeCtx.current.store;
-          },
-        };
-      }
-
-      return storeCtx.current.produce;
-    }, [storeCtx]);
+    return storeCtx.current.produce;
   };
 
   const useActions = () => {
@@ -446,7 +504,7 @@ export function createStoreContext<
     ) => {
       const storeCtx = useContext(StoreContext);
 
-      const update = useUpdate();
+      const update = useUpdate(storeCtx.current.storagePersistence);
 
       const props = useMemo(
         toAnonFunction(hooksProps),
@@ -457,7 +515,7 @@ export function createStoreContext<
 
       const { updateSelector, initialStateRef } = useMemo(() => {
         return {
-          updateSelector: createSelector(hookSelector, result => {
+          updateSelector: createSelector(hookSelector, (result) => {
             stateRef.current = result;
 
             if (!isMountedRef.current) {

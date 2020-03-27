@@ -30,9 +30,9 @@ const initialState: IPosts = {
 
 const Store = createStore(initialState, {
   asyncActions: {
-    getPosts: produce => async () => {
+    getPosts: (produce) => async () => {
       try {
-        produce(draft => {
+        produce((draft) => {
           draft.state = FetchState.loading;
         });
 
@@ -40,12 +40,12 @@ const Store = createStore(initialState, {
           await fetch("https://jsonplaceholder.typicode.com/posts")
         ).json();
 
-        produce(draft => {
+        produce((draft) => {
           draft.posts = data;
           draft.state = FetchState.complete;
         });
       } catch (err) {
-        produce(draft => {
+        produce((draft) => {
           draft.state = FetchState.error;
           draft.fetchError = JSON.stringify(err);
         });
@@ -86,7 +86,7 @@ export const AsyncActions = () => {
         Get Data
       </button>
       <ol>
-        {posts?.slice(0, 10).map(value => {
+        {posts?.slice(0, 10).map((value) => {
           return (
             <li key={value.id}>
               <h3>{value.title}</h3>
