@@ -244,7 +244,10 @@ describe("createStoreContext", () => {
   test("correct usage", async () => {
     const persistenceKey = "createStoreCtx";
 
-    localStorage.setItem(persistenceKey, JSON.stringify({ a: 4 }));
+    const localStorageKeyDebugName = persistenceKey + "-" + persistenceKey;
+
+    localStorage.setItem(localStorageKeyDebugName, JSON.stringify({ a: 4 }));
+    localStorage.setItem(persistenceKey, JSON.stringify({ a: 5 }));
 
     const StoreRemember = createStoreContext(
       {
@@ -273,14 +276,52 @@ describe("createStoreContext", () => {
       }
     );
 
-    const wrapper = (debugName: string, store: typeof StoreRemember) => (
-      props: any
-    ) => {
+    const StoreRememberNoDebugName = createStoreContext(
+      {
+        a: 1,
+      },
+      {
+        storagePersistence: {
+          persistenceKey,
+          isActive: true,
+        },
+      }
+    );
+
+    const wrapper = ({
+      debugName,
+      store,
+    }: {
+      debugName?: string;
+      store: typeof StoreRemember;
+    }) => (props: any) => {
       return createElement(store.Provider, {
         debugName,
         ...props,
       });
     };
+
+    const rememberedStateNoDebugName = renderHook(
+      () => {
+        const store = StoreRememberNoDebugName.useStore();
+        const produce = StoreRememberNoDebugName.useProduce();
+
+        return { store, produce };
+      },
+      {
+        wrapper: wrapper({ store: StoreRememberNoDebugName }),
+      }
+    );
+
+    expect(rememberedStateNoDebugName.result.current.store).toEqual({
+      a: 5,
+    });
+
+    expect(localStorage.getItem(persistenceKey)).toBe(
+      JSON.stringify({
+        a: 5,
+      })
+    );
 
     const rememberedState = renderHook(
       () => {
@@ -290,7 +331,7 @@ describe("createStoreContext", () => {
         return { store, produce };
       },
       {
-        wrapper: wrapper(persistenceKey, StoreRemember),
+        wrapper: wrapper({ debugName: persistenceKey, store: StoreRemember }),
       }
     );
 
@@ -302,7 +343,7 @@ describe("createStoreContext", () => {
         return { store, produce };
       },
       {
-        wrapper: wrapper(persistenceKey, StoreNoRemember),
+        wrapper: wrapper({ debugName: persistenceKey, store: StoreNoRemember }),
       }
     );
 
@@ -335,17 +376,17 @@ describe("createStoreContext", () => {
     expect(rememberedState.result.current.store).toEqual({ a: 100 });
     expect(notRememberedState.result.current.store).toEqual({ a: 200 });
 
-    expect(localStorage.getItem(persistenceKey)).toEqual(
+    expect(localStorage.getItem(localStorageKeyDebugName)).toEqual(
       JSON.stringify({ a: 4 })
     );
 
     await waitForExpect(async () => {
-      expect(localStorage.getItem(persistenceKey)).toEqual(
+      expect(localStorage.getItem(localStorageKeyDebugName)).toEqual(
         JSON.stringify({ a: 100 })
       );
     });
 
-    expect(localStorage.getItem(persistenceKey)).toEqual(
+    expect(localStorage.getItem(localStorageKeyDebugName)).toEqual(
       JSON.stringify({ a: 100 })
     );
   });
@@ -353,16 +394,17 @@ describe("createStoreContext", () => {
   test("no provider should work anyway", async () => {
     const persistenceKey = "noProviderStoreCtx";
 
-    localStorage.setItem(persistenceKey, JSON.stringify({ a: 10 }));
+    const localStorageKey = persistenceKey + "-noProvider";
+    localStorage.setItem(localStorageKey, JSON.stringify({ a: 10 }));
 
     const Store = createStoreContext(
       {
         a: 1,
       },
       {
+        devName: persistenceKey,
         storagePersistence: {
           debounceWait: 1000,
-          persistenceKey,
           isActive: true,
         },
       }
@@ -388,12 +430,12 @@ describe("createStoreContext", () => {
 
     expect(HookResult.result.current.store).toEqual({ a: 20 });
 
-    expect(localStorage.getItem(persistenceKey)).toBe(
+    expect(localStorage.getItem(localStorageKey)).toBe(
       JSON.stringify({ a: 10 })
     );
 
     await waitForExpect(() => {
-      expect(localStorage.getItem(persistenceKey)).toBe(
+      expect(localStorage.getItem(localStorageKey)).toBe(
         JSON.stringify({ a: 20 })
       );
     });
@@ -420,8 +462,6 @@ describe("createStoreContext", () => {
           },
         }
       );
-    }).toThrowError(
-      "You have to specify persistence key, debugName or devName"
-    );
+    }).toThrowError("You have to specify persistence key or devName");
   });
 });

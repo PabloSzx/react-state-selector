@@ -203,15 +203,21 @@ export function createStoreContext<
           "For local storage persistence your store has to be an object"
         );
 
-      const persistenceKey =
-        options.storagePersistence.persistenceKey ||
-        debugName ||
-        options.devName;
+      let persistenceKey: string | undefined;
+      if (options.storagePersistence.persistenceKey) {
+        persistenceKey = options.storagePersistence.persistenceKey;
+      } else if (options.devName) {
+        persistenceKey = options.devName;
+      }
 
       if (!persistenceKey)
-        throw new Error(
-          "You have to specify persistence key, debugName or devName"
-        );
+        throw new Error("You have to specify persistence key or devName");
+
+      if (debugName) {
+        persistenceKey += "-" + debugName;
+      } else if (debugName === null) {
+        persistenceKey += "-" + "noProvider";
+      }
 
       return connectPersistenceStorage({
         persistenceKey,

@@ -22,13 +22,13 @@ yarn add react-state-selector
 
 > Check **https://pabloszx.github.io/react-state-selector** for more detailed examples and use cases.
 
-### TODOs
+### Features
 
-- [x] Redux DevTools
-- [x] async actions
+- [x] Redux **DevTools** support
+- [x] **async** actions (_**redux-thunk** alike_)
 - [x] **TypeScript** first class support
 - [x] **_reselect_** createSelector support
-- [ ] **More** examples and use cases (In progress...)
+- [x] Easy and efficient **localStorage** data persistence
 
 ### Basic Usage
 
@@ -57,12 +57,12 @@ const {
       },
     },
     actions: {
-      incrementA: (n: number) => draft => {
+      incrementA: (n: number) => (draft) => {
         // Here you can mutate "draft", and immer will
         // automatically make the immutable equivalent
         draft.countA += n;
       },
-      incrementB: (n: number) => draft => {
+      incrementB: (n: number) => (draft) => {
         draft.countB += n;
       },
     },
@@ -126,12 +126,12 @@ const {
       },
     },
     actions: {
-      incrementA: (n: number) => draft => {
+      incrementA: (n: number) => (draft) => {
         // Here you can mutate "draft", and immer will
         // automatically make the immutable equivalent
         draft.countA += n;
       },
-      incrementB: (n: number) => draft => {
+      incrementB: (n: number) => (draft) => {
         draft.countB += n;
       },
     },
@@ -195,7 +195,7 @@ By default every created store gives a couple of out of the box functionality, i
 - If you **don't** give it a function, it will work simply as a **state getter**, so you can check the global state anytime without any restriction.
 
 ```ts
-const state = produce(draft => {
+const state = produce((draft) => {
   draft.a += 1;
 });
 console.log(produce() === state); // true
@@ -208,7 +208,7 @@ console.log(produce() === state); // true
 - You shouldn't rely on this feature to transform the entire state as with [produce](#produce-functiondraft--void--tstore-tstore) or [custom actions](#custom-actions);
 
 ```ts
-const state = await asyncProduce(async draft => {
+const state = await asyncProduce(async (draft) => {
   draft.users = await (await fetch("/api/users")).json();
 });
 console.log(produce() === state); // true
@@ -251,7 +251,7 @@ const IncrementComp = () => {
   return (
     <button
       onClick={() =>
-        produce(draft => {
+        produce((draft) => {
           draft.count += 1;
         })
       }
@@ -346,7 +346,7 @@ const Store = createStore(
   { a: 1 },
   {
     actions: {
-      increment: (n: number) => draft => {
+      increment: (n: number) => (draft) => {
         draft.a += n;
       },
     },
@@ -356,7 +356,7 @@ const StoreCtx = createStore(
   { b: 1 },
   {
     actions: {
-      decrement: (n: number) => draft => {
+      decrement: (n: number) => (draft) => {
         draft.b -= n;
       },
     },
@@ -407,21 +407,21 @@ const Store = createStore(
   },
   {
     asyncActions: {
-      getData: produce => async bodyArgs => {
-        produce(draft => {
+      getData: (produce) => async (bodyArgs) => {
+        produce((draft) => {
           draft.state = State.loading;
         });
 
         try {
           const response = await axios.post("/data", bodyArgs);
 
-          produce(draft => {
+          produce((draft) => {
             draft.state = State.complete;
             draft.data = response.data;
           });
         } catch (err) {
           console.error(err);
-          produce(draft => {
+          produce((draft) => {
             draft.state = State.error;
           });
         }
@@ -460,6 +460,88 @@ const Data = () => {
 ```
 
 > Keep in mind that you can mix common synchronous actions and async actions in a single store, but you should not repeat the action names in both objects.
+
+### **localStorage** data persistence and \*_DevTools_
+
+When creating an store via **createStore** or **createStoreContext** you can specify some field that enable some useful features:
+
+```tsx
+//createStoreContext(
+createStore(
+  {
+    foo: "bar",
+  },
+  {
+    /**
+     * devName
+     *
+     * Activates the Redux DevTools for this store using
+     * this name as reference.
+     */
+    devName: "fooBarStore",
+
+    /**
+     * devToolsInProduction
+     *
+     * Activates the Redux Devtools functionality in production.
+     *
+     * By default this is false
+     */
+    devToolsInProduction: true,
+    storagePersistence: {
+      /**
+       * isActive
+       *
+       * Activates the data persistence in this store
+       **/
+      isActive: true,
+      /**
+       * persistenceKey
+       *
+       * Set the key used for the storage persistence method.
+       *
+       * It has to be a string, and if it's not specified
+       * reuses the "devName", but it has to exists at least one
+       * of these two if the storagePersistence is active
+       **/
+      persistenceKey: "fooBarStore",
+      /**
+       * debounceWait
+       *
+       * Calling an external store like localStorage every time
+       * any change to the store is very computationally expensive
+       * and that's why by default this functionality is being debounced
+       * to be called only when needed, after X amount of milliseconds
+       * since the last change to the store.
+       *
+       * By default it's set to 3000 ms, but you can customize it to
+       * be 0 if you want almost instant save to the persistence store
+       **/
+      debounceWait: 1000,
+      /**
+       * persistenceMethod
+       *
+       * You also can customize the persistence method,
+       * but by default uses window.localStorage.
+       *
+       * Keep in mind that it should follow the same API
+       * of setItem and getItem of localStorage
+       **/
+      persistenceMethod: window.localStorage,
+      /**
+       * isSSR
+       *
+       * Flag used to specify that this store is going to be
+       * used in server side rendering environments and it prevents
+       * client/server mismatched html on client side hydration
+       *
+       * false by default
+       **/
+      isSSR: true,
+    },
+  }
+);
+```
 
 ### **Map / Set** support _and/or_ **old browsers / React Native** support
 
