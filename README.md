@@ -461,7 +461,7 @@ const Data = () => {
 
 > Keep in mind that you can mix common synchronous actions and async actions in a single store, but you should not repeat the action names in both objects.
 
-### **localStorage** data persistence and \*_DevTools_
+### **localStorage** data persistence and **DevTools**
 
 When creating an store via **createStore** or **createStoreContext** you can specify some field that enable some useful features:
 
