@@ -401,18 +401,18 @@ export function createStore<
         hookPropsDeps || [hooksProps]
       );
 
-      const isMountedRef = useRef(false);
+      const firstSelectorCall = useRef(true);
 
       const { updateSelector, initialStateRef } = useMemo(() => {
         return {
           updateSelector: createSelector(hookSelector, (result) => {
             stateRef.current = result;
 
-            if (!isMountedRef.current) {
-              return;
+            if (firstSelectorCall.current) {
+              firstSelectorCall.current = false;
+            } else {
+              update();
             }
-
-            update();
           }),
           initialStateRef: hookSelector(currentStore, props),
         };
@@ -427,8 +427,6 @@ export function createStore<
       }, [props]);
 
       useEffect(() => {
-        isMountedRef.current = true;
-
         return () => {
           listeners.delete(updateSelector);
         };

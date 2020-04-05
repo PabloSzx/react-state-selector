@@ -23,7 +23,7 @@ export function toAnonFunction(arg: unknown): () => typeof arg {
   return () => arg;
 }
 
-const incrementParameter = (num: number) => ++num;
+const incrementParam = (num: number) => ++num;
 
 export const emptyArray: [] = [];
 
@@ -38,7 +38,7 @@ export const useUpdate = (
     }
   }, emptyArray);
 
-  return useCallback(() => setState(incrementParameter), emptyArray);
+  return useCallback(() => setState(incrementParam), emptyArray);
 };
 
 export const isClientSide = typeof window !== "undefined";

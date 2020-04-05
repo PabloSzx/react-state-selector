@@ -511,18 +511,18 @@ export function createStoreContext<
         hookPropsDeps || [hooksProps]
       );
 
-      const isMountedRef = useRef(false);
+      const firstSelectorCall = useRef(true);
 
       const { updateSelector, initialStateRef } = useMemo(() => {
         return {
           updateSelector: createSelector(hookSelector, (result) => {
             stateRef.current = result;
 
-            if (!isMountedRef.current) {
-              return;
+            if (firstSelectorCall.current) {
+              firstSelectorCall.current = false;
+            } else {
+              update();
             }
-
-            update();
           }),
           initialStateRef: hookSelector(storeCtx.current.store, props),
         };
@@ -537,8 +537,6 @@ export function createStoreContext<
       }, [props]);
 
       useEffect(() => {
-        isMountedRef.current = true;
-
         return () => {
           storeCtx.current.listeners.delete(updateSelector);
         };
