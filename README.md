@@ -22,8 +22,30 @@ yarn add react-state-selector
 
 > Check **https://pabloszx.github.io/react-state-selector** for more detailed examples and use cases.
 
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**
+
+  - [Features](#features)
+  - [Basic Usage](#basic-usage)
+  - [Basic Context Usage](#basic-context-usage)
+- [Default API](#default-api)
+  - [createStore](#createstore)
+    - [produce: _function(draft => void | TStore): TStore_](#produce-_functiondraft--void--tstore-tstore_)
+    - [asyncProduce: _function(async draft => void | TStore): Promise TStore_](#asyncproduce-_functionasync-draft--void--tstore-promise-tstore_)
+    - [useStore: _function(): TStore_](#usestore-_function-tstore_)
+  - [createStoreContext](#createstorecontext)
+    - [useStore: _function(): TStore_](#usestore-_function-tstore_-1)
+    - [useProduce: _function(): { produce, asyncProduce }_](#useproduce-_function--produce-asyncproduce-_)
+- [Custom API](#custom-api)
+  - [Custom Hooks](#custom-hooks)
+  - [Custom Actions](#custom-actions)
+    - [Actions](#actions)
+    - [Async Actions](#async-actions)
+  - [**localStorage** data persistence and **DevTools**](#localstorage-data-persistence-and-devtools)
+  - [**Map / Set** support _and/or_ **old browsers / React Native** support](#map--set-support-_andor_-old-browsers--react-native-support)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ### Features
 
