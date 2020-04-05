@@ -22,6 +22,9 @@ yarn add react-state-selector
 
 > Check **https://pabloszx.github.io/react-state-selector** for more detailed examples and use cases.
 
+<!-- START doctoc -->
+<!-- END doctoc -->
+
 ### Features
 
 - [x] Redux **DevTools** support
