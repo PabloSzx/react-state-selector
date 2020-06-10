@@ -11,6 +11,10 @@
     "selector",
     "react-state"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PabloSzx/react-state-selector.git"
+  },
   "license": "MIT",
   "author": "PabloSzx",
   "main": "dist/index.js",
