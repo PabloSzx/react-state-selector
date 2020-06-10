@@ -37,18 +37,6 @@ import {
   PersistenceStoragePlugin,
 } from "./plugins/persistenceStorage";
 
-export { createSelector } from "reselect";
-export {
-  Immutable,
-  Draft,
-  castDraft,
-  castImmutable,
-  original,
-  enableAllPlugins,
-  enableES5,
-  enableMapSet,
-} from "immer";
-
 /**
  *  Create **react-state-selector** global store
  *
