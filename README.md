@@ -24,11 +24,12 @@ yarn add react-state-selector
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
-  - [Features](#features)
-  - [Basic Usage](#basic-usage)
-  - [Basic Context Usage](#basic-context-usage)
+- [Features](#features)
+- [Basic Usage](#basic-usage)
+- [Basic Context Usage](#basic-context-usage)
 - [Default API](#default-api)
   - [createStore](#createstore)
     - [produce: _function(draft => void | TStore): TStore_](#produce-_functiondraft--void--tstore-tstore_)
@@ -54,7 +55,7 @@ yarn add react-state-selector
 - [x] **TypeScript** first class support
 - [x] **_reselect_** createSelector support
 - [x] Easy and efficient **localStorage** data persistence
-- [x] Support for **AsyncStorage** data persistence (_for example, for [React Native AsyncStorage](https://reactnative.dev/docs/0.53/asyncstorage)_), just add it inside the `persistenceMethod` option in `createStore` or `createStoreContext`, and use the helpers `isReady` _(createStore)_ or `useIsReady` _(createStoreContext)_ to wait for them to be ready after it's usage.
+- [x] Support for **AsyncStorage** data persistence (_for example, for [React Native AsyncStorage](https://reactnative.dev/docs/0.53/asyncstorage)_), just add it inside the `persistenceMethod` option in `createStore` or `createStoreContext`, and use the helpers `isReady` _(createStore)_ or `useIsReady` _(createStoreContext)_ to wait for them to be ready before it's usage.
 
 ### Basic Usage
 
