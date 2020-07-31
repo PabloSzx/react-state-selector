@@ -570,7 +570,7 @@ createStore(
 );
 ```
 
-### **Map / Set** support _and/or_ **old browsers / React Native** support
+### **Map, Set, old browsers, React Native** support
 
 In [Immer](https://immerjs.github.io/immer) latest version in order to reduce bundle size if you need support for **Map**, **Set**, **old browsers** or **React Native** you need to call some specific Immer functions as early as possible in your application.
 
