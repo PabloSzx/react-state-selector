@@ -29,6 +29,8 @@ import {
   toAnonFunction,
   useIsomorphicLayoutEffect,
   useUpdate,
+  Constants,
+  getPromiseWithCallbacks,
 } from "./common";
 import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
 import {
@@ -147,8 +149,13 @@ export function createStore<
    */
   actions: IActionsObj<TStore, typeof options> &
     IAsyncActionsObj<TStore, typeof options>;
+  /**
+   * Promise that resolves when the store is ready to be used.
+   * Only useful when using an Async Storage Persistance, like AsyncStorage from React Native
+   */
+  isReady: Promise<void>;
 } {
-  if (process.env.NODE_ENV !== "production") {
+  if (Constants.IS_NOT_PRODUCTION) {
     for (const name in options?.hooks) {
       if (
         name.length < 4 ||
@@ -162,7 +169,7 @@ export function createStore<
     }
   }
 
-  if (process.env.NODE_ENV !== "production") {
+  if (Constants.IS_NOT_PRODUCTION) {
     if (options?.actions && options.asyncActions) {
       const asyncActionsKeys = Object.keys(options.asyncActions);
 
@@ -178,10 +185,11 @@ export function createStore<
 
   let devTools: ReduxDevTools | undefined;
   let localStoragePlugin: PersistenceStoragePlugin<TStore> | undefined | null;
+  let isReady = Promise.resolve();
 
   if (
     options?.devName &&
-    (options.devToolsInProduction || process.env.NODE_ENV !== "production")
+    (options.devToolsInProduction || Constants.IS_NOT_PRODUCTION)
   ) {
     devTools = connectDevTools(options.devName);
   }
@@ -287,6 +295,8 @@ export function createStore<
   };
 
   if (options?.storagePersistence?.isActive) {
+    const { promise, resolve, reject } = getPromiseWithCallbacks();
+    isReady = promise;
     if (typeof initialStore !== "object" || Array.isArray(initialStore))
       throw new Error(
         "For local storage persistence your store has to be an object"
@@ -304,6 +314,8 @@ export function createStore<
       debounceWait: options.storagePersistence.debounceWait,
       persistenceMethod: options.storagePersistence.persistenceMethod,
       isSSR: options.storagePersistence.isSSR,
+      resolve,
+      reject,
     });
   }
 
@@ -432,6 +444,7 @@ export function createStore<
     > &
       IAsyncActionsObj<TStore, typeof options>,
     hooks: (hooksObj as unknown) as IHooksObj<TStore, typeof options>,
+    isReady,
     ...produceObj,
   };
 }

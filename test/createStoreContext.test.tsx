@@ -7,6 +7,7 @@ import { act, cleanup, render } from "@testing-library/react";
 import { act as actHooks, renderHook } from "@testing-library/react-hooks";
 
 import { createSelector, createStoreContext } from "../src";
+import { Constants } from "../src/common";
 import { nRenderString, useRenderCount } from "./utils/useRenderCount";
 
 afterEach(cleanup);
@@ -382,8 +383,8 @@ describe("actions", () => {
 
   it("should ignore the same name on actions and asyncActions in production", () => {
     expect(() => {
-      const beforeEnv = process.env.NODE_ENV;
-      process.env.NODE_ENV = "production";
+      const beforeEnv = Constants.IS_NOT_PRODUCTION;
+      Constants.IS_NOT_PRODUCTION = false;
       createStoreContext(
         {},
         {
@@ -395,7 +396,7 @@ describe("actions", () => {
           },
         }
       );
-      process.env.NODE_ENV = beforeEnv;
+      Constants.IS_NOT_PRODUCTION = beforeEnv;
     }).not.toThrow();
   });
 });
@@ -905,6 +906,7 @@ describe("context providers", () => {
         return { store, produceGetterResult: produce() };
       },
       {
+        //@ts-expect-error
         wrapper: Store.Provider,
       }
     );

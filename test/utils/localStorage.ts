@@ -1,3 +1,31 @@
+import { random } from "lodash";
+import wait from "waait";
+
+export const mockAsyncLocalStorage = (min = 50, max = 200) => {
+  const storage: Record<string, string | null> = {};
+
+  const getItem = async (key: string) => {
+    await wait(random(min, max));
+    return storage[key] ?? null;
+  };
+
+  const setItem = async (key: string, value: string) => {
+    await wait(random(min, max));
+    storage[key] = value;
+  };
+
+  const removeItem = async (key: string) => {
+    await wait(random(min, max));
+    delete storage[key];
+  };
+
+  return {
+    getItem,
+    setItem,
+    removeItem,
+  };
+};
+
 const previousLocalStorage =
   typeof window !== "undefined" ? window.localStorage : undefined;
 

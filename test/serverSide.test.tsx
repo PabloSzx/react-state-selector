@@ -6,6 +6,7 @@ import React, { FC } from "react";
 import { renderToString } from "react-dom/server";
 
 import { createStore, createStoreContext } from "../src";
+import { Constants } from "../src/common";
 
 describe("server-side-rendering", () => {
   describe("basic createStore", () => {
@@ -44,14 +45,14 @@ describe("server-side-rendering", () => {
 
     it("should not detect errors on wrong hook names if in production mode", () => {
       expect(() => {
-        const previous = process.env.NODE_ENV;
-        process.env.NODE_ENV = "production";
+        const previous = Constants.IS_NOT_PRODUCTION;
+        Constants.IS_NOT_PRODUCTION = false;
         createStore(initialStore, {
           hooks: {
             wrongHookName: () => {},
           },
         });
-        process.env.NODE_ENV = previous;
+        Constants.IS_NOT_PRODUCTION = previous;
       }).not.toThrow();
     });
   });
@@ -92,14 +93,14 @@ describe("server-side-rendering", () => {
 
     it("should not detect errors on wrong hook names if in production mode", () => {
       expect(() => {
-        const previous = process.env.NODE_ENV;
-        process.env.NODE_ENV = "production";
+        const previous = Constants.IS_NOT_PRODUCTION;
+        Constants.IS_NOT_PRODUCTION = false;
         createStoreContext(initialStore, {
           hooks: {
             wrongHookName: () => {},
           },
         });
-        process.env.NODE_ENV = previous;
+        Constants.IS_NOT_PRODUCTION = previous;
       }).not.toThrow();
     });
   });

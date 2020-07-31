@@ -1,8 +1,9 @@
 import { IPersistenceMethod, IProduce, isClientSide } from "../common";
+import { isPromise } from "../utils/isPromise";
 
 export type PersistenceStoragePlugin<T = any> = {
-  getState: () => void;
-  setState: (state: T) => void;
+  getState: () => void | Promise<void>;
+  setState: (state: T) => void | Promise<void>;
   current: Pick<
     ConnectPersistenceStorageArgs,
     "persistenceKey" | "isSSR" | "persistenceMethod" | "debounceWait"
@@ -56,9 +57,11 @@ export type IPersistenceOptions = {
 export type ConnectPersistenceStorageArgs = {
   persistenceKey: string;
   produce: IProduce<any>;
-  debounceWait?: number;
+  debounceWait: number | undefined;
   persistenceMethod?: IPersistenceMethod | undefined;
-  isSSR?: boolean;
+  isSSR: boolean | undefined;
+  resolve: () => void;
+  reject: (reason?: any) => void;
 };
 
 export const connectPersistenceStorage = ({
@@ -67,6 +70,8 @@ export const connectPersistenceStorage = ({
   debounceWait = 3000,
   persistenceMethod = isClientSide ? window.localStorage : undefined,
   isSSR,
+  resolve,
+  reject,
 }: ConnectPersistenceStorageArgs): PersistenceStoragePlugin | null => {
   if (!persistenceMethod) return null;
 
@@ -74,8 +79,18 @@ export const connectPersistenceStorage = ({
   let timeout: NodeJS.Timeout | undefined;
 
   const setStateFn = (state: unknown) => {
-    persistenceMethod.setItem(persistenceName, JSON.stringify(state));
+    const possiblePromise = persistenceMethod.setItem(
+      persistenceName,
+      JSON.stringify(state)
+    );
+
+    if (isPromise(possiblePromise)) {
+      return possiblePromise.then(() => {
+        isConnected = true;
+      });
+    }
     if (!isConnected) isConnected = true;
+    return void 0;
   };
 
   const setState = (state: unknown) => {
@@ -88,25 +103,58 @@ export const connectPersistenceStorage = ({
   };
 
   const getState = () => {
-    if (isConnected || !persistenceMethod) return;
+    if (isConnected || !persistenceMethod) {
+      resolve();
+      return void 0;
+    }
 
     try {
-      const state = persistenceMethod.getItem(persistenceName);
+      const statePromise = persistenceMethod.getItem(persistenceName);
 
-      if (state == null) {
+      if (isPromise(statePromise)) {
+        return statePromise
+          .then((state) => {
+            if (state == null) {
+              isConnected = true;
+              resolve();
+              return void 0;
+            }
+
+            produce(() => ({
+              ...produce(),
+              ...JSON.parse(state),
+            }));
+            isConnected = true;
+            resolve();
+            return void 0;
+          })
+          .catch(reject);
+      } else {
+        if (statePromise == null) {
+          isConnected = true;
+          resolve();
+          return void 0;
+        }
+
+        produce(() => ({
+          ...produce(),
+          ...JSON.parse(statePromise),
+        }));
         isConnected = true;
-        return;
+        resolve();
+        return void 0;
       }
-
-      produce(() => ({
-        ...produce(),
-        ...JSON.parse(state),
-      }));
-      isConnected = true;
-    } catch (err) {}
+    } catch (err) {
+      reject(err);
+      return void 0;
+    }
   };
 
-  if (!isSSR) getState();
+  if (isSSR) {
+    resolve();
+  } else {
+    getState();
+  }
 
   return {
     getState,

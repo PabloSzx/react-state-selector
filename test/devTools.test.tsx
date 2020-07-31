@@ -4,6 +4,7 @@ import { render } from "@testing-library/react";
 import { act, renderHook } from "@testing-library/react-hooks";
 
 import { createStore, createStoreContext } from "../src";
+import { Constants } from "../src/common";
 import { connectDevTools } from "../src/plugins/devTools";
 
 const mockDevTools = () => {
@@ -191,6 +192,7 @@ describe("with redux dev tools", () => {
       },
       {
         initialProps: {},
+        //@ts-expect-error
         wrapper: Store.Provider,
       }
     );
@@ -296,8 +298,9 @@ describe("with redux dev tools", () => {
 
   it("createStore in production by default should not connect to devTools", () => {
     const { devToolsMock } = mockDevTools();
-    const previous = process.env.NODE_ENV;
-    process.env.NODE_ENV = "production";
+
+    const previous = Constants.IS_NOT_PRODUCTION;
+    Constants.IS_NOT_PRODUCTION = false;
 
     createStore(
       {
@@ -314,13 +317,14 @@ describe("with redux dev tools", () => {
       0
     );
 
-    process.env.NODE_ENV = previous;
+    Constants.IS_NOT_PRODUCTION = previous;
   });
 
   it("createStore in production with it's config should connect to devTools", () => {
     const { devToolsMock, devState } = mockDevTools();
-    const previous = process.env.NODE_ENV;
-    process.env.NODE_ENV = "production";
+
+    const previous = Constants.IS_NOT_PRODUCTION;
+    Constants.IS_NOT_PRODUCTION = false;
 
     createStore(
       {
@@ -340,13 +344,13 @@ describe("with redux dev tools", () => {
 
     expect(devState.current).toEqual({ a: 1 });
 
-    process.env.NODE_ENV = previous;
+    Constants.IS_NOT_PRODUCTION = previous;
   });
 
   it("createStoreContext in production by default should not connect to devTools", () => {
     const { devToolsMock } = mockDevTools();
-    const previous = process.env.NODE_ENV;
-    process.env.NODE_ENV = "production";
+    const previous = Constants.IS_NOT_PRODUCTION;
+    Constants.IS_NOT_PRODUCTION = false;
 
     createStoreContext(
       {
@@ -363,13 +367,13 @@ describe("with redux dev tools", () => {
       0
     );
 
-    process.env.NODE_ENV = previous;
+    Constants.IS_NOT_PRODUCTION = previous;
   });
 
   it("createStoreContext in production with it's config should connect to devTools", () => {
     const { devToolsMock, devState } = mockDevTools();
-    const previous = process.env.NODE_ENV;
-    process.env.NODE_ENV = "production";
+    const previous = Constants.IS_NOT_PRODUCTION;
+    Constants.IS_NOT_PRODUCTION = false;
 
     createStoreContext(
       {
@@ -389,7 +393,7 @@ describe("with redux dev tools", () => {
 
     expect(devState.current).toEqual({ a: 1 });
 
-    process.env.NODE_ENV = previous;
+    Constants.IS_NOT_PRODUCTION = previous;
   });
 });
 

@@ -21,6 +21,7 @@ import {
   useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { createSelector, ParametricSelector } from "reselect";
 
@@ -40,6 +41,8 @@ import {
   toAnonFunction,
   useIsomorphicLayoutEffect,
   useUpdate,
+  Constants,
+  getPromiseWithCallbacks,
 } from "./common";
 import { connectDevTools, ReduxDevTools } from "./plugins/devTools";
 import {
@@ -47,6 +50,8 @@ import {
   IPersistenceOptions,
   PersistenceStoragePlugin,
 } from "./plugins/persistenceStorage";
+
+const defaultIsReady = Promise.resolve();
 
 /**
  * Create React Context version of a **react-state-selector** global store
@@ -164,8 +169,13 @@ export function createStoreContext<
    * @type {Record<string, (...props:any[]) => unknown>}
    */
   hooks: IHooksObj<TStore, typeof options>;
+  /**
+   * Returns promise that resolves when the store is ready to be used.
+   * Only useful when using an Async Storage Persistance, like AsyncStorage from React Native
+   */
+  useIsReady: () => boolean;
 } {
-  if (process.env.NODE_ENV !== "production") {
+  if (Constants.IS_NOT_PRODUCTION) {
     for (const name in options?.hooks) {
       if (
         name.length < 4 ||
@@ -177,9 +187,7 @@ export function createStoreContext<
         );
       }
     }
-  }
 
-  if (process.env.NODE_ENV !== "production") {
     if (options?.actions && options.asyncActions) {
       const asyncActionsKeys = Object.keys(options.asyncActions);
 
@@ -203,6 +211,8 @@ export function createStoreContext<
           "For local storage persistence your store has to be an object"
         );
 
+      const { promise: isReady, resolve, reject } = getPromiseWithCallbacks();
+
       let persistenceKey: string | undefined;
       if (options.storagePersistence.persistenceKey) {
         persistenceKey = options.storagePersistence.persistenceKey;
@@ -219,13 +229,20 @@ export function createStoreContext<
         persistenceKey += "-noProvider";
       }
 
-      return connectPersistenceStorage({
-        persistenceKey,
-        produce: produceStore,
-        debounceWait: options.storagePersistence.debounceWait,
-        persistenceMethod: options.storagePersistence.persistenceMethod,
-        isSSR: options.storagePersistence.isSSR,
-      });
+      return Object.assign(
+        connectPersistenceStorage({
+          persistenceKey,
+          produce: produceStore,
+          debounceWait: options.storagePersistence.debounceWait,
+          persistenceMethod: options.storagePersistence.persistenceMethod,
+          isSSR: options.storagePersistence.isSSR,
+          resolve,
+          reject,
+        }),
+        {
+          isReady,
+        }
+      );
     }
     return null;
   };
@@ -233,7 +250,7 @@ export function createStoreContext<
   const createDevToolsInstance = (debugName?: string | null) => {
     if (
       options?.devName &&
-      (options.devToolsInProduction || process.env.NODE_ENV !== "production")
+      (options.devToolsInProduction || Constants.IS_NOT_PRODUCTION)
     ) {
       let devToolsName: string;
       if (debugName) {
@@ -266,6 +283,7 @@ export function createStoreContext<
       asyncProduce: IAsyncProduce<TStore>;
     };
     storagePersistence?: PersistenceStoragePlugin | null;
+    isReady: Promise<void>;
   };
 
   const createProduceObj = (
@@ -358,16 +376,24 @@ export function createStoreContext<
       devTools: createDevToolsInstance(debugName),
     };
 
+    let isReady = defaultIsReady;
+
     const produceObj = createProduceObj(storeRef);
 
     storeRef.produce = produceObj;
 
-    storeRef.storagePersistence = createStoragePersistenceInstance(
+    const persistance = createStoragePersistenceInstance(
       produceObj.produce,
       debugName
     );
 
-    return Object.assign(storeRef, { produce: produceObj });
+    if (persistance) {
+      const { current, getState, setState } = persistance;
+      storeRef.storagePersistence = { current, getState, setState };
+      isReady = persistance.isReady;
+    }
+
+    return Object.assign(storeRef, { produce: produceObj, isReady });
   };
 
   const StoreContext = createContext<MutableRefObject<IStore>>({
@@ -546,11 +572,32 @@ export function createStoreContext<
     };
   }
 
+  const useIsReady = () => {
+    const {
+      current: { isReady },
+    } = useContext(StoreContext);
+
+    const [ready, setReady] = useState(isReady === defaultIsReady);
+
+    useEffect(() => {
+      if (isReady !== defaultIsReady) {
+        isReady.then(() => {
+          setTimeout(() => {
+            setReady(true);
+          }, 0);
+        });
+      }
+    }, [setReady]);
+
+    return ready;
+  };
+
   return {
     Provider,
     useStore,
     useProduce,
     useActions,
     hooks: (hooksObj as unknown) as IHooksObj<TStore, typeof options>,
+    useIsReady,
   };
 }

@@ -27,6 +27,10 @@ const incrementParam = (num: number) => ++num;
 
 export const emptyArray: [] = [];
 
+export const Constants = {
+  IS_NOT_PRODUCTION: process.env.NODE_ENV !== "production",
+};
+
 export const useUpdate = (
   persistencePlugin?: PersistenceStoragePlugin | null
 ) => {
@@ -39,6 +43,22 @@ export const useUpdate = (
   }, emptyArray);
 
   return useCallback(() => setState(incrementParam), emptyArray);
+};
+
+export const getPromiseWithCallbacks = () => {
+  let resolve: () => void = undefined as any;
+  let reject: (reason?: any) => void = undefined as any;
+
+  const promise = new Promise<void>((resolvePromise, rejectPromise) => {
+    resolve = resolvePromise;
+    reject = rejectPromise;
+  });
+
+  return {
+    promise,
+    resolve,
+    reject,
+  };
 };
 
 export const isClientSide = typeof window !== "undefined";
@@ -105,6 +125,6 @@ export type IUseProduce<TStore> = () => {
 };
 
 export type IPersistenceMethod = {
-  setItem(key: string, data: any): any;
-  getItem(key: string): string | null;
+  setItem(key: string, value: string): void | Promise<void>;
+  getItem(key: string): (string | null) | Promise<string | null>;
 };
