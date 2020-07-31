@@ -4609,7 +4609,7 @@ var storybook_ui_dll = (function (e) {
   "2n2P": function (e, t, n) {
     "use strict";
     Object.defineProperty(t, "__esModule", { value: !0 }), (t.version = void 0);
-    t.version = "5.3.16";
+    t.version = "5.3.18";
   },
   "2nwC": function (e, t, n) {
     "use strict";
@@ -24066,8 +24066,8 @@ var storybook_ui_dll = (function (e) {
       y = /^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/,
       S = /^(?:\n *)*\n/,
       T = /\r\n?/g,
-      O = /^\[\^(.*)\](:.*)\n/,
-      C = /^\[\^(.*)\]/,
+      O = /^\[\^([^\]]+)](:.*)\n/,
+      C = /^\[\^([^\]]+)]/,
       R = /\f/g,
       N = /^\s*?\[(x|\s)\]/,
       I = /^ *(#{1,6}) *([^\n]+)\n{0,2}/,
@@ -24230,7 +24230,12 @@ var storybook_ui_dll = (function (e) {
     }
     function Re(e) {
       try {
-        if (decodeURIComponent(e).match(/^\s*javascript:/i)) return null;
+        if (
+          decodeURIComponent(e)
+            .replace(/[^A-Za-z0-9/:]/g, "")
+            .match(/^\s*(javascript|vbscript|data):/i)
+        )
+          return null;
       } catch (e) {
         return null;
       }
@@ -24354,7 +24359,7 @@ var storybook_ui_dll = (function (e) {
                   })(s, l));
                 (A.test(d) || P.test(d)) &&
                   (e[u] = i.a.cloneElement(r(d.trim()), { key: n }));
-              } else e[c[t] || t] = !0;
+              } else "style" !== t && (e[c[t] || t] = !0);
               return e;
             }, {})
           : void 0;
@@ -24444,7 +24449,7 @@ var storybook_ui_dll = (function (e) {
             match: Se(C),
             order: 2,
             parse: function (e) {
-              return { content: e[1], target: "#" + e[1] };
+              return { content: e[1], target: "#" + t.slugify(e[1]) };
             },
             react: function (e, t, r) {
               return n(
@@ -24860,7 +24865,7 @@ var storybook_ui_dll = (function (e) {
               T.map(function (e) {
                 return n(
                   "div",
-                  { id: e.identifier, key: e.identifier },
+                  { id: t.slugify(e.identifier), key: e.identifier },
                   e.identifier,
                   Z(X(e.footnote, { inline: !0 }))
                 );
@@ -61935,7 +61940,13 @@ var storybook_ui_dll = (function (e) {
       m = s.styled.div(function (e) {
         var t = e.theme;
         return {
-          "&&": { p: { margin: "0 0 10px 0" } },
+          "&&": {
+            p: { margin: "0 0 10px 0" },
+            a: {
+              textDecoration: "underline",
+              "&:hover": { textDecoration: "none" },
+            },
+          },
           code: (0, u.codeCommon)({ theme: t }),
           "& code": { margin: 0, display: "inline-block" },
         };

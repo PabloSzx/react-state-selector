@@ -1,245 +1,42 @@
 (window.webpackJsonp = window.webpackJsonp || []).push([
   [0],
   {
-    113: function (module, __webpack_exports__, __webpack_require__) {
+    114: function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       __webpack_require__.d(__webpack_exports__, "a", function () {
         return DevTools;
       });
-      var connectDevTools = function (name) {
-        try {
-          if (
-            "undefined" != typeof window &&
-            void 0 !== window.__REDUX_DEVTOOLS_EXTENSION__
-          )
-            return window.__REDUX_DEVTOOLS_EXTENSION__.connect({
-              name: "Store " + name,
-              serialize: !0,
-            });
-        } catch (err) {}
-      };
-      try {
-        (connectDevTools.displayName = "connectDevTools"),
-          (connectDevTools.__docgenInfo = {
-            description: "",
-            displayName: "connectDevTools",
-            props: {
-              toString: {
-                defaultValue: null,
-                description: "Returns a string representation of a string.",
-                name: "toString",
-                required: !1,
-                type: { name: "() => string" },
-              },
-              charAt: {
-                defaultValue: null,
-                description:
-                  "Returns the character at the specified index.\n@param pos The zero-based index of the desired character.",
-                name: "charAt",
-                required: !0,
-                type: { name: "(pos: number) => string" },
-              },
-              charCodeAt: {
-                defaultValue: null,
-                description:
-                  "Returns the Unicode value of the character at the specified location.\n@param index The zero-based index of the desired character. If there is no character at the specified index, NaN is returned.",
-                name: "charCodeAt",
-                required: !0,
-                type: { name: "(index: number) => number" },
-              },
-              concat: {
-                defaultValue: null,
-                description:
-                  "Returns a string that contains the concatenation of two or more strings.\n@param strings The strings to append to the end of the string.",
-                name: "concat",
-                required: !0,
-                type: { name: "(...strings: string[]) => string" },
-              },
-              indexOf: {
-                defaultValue: null,
-                description:
-                  "Returns the position of the first occurrence of a substring.\n@param searchString The substring to search for in the string\n@param position The index at which to begin searching the String object. If omitted, search starts at the beginning of the string.",
-                name: "indexOf",
-                required: !0,
-                type: {
-                  name: "(searchString: string, position?: number) => number",
-                },
-              },
-              lastIndexOf: {
-                defaultValue: null,
-                description:
-                  "Returns the last occurrence of a substring in the string.\n@param searchString The substring to search for.\n@param position The index at which to begin searching. If omitted, the search begins at the end of the string.",
-                name: "lastIndexOf",
-                required: !0,
-                type: {
-                  name: "(searchString: string, position?: number) => number",
-                },
-              },
-              localeCompare: {
-                defaultValue: null,
-                description:
-                  "Determines whether two strings are equivalent in the current locale.\nDetermines whether two strings are equivalent in the current or specified locale.\n@param that String to compare to target string\n@param that String to compare to target string\n@param locales A locale string or array of locale strings that contain one or more language or locale tags. If you include more than one locale string, list them in descending order of priority so that the first entry is the preferred locale. If you omit this parameter, the default locale of the JavaScript runtime is used. This parameter must conform to BCP 47 standards; see the Intl.Collator object for details.\n@param options An object that contains one or more properties that specify comparison options. see the Intl.Collator object for details.",
-                name: "localeCompare",
-                required: !0,
-                type: {
-                  name:
-                    "{ (that: string): number; (that: string, locales?: string | string[], options?: CollatorOptions): number; }",
-                },
-              },
-              match: {
-                defaultValue: null,
-                description:
-                  "Matches a string with a regular expression, and returns an array containing the results of that search.\n@param regexp A variable name or string literal containing the regular expression pattern and flags.",
-                name: "match",
-                required: !0,
-                type: { name: "(regexp: string | RegExp) => RegExpMatchArray" },
-              },
-              replace: {
-                defaultValue: null,
-                description:
-                  "Replaces text in a string, using a regular expression or search string.\nReplaces text in a string, using a regular expression or search string.\n@param searchValue A string to search for.\n@param replaceValue A string containing the text to replace for every successful match of searchValue in this string.\n@param searchValue A string to search for.\n@param replacer A function that returns the replacement text.",
-                name: "replace",
-                required: !0,
-                type: {
-                  name:
-                    "{ (searchValue: string | RegExp, replaceValue: string): string; (searchValue: string | RegExp, replacer: (substring: string, ...args: any[]) => string): string; }",
-                },
-              },
-              search: {
-                defaultValue: null,
-                description:
-                  "Finds the first substring match in a regular expression search.\n@param regexp The regular expression pattern and applicable flags.",
-                name: "search",
-                required: !0,
-                type: { name: "(regexp: string | RegExp) => number" },
-              },
-              slice: {
-                defaultValue: null,
-                description:
-                  "Returns a section of a string.\n@param start The index to the beginning of the specified portion of stringObj.\n@param end The index to the end of the specified portion of stringObj. The substring includes the characters up to, but not including, the character indicated by end.\rIf this value is not specified, the substring continues to the end of stringObj.",
-                name: "slice",
-                required: !0,
-                type: { name: "(start?: number, end?: number) => string" },
-              },
-              split: {
-                defaultValue: null,
-                description:
-                  "Split a string into substrings using the specified separator and return them as an array.\n@param separator A string that identifies character or characters to use in separating the string. If omitted, a single-element array containing the entire string is returned.\n@param limit A value used to limit the number of elements returned in the array.",
-                name: "split",
-                required: !0,
-                type: {
-                  name:
-                    "(separator: string | RegExp, limit?: number) => string[]",
-                },
-              },
-              substring: {
-                defaultValue: null,
-                description:
-                  "Returns the substring at the specified location within a String object.\n@param start The zero-based index number indicating the beginning of the substring.\n@param end Zero-based index number indicating the end of the substring. The substring includes the characters up to, but not including, the character indicated by end.\rIf end is omitted, the characters from start through the end of the original string are returned.",
-                name: "substring",
-                required: !0,
-                type: { name: "(start: number, end?: number) => string" },
-              },
-              toLowerCase: {
-                defaultValue: null,
-                description:
-                  "Converts all the alphabetic characters in a string to lowercase.",
-                name: "toLowerCase",
-                required: !0,
-                type: { name: "() => string" },
-              },
-              toLocaleLowerCase: {
-                defaultValue: null,
-                description:
-                  "Converts all alphabetic characters to lowercase, taking into account the host environment's current locale.",
-                name: "toLocaleLowerCase",
-                required: !0,
-                type: { name: "(locales?: string | string[]) => string" },
-              },
-              toUpperCase: {
-                defaultValue: null,
-                description:
-                  "Converts all the alphabetic characters in a string to uppercase.",
-                name: "toUpperCase",
-                required: !0,
-                type: { name: "() => string" },
-              },
-              toLocaleUpperCase: {
-                defaultValue: null,
-                description:
-                  "Returns a string where all alphabetic characters have been converted to uppercase, taking into account the host environment's current locale.",
-                name: "toLocaleUpperCase",
-                required: !0,
-                type: { name: "(locales?: string | string[]) => string" },
-              },
-              trim: {
-                defaultValue: null,
-                description:
-                  "Removes the leading and trailing white space and line terminator characters from a string.",
-                name: "trim",
-                required: !0,
-                type: { name: "() => string" },
-              },
-              length: {
-                defaultValue: null,
-                description: "Returns the length of a String object.",
-                name: "length",
-                required: !0,
-                type: { name: "number" },
-              },
-              substr: {
-                defaultValue: null,
-                description:
-                  "Gets a substring beginning at the specified location and having the specified length.\n@param from The starting position of the desired substring. The index of the first character in the string is zero.\n@param length The number of characters to include in the returned substring.",
-                name: "substr",
-                required: !0,
-                type: { name: "(from: number, length?: number) => string" },
-              },
-              valueOf: {
-                defaultValue: null,
-                description:
-                  "Returns the primitive value of the specified object.",
-                name: "valueOf",
-                required: !1,
-                type: { name: "() => string" },
-              },
-            },
-          }),
-          "undefined" != typeof STORYBOOK_REACT_CLASSES &&
-            (STORYBOOK_REACT_CLASSES[
-              "src/plugins/devTools.ts#connectDevTools"
-            ] = {
-              docgenInfo: connectDevTools.__docgenInfo,
-              name: "connectDevTools",
-              path: "src/plugins/devTools.ts#connectDevTools",
-            });
-      } catch (__react_docgen_typescript_loader_error) {}
-      __webpack_require__(617);
-      var react = __webpack_require__(0),
-        react_default = __webpack_require__.n(react),
-        devTools_open = !1,
+      __webpack_require__(680);
+      var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0),
+        react__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(
+          react__WEBPACK_IMPORTED_MODULE_1__
+        ),
+        open = !1,
         DevTools = function () {
-          var isDevTools = Object(react.useMemo)(function () {
-            return (
-              "undefined" != typeof window &&
-              void 0 !== window.__REDUX_DEVTOOLS_EXTENSION__
-            );
-          }, []);
+          var isDevTools = Object(react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(
+            function () {
+              return (
+                "undefined" != typeof window &&
+                void 0 !== window.__REDUX_DEVTOOLS_EXTENSION__
+              );
+            },
+            []
+          );
           return (
-            Object(react.useEffect)(function () {
+            Object(react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
               if (
                 "undefined" != typeof window &&
                 void 0 !== window.__REDUX_DEVTOOLS_EXTENSION__ &&
-                !devTools_open
+                !open
               ) {
                 try {
                   window.__REDUX_DEVTOOLS_EXTENSION__.open("right");
                 } catch (err) {}
-                devTools_open = !0;
+                open = !0;
               }
             }, []),
             isDevTools
-              ? react_default.a.createElement(
+              ? react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(
                   "div",
                   {
                     style: {
@@ -249,15 +46,19 @@
                       padding: "5px",
                     },
                   },
-                  react_default.a.createElement(
+                  react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(
                     "p",
                     { style: { color: "white" } },
                     "Check the ",
-                    react_default.a.createElement("b", null, "Redux DevTools"),
+                    react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(
+                      "b",
+                      null,
+                      "Redux DevTools"
+                    ),
                     " extension and see the current state, history and actions dispatched to the store."
                   )
                 )
-              : react_default.a.createElement(
+              : react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(
                   "div",
                   {
                     style: {
@@ -269,10 +70,14 @@
                     },
                   },
                   "Install ",
-                  react_default.a.createElement("b", null, "Redux DevTools"),
+                  react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(
+                    "b",
+                    null,
+                    "Redux DevTools"
+                  ),
                   " in",
                   " ",
-                  react_default.a.createElement(
+                  react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(
                     "a",
                     {
                       style: { color: "white" },
@@ -281,12 +86,16 @@
                       href:
                         "https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en",
                     },
-                    react_default.a.createElement("b", null, "Chrome")
+                    react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(
+                      "b",
+                      null,
+                      "Chrome"
+                    )
                   ),
                   " ",
                   "or",
                   " ",
-                  react_default.a.createElement(
+                  react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(
                     "a",
                     {
                       style: { color: "white" },
@@ -295,7 +104,11 @@
                       href:
                         "https://addons.mozilla.org/en-US/firefox/addon/reduxdevtools/",
                     },
-                    react_default.a.createElement("b", null, "Firefox")
+                    react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(
+                      "b",
+                      null,
+                      "Firefox"
+                    )
                   )
                 )
           );
@@ -314,36 +127,50 @@
               path: "stories/utils/devTools.tsx#DevTools",
             });
       } catch (__react_docgen_typescript_loader_error) {}
+      try {
+        (DevTools.displayName = "DevTools"),
+          (DevTools.__docgenInfo = {
+            description: "",
+            displayName: "DevTools",
+            props: {},
+          }),
+          "undefined" != typeof STORYBOOK_REACT_CLASSES &&
+            (STORYBOOK_REACT_CLASSES["stories/utils/devTools.tsx#DevTools"] = {
+              docgenInfo: DevTools.__docgenInfo,
+              name: "DevTools",
+              path: "stories/utils/devTools.tsx#DevTools",
+            });
+      } catch (__react_docgen_typescript_loader_error) {}
     },
-    268: function (module, exports, __webpack_require__) {
-      __webpack_require__(269),
-        __webpack_require__(415),
-        (module.exports = __webpack_require__(416));
+    277: function (module, exports, __webpack_require__) {
+      __webpack_require__(278),
+        __webpack_require__(424),
+        (module.exports = __webpack_require__(425));
     },
-    333: function (module, exports) {},
-    416: function (module, __webpack_exports__, __webpack_require__) {
+    342: function (module, exports) {},
+    425: function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       __webpack_require__.r(__webpack_exports__),
         function (module) {
           var _storybook_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-            267
+            276
           );
           Object(_storybook_react__WEBPACK_IMPORTED_MODULE_0__.configure)(
-            __webpack_require__(607),
+            __webpack_require__(670),
             module
           );
-        }.call(this, __webpack_require__(417)(module));
+        }.call(this, __webpack_require__(426)(module));
     },
-    607: function (module, exports, __webpack_require__) {
+    670: function (module, exports, __webpack_require__) {
       var map = {
-        "./createStore/asyncActions.stories.tsx": 608,
-        "./createStore/basicUsage.stories.tsx": 611,
-        "./createStore/createSelector.stories.tsx": 612,
-        "./createStore/multipleProps.stories.tsx": 613,
-        "./createStoreContext/asyncActionsContext.stories.tsx": 614,
-        "./createStoreContext/basicUsageContext.stories.tsx": 615,
-        "./devTools/createStore.stories.tsx": 616,
-        "./devTools/createStoreContext.stories.tsx": 618,
+        "./createStore/asyncActions.stories.tsx": 671,
+        "./createStore/basicUsage.stories.tsx": 674,
+        "./createStore/createSelector.stories.tsx": 675,
+        "./createStore/multipleProps.stories.tsx": 676,
+        "./createStoreContext/asyncActionsContext.stories.tsx": 677,
+        "./createStoreContext/basicUsageContext.stories.tsx": 678,
+        "./devTools/createStore.stories.tsx": 679,
+        "./devTools/createStoreContext.stories.tsx": 681,
       };
       function webpackContext(req) {
         var id = webpackContextResolve(req);
@@ -361,16 +188,16 @@
       }),
         (webpackContext.resolve = webpackContextResolve),
         (module.exports = webpackContext),
-        (webpackContext.id = 607);
+        (webpackContext.id = 670);
     },
-    608: function (module, __webpack_exports__, __webpack_require__) {
+    671: function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       __webpack_require__.r(__webpack_exports__),
         __webpack_require__.d(__webpack_exports__, "AsyncActions", function () {
           return AsyncActions;
         });
       var FetchState,
-        tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(67),
+        tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(66),
         react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0),
         react__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(
           react__WEBPACK_IMPORTED_MODULE_1__
@@ -528,7 +355,7 @@
             __MODULE_DEPENDENCIES__: [],
             __LOCAL_DEPENDENCIES__: {},
             __SOURCE_PREFIX__:
-              "/home/pablosz/react-state-selector/stories/createStore",
+              "E:\\Repositories\\react-state-selector\\stories\\createStore",
             __IDS_TO_FRAMEWORKS__: {},
           }
         );
@@ -550,7 +377,7 @@
         title: "createStore",
       };
     },
-    611: function (module, __webpack_exports__, __webpack_require__) {
+    674: function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       __webpack_require__.r(__webpack_exports__),
         __webpack_require__.d(__webpack_exports__, "basicUsage", function () {
@@ -759,7 +586,7 @@
             __MODULE_DEPENDENCIES__: [],
             __LOCAL_DEPENDENCIES__: {},
             __SOURCE_PREFIX__:
-              "/home/pablosz/react-state-selector/stories/createStore",
+              "E:\\Repositories\\react-state-selector\\stories\\createStore",
             __IDS_TO_FRAMEWORKS__: {},
           }
         );
@@ -781,7 +608,7 @@
         title: "createStore",
       };
     },
-    612: function (module, __webpack_exports__, __webpack_require__) {
+    675: function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       __webpack_require__.r(__webpack_exports__),
         __webpack_require__.d(
@@ -994,7 +821,7 @@
             __MODULE_DEPENDENCIES__: [],
             __LOCAL_DEPENDENCIES__: {},
             __SOURCE_PREFIX__:
-              "/home/pablosz/react-state-selector/stories/createStore",
+              "E:\\Repositories\\react-state-selector\\stories\\createStore",
             __IDS_TO_FRAMEWORKS__: {},
           }
         );
@@ -1016,7 +843,7 @@
         title: "createStore",
       };
     },
-    613: function (module, __webpack_exports__, __webpack_require__) {
+    676: function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       __webpack_require__.r(__webpack_exports__),
         __webpack_require__.d(
@@ -1141,7 +968,7 @@
             __MODULE_DEPENDENCIES__: [],
             __LOCAL_DEPENDENCIES__: {},
             __SOURCE_PREFIX__:
-              "/home/pablosz/react-state-selector/stories/createStore",
+              "E:\\Repositories\\react-state-selector\\stories\\createStore",
             __IDS_TO_FRAMEWORKS__: {},
           }
         );
@@ -1163,7 +990,7 @@
         title: "createStore",
       };
     },
-    614: function (module, __webpack_exports__, __webpack_require__) {
+    677: function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       __webpack_require__.r(__webpack_exports__),
         __webpack_require__.d(
@@ -1174,7 +1001,7 @@
           }
         );
       var FetchState,
-        tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(67),
+        tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(66),
         react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(0),
         react__WEBPACK_IMPORTED_MODULE_1___default = __webpack_require__.n(
           react__WEBPACK_IMPORTED_MODULE_1__
@@ -1336,7 +1163,7 @@
             __MODULE_DEPENDENCIES__: [],
             __LOCAL_DEPENDENCIES__: {},
             __SOURCE_PREFIX__:
-              "/home/pablosz/react-state-selector/stories/createStoreContext",
+              "E:\\Repositories\\react-state-selector\\stories\\createStoreContext",
             __IDS_TO_FRAMEWORKS__: {},
           }
         );
@@ -1358,7 +1185,7 @@
         title: "createStoreContext",
       };
     },
-    615: function (module, __webpack_exports__, __webpack_require__) {
+    678: function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       __webpack_require__.r(__webpack_exports__),
         __webpack_require__.d(__webpack_exports__, "basicUsage", function () {
@@ -1625,7 +1452,7 @@
             __MODULE_DEPENDENCIES__: [],
             __LOCAL_DEPENDENCIES__: {},
             __SOURCE_PREFIX__:
-              "/home/pablosz/react-state-selector/stories/createStoreContext",
+              "E:\\Repositories\\react-state-selector\\stories\\createStoreContext",
             __IDS_TO_FRAMEWORKS__: {},
           }
         );
@@ -1647,7 +1474,7 @@
         title: "createStoreContext",
       };
     },
-    616: function (module, __webpack_exports__, __webpack_require__) {
+    679: function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       __webpack_require__.r(__webpack_exports__),
         __webpack_require__.d(
@@ -1665,7 +1492,7 @@
           11
         ),
         _stories_utils_devTools__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-          113
+          114
         ),
         addSourceDecorator =
           (__webpack_require__(15).withSource,
@@ -1877,7 +1704,7 @@
             __MODULE_DEPENDENCIES__: [],
             __LOCAL_DEPENDENCIES__: {},
             __SOURCE_PREFIX__:
-              "/home/pablosz/react-state-selector/stories/devTools",
+              "E:\\Repositories\\react-state-selector\\stories\\devTools",
             __IDS_TO_FRAMEWORKS__: {},
           }
         );
@@ -1899,8 +1726,8 @@
         title: "devTools",
       };
     },
-    617: function (module, exports, __webpack_require__) {},
-    618: function (module, __webpack_exports__, __webpack_require__) {
+    680: function (module, exports, __webpack_require__) {},
+    681: function (module, __webpack_exports__, __webpack_require__) {
       "use strict";
       __webpack_require__.r(__webpack_exports__),
         __webpack_require__.d(
@@ -1918,7 +1745,7 @@
           11
         ),
         _stories_utils_devTools__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-          113
+          114
         ),
         addSourceDecorator =
           (__webpack_require__(15).withSource,
@@ -2188,7 +2015,7 @@
             __MODULE_DEPENDENCIES__: [],
             __LOCAL_DEPENDENCIES__: {},
             __SOURCE_PREFIX__:
-              "/home/pablosz/react-state-selector/stories/devTools",
+              "E:\\Repositories\\react-state-selector\\stories\\devTools",
             __IDS_TO_FRAMEWORKS__: {},
           }
         );
@@ -2211,6 +2038,6 @@
       };
     },
   },
-  [[268, 1, 2]],
+  [[277, 1, 2]],
 ]);
-//# sourceMappingURL=main.ed27fa0b068d5d94a0aa.bundle.js.map
+//# sourceMappingURL=main.44ec62af9236dbf945f2.bundle.js.map

@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "./static/css/main.0ebf8677.chunk.css",
-    "main.js": "./main.ed27fa0b068d5d94a0aa.bundle.js",
-    "main.css.map": "./static/css/main.0ebf8677.chunk.css.map",
-    "main.js.map": "./main.ed27fa0b068d5d94a0aa.bundle.js.map",
-    "runtime~main.js": "./runtime~main.ed27fa0b068d5d94a0aa.bundle.js",
-    "runtime~main.js.map": "./runtime~main.ed27fa0b068d5d94a0aa.bundle.js.map",
-    "vendors~main.js": "./vendors~main.ed27fa0b068d5d94a0aa.bundle.js",
-    "vendors~main.js.map": "./vendors~main.ed27fa0b068d5d94a0aa.bundle.js.map",
+    "main.css": "./static/css/main.b148d59f.chunk.css",
+    "main.js": "./main.44ec62af9236dbf945f2.bundle.js",
+    "main.css.map": "./static/css/main.b148d59f.chunk.css.map",
+    "main.js.map": "./main.44ec62af9236dbf945f2.bundle.js.map",
+    "runtime~main.js": "./runtime~main.44ec62af9236dbf945f2.bundle.js",
+    "runtime~main.js.map": "./runtime~main.44ec62af9236dbf945f2.bundle.js.map",
+    "vendors~main.js": "./vendors~main.44ec62af9236dbf945f2.bundle.js",
+    "vendors~main.js.map": "./vendors~main.44ec62af9236dbf945f2.bundle.js.map",
     "../dist/.storybook/config.d.ts": "./../dist/.storybook/config.d.ts",
     "../dist/src/common.d.ts": "./../dist/src/common.d.ts",
     "../dist/src/createStore.d.ts": "./../dist/src/createStore.d.ts",
@@ -15,24 +15,25 @@
     "../dist/src/index.d.ts": "./../dist/src/index.d.ts",
     "../dist/src/plugins/devTools.d.ts": "./../dist/src/plugins/devTools.d.ts",
     "../dist/src/plugins/persistenceStorage.d.ts": "./../dist/src/plugins/persistenceStorage.d.ts",
+    "../dist/src/utils/isPromise.d.ts": "./../dist/src/utils/isPromise.d.ts",
+    "../dist/stories/createStoreContext/asyncActionsContext.stories.d.ts": "./../dist/stories/createStoreContext/asyncActionsContext.stories.d.ts",
+    "../dist/stories/createStoreContext/basicUsageContext.stories.d.ts": "./../dist/stories/createStoreContext/basicUsageContext.stories.d.ts",
     "../dist/stories/createStore/asyncActions.stories.d.ts": "./../dist/stories/createStore/asyncActions.stories.d.ts",
     "../dist/stories/createStore/basicUsage.stories.d.ts": "./../dist/stories/createStore/basicUsage.stories.d.ts",
     "../dist/stories/createStore/createSelector.stories.d.ts": "./../dist/stories/createStore/createSelector.stories.d.ts",
     "../dist/stories/createStore/multipleProps.stories.d.ts": "./../dist/stories/createStore/multipleProps.stories.d.ts",
-    "../dist/stories/createStoreContext/asyncActionsContext.stories.d.ts": "./../dist/stories/createStoreContext/asyncActionsContext.stories.d.ts",
-    "../dist/stories/createStoreContext/basicUsageContext.stories.d.ts": "./../dist/stories/createStoreContext/basicUsageContext.stories.d.ts",
     "../dist/stories/devTools/createStore.stories.d.ts": "./../dist/stories/devTools/createStore.stories.d.ts",
     "../dist/stories/devTools/createStoreContext.stories.d.ts": "./../dist/stories/devTools/createStoreContext.stories.d.ts",
     "../dist/stories/utils/devTools.d.ts": "./../dist/stories/utils/devTools.d.ts",
     "iframe.html": "./iframe.html",
-    "precache-manifest.8ad1891fb7fd4f8371193ad4675ef421.js": "./precache-manifest.8ad1891fb7fd4f8371193ad4675ef421.js",
+    "precache-manifest.66a09c230f46045e94ec09aa83e38413.js": "./precache-manifest.66a09c230f46045e94ec09aa83e38413.js",
     "service-worker.js": "./service-worker.js",
-    "vendors~main.ed27fa0b068d5d94a0aa.bundle.js.LICENSE.txt": "./vendors~main.ed27fa0b068d5d94a0aa.bundle.js.LICENSE.txt"
+    "vendors~main.44ec62af9236dbf945f2.bundle.js.LICENSE.txt": "./vendors~main.44ec62af9236dbf945f2.bundle.js.LICENSE.txt"
   },
   "entrypoints": [
-    "runtime~main.ed27fa0b068d5d94a0aa.bundle.js",
-    "vendors~main.ed27fa0b068d5d94a0aa.bundle.js",
-    "static/css/main.0ebf8677.chunk.css",
-    "main.ed27fa0b068d5d94a0aa.bundle.js"
+    "runtime~main.44ec62af9236dbf945f2.bundle.js",
+    "vendors~main.44ec62af9236dbf945f2.bundle.js",
+    "static/css/main.b148d59f.chunk.css",
+    "main.44ec62af9236dbf945f2.bundle.js"
   ]
 }
