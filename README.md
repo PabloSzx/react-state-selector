@@ -24,12 +24,11 @@ yarn add react-state-selector
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 **Table of Contents**
 
-- [Features](#features)
-- [Basic Usage](#basic-usage)
-- [Basic Context Usage](#basic-context-usage)
+  - [Features](#features)
+  - [Basic Usage](#basic-usage)
+  - [Basic Context Usage](#basic-context-usage)
 - [Default API](#default-api)
   - [createStore](#createstore)
     - [produce: _function(draft => void | TStore): TStore_](#produce-_functiondraft--void--tstore-tstore_)
@@ -44,7 +43,7 @@ yarn add react-state-selector
     - [Actions](#actions)
     - [Async Actions](#async-actions)
   - [**localStorage** data persistence and **DevTools**](#localstorage-data-persistence-and-devtools)
-  - [**Map / Set** support _and/or_ **old browsers / React Native** support](#map--set-support-_andor_-old-browsers--react-native-support)
+  - [**Map, Set, old browsers, React Native** support](#map-set-old-browsers-react-native-support)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
