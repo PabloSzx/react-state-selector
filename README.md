@@ -24,11 +24,12 @@ yarn add react-state-selector
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
-  - [Features](#features)
-  - [Basic Usage](#basic-usage)
-  - [Basic Context Usage](#basic-context-usage)
+- [Features](#features)
+- [Basic Usage](#basic-usage)
+- [Basic Context Usage](#basic-context-usage)
 - [Default API](#default-api)
   - [createStore](#createstore)
     - [produce: _function(draft => void | TStore): TStore_](#produce-_functiondraft--void--tstore-tstore_)
@@ -399,8 +400,8 @@ const A = () => {
   );
 };
 const B = () => {
-  const { b } = Store.useStore();
-  const { decrement } = Store.useActions();
+  const { b } = StoreCtx.useStore();
+  const { decrement } = StoreCtx.useActions();
 
   return (
     <div>
