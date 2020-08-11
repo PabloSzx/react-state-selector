@@ -48,7 +48,7 @@ yarn add react-state-selector
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-### Features
+## Features
 
 - [x] Redux **DevTools** support
 - [x] **async** actions (_**redux-thunk** alike_)
@@ -57,7 +57,7 @@ yarn add react-state-selector
 - [x] Easy and efficient **localStorage** data persistence
 - [x] Support for **AsyncStorage** data persistence (_for example, for [React Native AsyncStorage](https://reactnative.dev/docs/0.53/asyncstorage)_), just add it inside the `persistenceMethod` option in `createStore` or `createStoreContext`, and use the helpers `isReady` _(createStore)_ or `useIsReady` _(createStoreContext)_ to wait for them to be ready before it's usage.
 
-### Basic Usage
+## Basic Usage
 
 For simple global stores you can use createStore.
 
@@ -125,7 +125,7 @@ const CounterB = () => {
 
 This library uses type inference to automatically help you with auto-completion and type-safety, **even if you only use JavaScript and not TypeScript!**.
 
-### Basic Context Usage
+## Basic Context Usage
 
 If you need multiple instances of a specific store you can use the React Context API to make specific instances of the store.
 
@@ -488,7 +488,7 @@ const Data = () => {
 
 > Keep in mind that you can mix common synchronous actions and async actions in a single store, but you should not repeat the action names in both objects.
 
-### **localStorage** data persistence and **DevTools**
+## **localStorage** data persistence and **DevTools**
 
 When creating an store via **createStore** or **createStoreContext** you can specify some fields that enable some useful features:
 
@@ -570,7 +570,7 @@ createStore(
 );
 ```
 
-### **Map, Set, old browsers, React Native** support
+## **Map, Set, old browsers, React Native** support
 
 In [Immer](https://immerjs.github.io/immer) latest version in order to reduce bundle size if you need support for **Map**, **Set**, **old browsers** or **React Native** you need to call some specific Immer functions as early as possible in your application.
 
