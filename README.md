@@ -24,7 +24,6 @@ yarn add react-state-selector
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 **Table of Contents**
 
 - [Features](#features)
@@ -43,8 +42,8 @@ yarn add react-state-selector
   - [Custom Actions](#custom-actions)
     - [Actions](#actions)
     - [Async Actions](#async-actions)
-  - [**localStorage** data persistence and **DevTools**](#localstorage-data-persistence-and-devtools)
-  - [**Map, Set, old browsers, React Native** support](#map-set-old-browsers-react-native-support)
+- [**localStorage** data persistence and **DevTools**](#localstorage-data-persistence-and-devtools)
+- [**Map, Set, old browsers, React Native** support](#map-set-old-browsers-react-native-support)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
