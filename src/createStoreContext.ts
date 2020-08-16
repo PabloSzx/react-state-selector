@@ -55,37 +55,6 @@ const defaultIsReady = Promise.resolve();
 
 /**
  * Create React Context version of a **react-state-selector** global store
- *
- * @export
- * @template TStore
- * Any object, including array or complex objects like Map, Set or Classes. Even primitives would work.
- * @template THooks
- * Object that defines the custom hooks of the store.
- * @template TActions
- * Object that defines the custom actions of the store.
- * @template TAsyncActions
- * Object that defines the custom async actions of the store.
- * @param {Immutable<TStore>} initialStore
- * Initial state of the store
- * @param {{
- *     hooks?: THooks;
- *     actions?: TActions;
- *     devName?: string;
- *     devToolsInProduction?: boolean;
- *   }} [options]
- * Options object that may contain:
- * hooks: custom hooks;
- * actions: custom actions;
- * devName: name used to activate Redux DevTools;
- * devToolsInProduction: flag to manually activate the usage of the Redux DevTools in production
- * @returns {{
- *   Provider: FunctionComponent<{ debugName?: string }>;
- *   useStore: IUseStore<TStore>;
- *   useProduce: IUseProduce<TStore>;
- *   useActions: () => IActionsObj<TStore, typeof options> & IAsyncActionsObj<TStore, typeof options>;
- *   hooks: IHooksObj<TStore, typeof options>;
- * }}
- * Resulting object containing of the store.
  */
 export function createStoreContext<
   TStore,
@@ -97,76 +66,54 @@ export function createStoreContext<
   options?: {
     /**
      * Custom hooks.
-     *
-     * @type {Record<string, (store: Immutable<TStore>, props: any) => unknown>}
      */
     hooks?: THooks;
     /**
      * Custom actions.
-     *
-     * @type {Record<string, (...args: any[]) => (draft: Draft<TStore>) => void | TStore>}
      */
     actions?: TActions;
     /**
      * Custom async actions.
-     *
-     * @type {Record<string, (produce: (draft: (draft: Draft<TStore>) => void | TStore) => Immutable<TStore>) => (...args: any[]) => (draft: Draft<TStore>) => void | TStore>}
      */
     asyncActions?: TAsyncActions;
     /**
      * Name used to activate Redux DevTools.
-     *
-     * @type {string}
      */
     devName?: string;
     /**
      * Flag to manually activate the usage of the Redux DevTools in production.
-     *
-     * @type {boolean}
      */
     devToolsInProduction?: boolean;
 
     /**
      * Storage persistence options for the store.
      * By default uses window.localStorage
-     *
-     * @type {IPersistenceOptions}
      */
     storagePersistence?: IPersistenceOptions;
   }
 ): {
   /**
    * React Context Provider of an instance of the global store
-   *
-   * @type {FunctionComponent<{ debugName?: string }>}
    */
   Provider: FunctionComponent<{ debugName?: string }>;
   /**
    * Default hook that listens for any change in the store.
-   *
-   * @type {() => Immutable<TStore>}
    */
   useStore: IUseStore<TStore>;
   /**
    * Default hook that contains "produce" direct function to mutate the store and "asyncProduce" async version of produce
-   *
-   * @type {() => {
-   *  produce: (draft: (draft: Draft<TStore>) => void | TStore) => Immutable<TStore>
-   *  asyncProduce: (draft: (draft: Draft<TStore>) => Promise<void>) => Promise<Immutable<TStore>>
-   * }}
    */
   useProduce: IUseProduce<TStore>;
   /**
    * Hook that contains the custom actions specified in the options
-   *
-   * @type {() => Record<string, (...props:any[]) => TStore | Promise<TStore>>}
    */
-  useActions: () => IActionsObj<TStore, typeof options> &
-    IAsyncActionsObj<TStore, typeof options>;
+  useActions: () => IActionsObj<TStore, typeof options>;
+  /**
+   * Hook that contains the custom async actions specified in the options
+   */
+  useAsyncActions: () => IAsyncActionsObj<TStore, typeof options>;
   /**
    * Object containing the custom hooks specified in the options
-   *
-   * @type {Record<string, (...props:any[]) => unknown>}
    */
   hooks: IHooksObj<TStore, typeof options>;
   /**
@@ -276,8 +223,8 @@ export function createStoreContext<
       unknown
     >;
     devTools: ReduxDevTools | undefined;
-    actions?: IActionsObj<TStore, typeof options> &
-      IAsyncActionsObj<TStore, typeof options>;
+    actions?: IActionsObj<TStore, typeof options>;
+    asyncActions?: IAsyncActionsObj<TStore, typeof options>;
     produce: {
       produce: IProduce<TStore>;
       asyncProduce: IAsyncProduce<TStore>;
@@ -450,11 +397,6 @@ export function createStoreContext<
           (...args: unknown[]) => Immutable<TStore>
         > = {};
 
-        const asyncActionsObj: Record<
-          string,
-          (...args: unknown[]) => Promise<Immutable<TStore>>
-        > = {};
-
         for (const [actionName, actionFn] of Object.entries(
           options?.actions || {}
         )) {
@@ -494,8 +436,29 @@ export function createStoreContext<
             return storeCtx.current.store;
           };
         }
+
+        storeCtx.current.actions = (actionsObj as unknown) as IActionsObj<
+          TStore,
+          typeof options
+        >;
+      }
+
+      return storeCtx.current.actions;
+    }, emptyArray);
+  };
+  const useAsyncActions = () => {
+    const storeCtx = useContext(StoreContext);
+    const produceObj = useProduce();
+
+    return useMemo(() => {
+      if (storeCtx.current.asyncActions === undefined) {
+        const asyncActionsObj: Record<
+          string,
+          (...args: unknown[]) => Promise<Immutable<TStore>>
+        > = {};
+
         for (const [actionName, actionFn] of Object.entries(
-          options?.asyncActions || {}
+          (options && options.asyncActions) || {}
         )) {
           asyncActionsObj[actionName] = async (...args) => {
             await actionFn(produceObj.produce)(...args);
@@ -504,14 +467,13 @@ export function createStoreContext<
           };
         }
 
-        storeCtx.current.actions = ({
-          ...actionsObj,
-          ...asyncActionsObj,
-        } as unknown) as IActionsObj<TStore, typeof options> &
-          IAsyncActionsObj<TStore, typeof options>;
+        storeCtx.current.asyncActions = (asyncActionsObj as unknown) as IAsyncActionsObj<
+          TStore,
+          typeof options
+        >;
       }
 
-      return storeCtx.current.actions;
+      return storeCtx.current.asyncActions;
     }, emptyArray);
   };
 
@@ -597,6 +559,7 @@ export function createStoreContext<
     useStore,
     useProduce,
     useActions,
+    useAsyncActions,
     hooks: (hooksObj as unknown) as IHooksObj<TStore, typeof options>,
     useIsReady,
   };

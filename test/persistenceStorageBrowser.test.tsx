@@ -237,7 +237,7 @@ describe("createStore", () => {
 
     expect(storagePersistence.localStorageMock.getItem).toBeCalledTimes(2);
 
-    await expect(Store.actions.asyncIncrement()).resolves.toEqual({
+    await expect(Store.asyncActions.asyncIncrement()).resolves.toEqual({
       a: 4,
     });
 

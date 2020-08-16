@@ -215,7 +215,7 @@ describe("actions", () => {
     expect(inc).toEqual({ a: 21, state: AsyncState.waiting });
 
     const promiseIncrement = expect(
-      Store.actions.asyncIncrement(10)
+      Store.asyncActions.asyncIncrement(10)
     ).resolves.toEqual({
       a: 31,
       state: AsyncState.complete,
@@ -241,6 +241,7 @@ describe("actions", () => {
 
     const Store = createStore(initialStore, {
       hooks: {},
+      actions: {},
       asyncActions: {
         asyncError: (produce) => async (_n: number) => {
           await new Promise((_resolve, reject) => {
@@ -259,9 +260,9 @@ describe("actions", () => {
     });
 
     expect(Store.produce().state).toBe(AsyncState.waiting);
-    const rejectPromise = expect(Store.actions.asyncError(10)).rejects.toBe(
-      SampleError
-    );
+    const rejectPromise = expect(
+      Store.asyncActions.asyncError(10)
+    ).rejects.toBe(SampleError);
     expect(Store.produce().state).toBe(AsyncState.loading);
     await rejectPromise;
     expect(Store.produce().state).toBe(AsyncState.error);

@@ -24,6 +24,7 @@ yarn add react-state-selector
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
 **Table of Contents**
 
 - [Features](#features)
@@ -415,7 +416,7 @@ const B = () => {
 
 Async actions need to be defined in another object inside the **options object** called **asyncActions**, and the first function should **not** be _async_ itself since it receives a **_dispatch like_** function which works just like [produce](#produce-functiondraft--void--tstore-tstore), and after that you should define the **async function** which will receive the parameters you expect in the action.
 
-Both action types are merged inside the same **actions object** result of the [synchronous actions](#actions).
+The async actions are put separately in an **asyncActions object** `or useAsyncActions() hook`.
 
 ```tsx
 enum State {
@@ -459,8 +460,8 @@ const Store = createStore(
 const Data = () => {
   const storeData = Store.useStore();
 
-  // const {getData} = Store.useActions();
-  const { getData } = Store.actions;
+  // const {getData} = Store.useAsyncActions();
+  const { getData } = Store.asyncActions;
 
   switch (storeData.state) {
     case State.loading:

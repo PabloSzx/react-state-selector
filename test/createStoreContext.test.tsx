@@ -264,8 +264,9 @@ describe("actions", () => {
       () => {
         const store = Store.useStore();
         const actions = Store.useActions();
-
-        return { store, actions };
+        const asyncActions = Store.useAsyncActions();
+        Store.useAsyncActions();
+        return { store, actions, asyncActions };
       },
       {
         wrapper: Store.Provider,
@@ -284,7 +285,7 @@ describe("actions", () => {
     expect(result.current.store).toEqual({ a: 21, state: AsyncState.waiting });
 
     const promiseIncrement = actHooks(async () => {
-      await result.current.actions.asyncIncrement(10);
+      await result.current.asyncActions.asyncIncrement(10);
     });
     expect(result.current.store).toEqual({
       a: 21,
@@ -308,6 +309,7 @@ describe("actions", () => {
 
     const Store = createStoreContext(initialStore, {
       hooks: {},
+      actions: {},
       asyncActions: {
         asyncError: (produce) => async (_n: number) => {
           await actHooks(async () => {
@@ -331,8 +333,9 @@ describe("actions", () => {
       () => {
         const store = Store.useStore();
         const actions = Store.useActions();
+        const asyncActions = Store.useAsyncActions();
 
-        return { store, actions };
+        return { store, actions, asyncActions };
       },
       {
         wrapper: Store.Provider,
@@ -345,7 +348,7 @@ describe("actions", () => {
     });
 
     const promiseIncrement = expect(
-      result.current.actions.asyncError(10)
+      result.current.asyncActions.asyncError(10)
     ).rejects.toBe(SampleError);
 
     expect(result.current.store).toEqual({
@@ -703,6 +706,7 @@ describe("selectors and listeners", () => {
     const {
       hooks: { useMultiplySlow, useMultiplyFast },
       useProduce,
+      useAsyncActions,
       Provider,
     } = createStoreContext(initialStore, {
       hooks: {
@@ -756,7 +760,7 @@ describe("selectors and listeners", () => {
 
     const ProducerComp: FC = () => {
       const { produce } = useProduce();
-
+      useAsyncActions();
       return (
         <button
           data-testid="producer"
