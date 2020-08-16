@@ -29,6 +29,7 @@ const initialState: IPosts = {
 };
 
 const Store = createStoreContext(initialState, {
+  actions: {},
   asyncActions: {
     getPosts: (produce) => async () => {
       try {
@@ -57,7 +58,7 @@ const Store = createStoreContext(initialState, {
 
 export const AsyncActionsContext = () => {
   const { posts, state, fetchError } = Store.useStore();
-  const { getPosts } = Store.useActions();
+  const { getPosts } = Store.useAsyncActions();
 
   useEffect(() => {
     getPosts();

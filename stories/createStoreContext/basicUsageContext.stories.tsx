@@ -37,6 +37,7 @@ const {
         draft.b += n;
       },
     },
+    asyncActions: {},
   }
 );
 

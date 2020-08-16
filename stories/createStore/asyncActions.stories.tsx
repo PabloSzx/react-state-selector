@@ -29,6 +29,7 @@ const initialState: IPosts = {
 };
 
 const Store = createStore(initialState, {
+  actions: {},
   asyncActions: {
     getPosts: (produce) => async () => {
       try {
@@ -59,7 +60,7 @@ export const AsyncActions = () => {
   const { posts, state, fetchError } = Store.useStore();
 
   useEffect(() => {
-    Store.actions.getPosts();
+    Store.asyncActions.getPosts();
   }, []);
 
   if (state === FetchState.error) {
@@ -80,7 +81,7 @@ export const AsyncActions = () => {
     <div>
       <button
         onClick={() => {
-          Store.actions.getPosts();
+          Store.asyncActions.getPosts();
         }}
       >
         Get Data

@@ -1,21 +1,14 @@
 {
   "files": {
     "main.css": "./static/css/main.b148d59f.chunk.css",
-    "main.js": "./main.44ec62af9236dbf945f2.bundle.js",
+    "main.js": "./main.e0a5a6f830a0c41600c8.bundle.js",
     "main.css.map": "./static/css/main.b148d59f.chunk.css.map",
-    "main.js.map": "./main.44ec62af9236dbf945f2.bundle.js.map",
-    "runtime~main.js": "./runtime~main.44ec62af9236dbf945f2.bundle.js",
-    "runtime~main.js.map": "./runtime~main.44ec62af9236dbf945f2.bundle.js.map",
-    "vendors~main.js": "./vendors~main.44ec62af9236dbf945f2.bundle.js",
-    "vendors~main.js.map": "./vendors~main.44ec62af9236dbf945f2.bundle.js.map",
-    "../dist/.storybook/config.d.ts": "./../dist/.storybook/config.d.ts",
-    "../dist/src/common.d.ts": "./../dist/src/common.d.ts",
-    "../dist/src/createStore.d.ts": "./../dist/src/createStore.d.ts",
-    "../dist/src/createStoreContext.d.ts": "./../dist/src/createStoreContext.d.ts",
-    "../dist/src/index.d.ts": "./../dist/src/index.d.ts",
+    "main.js.map": "./main.e0a5a6f830a0c41600c8.bundle.js.map",
+    "runtime~main.js": "./runtime~main.e0a5a6f830a0c41600c8.bundle.js",
+    "runtime~main.js.map": "./runtime~main.e0a5a6f830a0c41600c8.bundle.js.map",
+    "vendors~main.js": "./vendors~main.e0a5a6f830a0c41600c8.bundle.js",
+    "vendors~main.js.map": "./vendors~main.e0a5a6f830a0c41600c8.bundle.js.map",
     "../dist/src/plugins/devTools.d.ts": "./../dist/src/plugins/devTools.d.ts",
-    "../dist/src/plugins/persistenceStorage.d.ts": "./../dist/src/plugins/persistenceStorage.d.ts",
-    "../dist/src/utils/isPromise.d.ts": "./../dist/src/utils/isPromise.d.ts",
     "../dist/stories/createStoreContext/asyncActionsContext.stories.d.ts": "./../dist/stories/createStoreContext/asyncActionsContext.stories.d.ts",
     "../dist/stories/createStoreContext/basicUsageContext.stories.d.ts": "./../dist/stories/createStoreContext/basicUsageContext.stories.d.ts",
     "../dist/stories/createStore/asyncActions.stories.d.ts": "./../dist/stories/createStore/asyncActions.stories.d.ts",
@@ -26,14 +19,14 @@
     "../dist/stories/devTools/createStoreContext.stories.d.ts": "./../dist/stories/devTools/createStoreContext.stories.d.ts",
     "../dist/stories/utils/devTools.d.ts": "./../dist/stories/utils/devTools.d.ts",
     "iframe.html": "./iframe.html",
-    "precache-manifest.66a09c230f46045e94ec09aa83e38413.js": "./precache-manifest.66a09c230f46045e94ec09aa83e38413.js",
+    "precache-manifest.5a5bd23d558f2b26fc7ec8c147506702.js": "./precache-manifest.5a5bd23d558f2b26fc7ec8c147506702.js",
     "service-worker.js": "./service-worker.js",
-    "vendors~main.44ec62af9236dbf945f2.bundle.js.LICENSE.txt": "./vendors~main.44ec62af9236dbf945f2.bundle.js.LICENSE.txt"
+    "vendors~main.e0a5a6f830a0c41600c8.bundle.js.LICENSE.txt": "./vendors~main.e0a5a6f830a0c41600c8.bundle.js.LICENSE.txt"
   },
   "entrypoints": [
-    "runtime~main.44ec62af9236dbf945f2.bundle.js",
-    "vendors~main.44ec62af9236dbf945f2.bundle.js",
+    "runtime~main.e0a5a6f830a0c41600c8.bundle.js",
+    "vendors~main.e0a5a6f830a0c41600c8.bundle.js",
     "static/css/main.b148d59f.chunk.css",
-    "main.44ec62af9236dbf945f2.bundle.js"
+    "main.e0a5a6f830a0c41600c8.bundle.js"
   ]
 }
