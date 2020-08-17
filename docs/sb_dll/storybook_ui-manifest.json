@@ -1,420 +1,252 @@
 {
   "name": "storybook_ui_dll",
   "content": {
-    "./@storybook/semver/internal/debug.js": {
-      "id": "++FH",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/internals/whitespaces.js": {
       "id": "+/eK",
+      "buildMeta": { "providedExports": true }
+    },
+    "./side-channel/index.js": {
+      "id": "+1S0",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_baseSetToString.js": {
       "id": "+7q0",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/containers/panel.js": {
-      "id": "+7uE",
+    "./internal-slot/index.js": {
+      "id": "+jgp",
       "buildMeta": { "providedExports": true }
     },
-    "./string.prototype.padstart/implementation.js": {
-      "id": "/HEY",
+    "./symbol.prototype.description/shim.js": {
+      "id": "/OF8",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/sketch/SketchPresetColors.js": {
-      "id": "/MEL",
+    "./es-abstract/2019/ToPropertyKey.js": {
+      "id": "/gYh",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/slider/SliderSwatch.js": {
-      "id": "0GQb",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/controls/Date.js": {
-      "id": "1+JY",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/swatches/SwatchesGroup.js": {
-      "id": "1ElM",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object.values/implementation.js": {
-      "id": "1JZ3",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/ToLength.js": {
-      "id": "1xT+",
+    "./object.fromentries/shim.js": {
+      "id": "0Ngc",
       "buildMeta": { "providedExports": true }
     },
     "./array.prototype.flatmap/polyfill.js": {
       "id": "21Ob",
       "buildMeta": { "providedExports": true }
     },
-    "./is-callable/index.js": {
-      "id": "27K6",
+    "./string.prototype.matchall/regexp-matchall.js": {
+      "id": "2bca",
       "buildMeta": { "providedExports": true }
     },
-    "./airbnb-js-shims/target/es5.js": {
-      "id": "2nwC",
+    "./string.prototype.matchall/implementation.js": {
+      "id": "2mwS",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/controls/Number.js": {
-      "id": "3+sY",
+    "./array.prototype.flatmap/implementation.js": {
+      "id": "2oWz",
       "buildMeta": { "providedExports": true }
     },
-    "./string.prototype.padstart/shim.js": {
-      "id": "3hAs",
+    "./es-abstract/helpers/getSymbolDescription.js": {
+      "id": "43e9",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/shared/animation.js": {
-      "id": "3ntq",
+    "./es-abstract/2019/AddEntriesFromIterable.js": {
+      "id": "6Dz6",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/controls/options/Select.js": {
-      "id": "43V4",
+    "./array.prototype.map/index.js": {
+      "id": "6oy7",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/blocks/Typeset.js": {
-      "id": "4KUs",
+    "./symbol.prototype.description/auto.js": {
+      "id": "7TIr",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/controls/Text.js": {
-      "id": "5KKI",
+    "./symbol.prototype.description/polyfill.js": {
+      "id": "7vSd",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/helpers/sign.js": {
-      "id": "5kLD",
+    "./iterate-iterator/index.js": {
+      "id": "8Ysr",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/OrdinaryGetOwnProperty.js": {
-      "id": "5n2z",
+    "./es-abstract/2019/GetMethod.js": {
+      "id": "8f7m",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/slider/SliderSwatches.js": {
-      "id": "7dUu",
+    "./es-abstract/2019/IteratorStep.js": {
+      "id": "9ppg",
       "buildMeta": { "providedExports": true }
     },
-    "./es5-shim/es5-sham.js": {
-      "id": "7h/X",
+    "./is-map/index.js": {
+      "id": "A5wW",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/FromPropertyDescriptor.js": {
-      "id": "85E9",
+    "./array.prototype.map/shim.js": {
+      "id": "AA3L",
       "buildMeta": { "providedExports": true }
     },
-    "./object.entries/implementation.js": {
-      "id": "90uY",
+    "./iterate-value/index.js": {
+      "id": "C+xP",
       "buildMeta": { "providedExports": true }
     },
-    "./string.prototype.padstart/polyfill.js": {
-      "id": "AO5/",
+    "./string.prototype.matchall/polyfill-regexp-matchall.js": {
+      "id": "CFUM",
       "buildMeta": { "providedExports": true }
     },
-    "./airbnb-js-shims/index.js": {
-      "id": "ARua",
+    "./es-abstract/2019/CreateIterResultObject.js": {
+      "id": "CUAF",
       "buildMeta": { "providedExports": true }
     },
-    "./function.prototype.name/shim.js": {
-      "id": "B+yX",
+    "./globalthis/shim.js": {
+      "id": "Dauz",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/helpers/isFinite.js": {
-      "id": "BNkw",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/sketch/Sketch.js": {
-      "id": "BWAm",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/modules/es.parse-int.js": {
-      "id": "Blm6",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/blocks/IconGallery.js": {
-      "id": "C+Jd",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/controls/options/Options.js": {
-      "id": "Dm/O",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2018/SpeciesConstructor.js": {
-      "id": "E4PL",
-      "buildMeta": { "providedExports": true }
-    },
-    "./airbnb-js-shims/target/es2018.js": {
-      "id": "E63F",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/modules/es.array.splice.js": {
-      "id": "Ee2X",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/blocks/ArgsTable/SectionRow.js": {
-      "id": "Ejfw",
+    "./array.prototype.map/polyfill.js": {
+      "id": "EAfU",
       "buildMeta": { "providedExports": true }
     },
     "./es-abstract/2019/ArraySpeciesCreate.js": {
       "id": "En82",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/helpers/DefineOwnProperty.js": {
-      "id": "EnL0",
+    "./es-abstract/2019/IteratorValue.js": {
+      "id": "FOyT",
       "buildMeta": { "providedExports": true }
     },
     "./array.prototype.flatmap/shim.js": {
       "id": "Ftmo",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2018/ToLength.js": {
-      "id": "GG0B",
+    "./airbnb-js-shims/target/es2020.js": {
+      "id": "HGf9",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/photoshop/PhotoshopPointerCircle.js": {
-      "id": "JYC6",
+    "./es-abstract/2019/ObjectCreate.js": {
+      "id": "IM4n",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/RequireObjectCoercible.js": {
-      "id": "JcO1",
+    "./array.prototype.map/implementation.js": {
+      "id": "IrHP",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/IsDataDescriptor.js": {
-      "id": "JfuD",
+    "./globalthis/implementation.browser.js": {
+      "id": "J+r7",
+      "buildMeta": { "providedExports": true }
+    },
+    "./promise.allsettled/requirePromise.js": {
+      "id": "J6ay",
+      "buildMeta": { "providedExports": true }
+    },
+    "./is-set/index.js": {
+      "id": "JJ27",
+      "buildMeta": { "providedExports": true }
+    },
+    "./globalthis/polyfill.js": {
+      "id": "JvF+",
       "buildMeta": { "providedExports": true }
     },
     "./array.prototype.flat/implementation.js": {
       "id": "K2dk",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2018/SameValueZero.js": {
-      "id": "KI0m",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object.getownpropertydescriptors/implementation.js": {
-      "id": "KI8r",
-      "buildMeta": { "providedExports": true }
-    },
-    "./airbnb-js-shims/target/es2019.js": {
-      "id": "KhaS",
-      "buildMeta": { "providedExports": true }
-    },
     "./object-inspect/index.js": {
       "id": "Khtt",
       "buildMeta": { "providedExports": true }
     },
-    "./string.prototype.padend/implementation.js": {
-      "id": "KviE",
+    "./es-abstract/2019/AdvanceStringIndex.js": {
+      "id": "LNwn",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/helpers/getOwnPropertyDescriptor.js": {
-      "id": "LN0W",
+    "./string.prototype.matchall/shim.js": {
+      "id": "Ly6n",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/blocks/ArgsTable/TabbedArgsTable.js": {
-      "id": "Lksp",
+    "./globalthis/auto.js": {
+      "id": "M8td",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/slider/Slider.js": {
-      "id": "MGLj",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/controls/options/Checkbox.js": {
-      "id": "MTJ+",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/ToInteger.js": {
-      "id": "N5La",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/controls/Object.js": {
-      "id": "NVDW",
+    "./es-abstract/2019/GetV.js": {
+      "id": "MmKw",
       "buildMeta": { "providedExports": true }
     },
     "./array.prototype.flat/shim.js": {
       "id": "NWtA",
       "buildMeta": { "providedExports": true }
     },
-    "./is-string/index.js": {
-      "id": "NvbO",
+    "./es-abstract/2019/RegExpExec.js": {
+      "id": "ODz2",
       "buildMeta": { "providedExports": true }
     },
-    "./es5-shim/es5-shim.js": {
-      "id": "OLuu",
+    "./promise.allsettled/implementation.js": {
+      "id": "OW5c",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2018/ToObject.js": {
-      "id": "OmNY",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/photoshop/PhotoshopPointer.js": {
-      "id": "P712",
-      "buildMeta": { "providedExports": true }
-    },
-    "./array-includes/polyfill.js": {
-      "id": "P8pT",
+    "./string.prototype.matchall/auto.js": {
+      "id": "P7oP",
       "buildMeta": { "providedExports": true }
     },
     "./es-abstract/2019/CreateDataPropertyOrThrow.js": {
       "id": "PFQp",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/blocks/ArgsTable/NoControlsWarning.js": {
-      "id": "PfsF",
+    "./isarray/index.js": {
+      "id": "Rl48",
       "buildMeta": { "providedExports": true }
     },
-    "./airbnb-js-shims/target/es2017.js": {
-      "id": "PrxZ",
+    "../lib/ui/dist/index.js": {
+      "id": "SbT1",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/IsRegExp.js": {
-      "id": "PxtS",
-      "buildMeta": { "providedExports": true }
-    },
-    "./promise.prototype.finally/shim.js": {
-      "id": "Q+zw",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/controls/options/index.js": {
-      "id": "QTMn",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/internals/number-parse-int.js": {
-      "id": "QkOM",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object.entries/shim.js": {
-      "id": "Qq1D",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/IsCallable.js": {
-      "id": "RIgF",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2018/ToInteger.js": {
-      "id": "SBCY",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/slider/SliderPointer.js": {
-      "id": "SZ3Y",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/ToPropertyDescriptor.js": {
-      "id": "Su2Q",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object.getownpropertydescriptors/polyfill.js": {
-      "id": "T/Xf",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-to-primitive/es2015.js": {
-      "id": "T8ea",
-      "buildMeta": { "providedExports": true }
-    },
-    "./airbnb-js-shims/target/es2015.js": {
-      "id": "Tk4B",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/controls/options/Radio.js": {
-      "id": "TnXy",
-      "buildMeta": { "providedExports": true }
-    },
-    "./function.prototype.name/implementation.js": {
-      "id": "Txjs",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/twitter/Twitter.js": {
-      "id": "U0VS",
+    "./es-abstract/2019/IteratorComplete.js": {
+      "id": "Tuui",
       "buildMeta": { "providedExports": true }
     },
     "./array.prototype.flat/polyfill.js": {
       "id": "UT3w",
       "buildMeta": { "providedExports": true }
     },
-    "./promise.prototype.finally/auto.js": {
-      "id": "VJ/d",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/helpers/callBound.js": {
-      "id": "VWqj",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/blocks/ColorPalette.js": {
-      "id": "W4lp",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object.getownpropertydescriptors/shim.js": {
-      "id": "X+5D",
+    "./object.fromentries/implementation.js": {
+      "id": "W5AF",
       "buildMeta": { "providedExports": true }
     },
     "./es-abstract/2019/Call.js": {
       "id": "X0RI",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/ToNumber.js": {
-      "id": "XCl4",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/sketch/SketchFields.js": {
-      "id": "XdGw",
-      "buildMeta": { "providedExports": true }
-    },
     "./es-abstract/2019/FlattenIntoArray.js": {
       "id": "YN8z",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/5/ToInteger.js": {
-      "id": "Ymn5",
       "buildMeta": { "providedExports": true }
     },
     "./es-abstract/2019/HasProperty.js": {
       "id": "Z0H+",
       "buildMeta": { "providedExports": true }
     },
-    "./function.prototype.name/polyfill.js": {
-      "id": "aP1Z",
+    "./es-abstract/2019/Set.js": {
+      "id": "adRX",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/Type.js": {
-      "id": "amkT",
+    "./es-abstract/2019/IteratorNext.js": {
+      "id": "bTMt",
       "buildMeta": { "providedExports": true }
     },
-    "./string.prototype.padend/shim.js": {
-      "id": "bjNx",
+    "./es-abstract/2019/ToUint32.js": {
+      "id": "cvSA",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/blocks/Story.js": {
-      "id": "bsDQ",
+    "./es-abstract/2019/GetIterator.js": {
+      "id": "e9sm",
       "buildMeta": { "providedExports": true }
     },
-    "./es6-shim/es6-shim.js": {
-      "id": "bzxO",
+    "./es-abstract/2019/SpeciesConstructor.js": {
+      "id": "eSgV",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/blocks/IFrame.js": {
-      "id": "c9Df",
+    "./promise.allsettled/polyfill.js": {
+      "id": "f4Rk",
       "buildMeta": { "providedExports": true }
     },
-    "./string.prototype.padend/polyfill.js": {
-      "id": "cP4u",
-      "buildMeta": { "providedExports": true }
-    },
-    "./promise.prototype.finally/requirePromise.js": {
-      "id": "cqYI",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2018/ToNumber.js": {
-      "id": "diqe",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2018/RequireObjectCoercible.js": {
-      "id": "e6+5",
-      "buildMeta": { "providedExports": true }
-    },
-    "./functions-have-names/index.js": {
-      "id": "eaYl",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object.values/polyfill.js": {
-      "id": "ghTS",
+    "./es-abstract/2019/IteratorClose.js": {
+      "id": "fRg2",
       "buildMeta": { "providedExports": true }
     },
     "./array.prototype.flatmap/auto.js": {
@@ -425,192 +257,32 @@
       "id": "hI79",
       "buildMeta": { "providedExports": true }
     },
-    "./airbnb-js-shims/target/es2016.js": {
-      "id": "hVge",
+    "./object.fromentries/polyfill.js": {
+      "id": "hkiR",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/helpers/maxSafeInteger.js": {
-      "id": "hyiC",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/helpers/isNaN.js": {
-      "id": "j1AC",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/5/Type.js": {
-      "id": "j3if",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/ToString.js": {
-      "id": "j5NJ",
+    "./string.prototype.matchall/helpers/RegExpStringIterator.js": {
+      "id": "j5P9",
       "buildMeta": { "providedExports": true }
     },
     "./es-abstract/2019/IsInteger.js": {
       "id": "jb28",
       "buildMeta": { "providedExports": true }
     },
-    "./object.entries/polyfill.js": {
-      "id": "kDzb",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/ToPrimitive.js": {
-      "id": "kOpY",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/swatches/SwatchesColor.js": {
-      "id": "lURT",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/modules/es.parse-float.js": {
-      "id": "lZm3",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2018/IsCallable.js": {
-      "id": "lqQZ",
-      "buildMeta": { "providedExports": true }
-    },
-    "./array.prototype.flat/auto.js": {
-      "id": "m0l7",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/CreateDataProperty.js": {
-      "id": "mnAq",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2018/ToPrimitive.js": {
-      "id": "my5u",
-      "buildMeta": { "providedExports": true }
-    },
-    "./promise.prototype.finally/polyfill.js": {
-      "id": "n4Ch",
+    "./es-array-method-boxes-properly/index.js": {
+      "id": "o5F1",
       "buildMeta": { "providedExports": true }
     },
     "./es-abstract/2019/Get.js": {
       "id": "oV90",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/IsPropertyKey.js": {
-      "id": "pIsM",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/controls/options/helpers.js": {
-      "id": "pO57",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/controls/Range.js": {
-      "id": "pSNy",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/5/ToNumber.js": {
-      "id": "pWWZ",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/helpers/assertRecord.js": {
-      "id": "pmjK",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-to-primitive/helpers/isPrimitive.js": {
-      "id": "q2Ea",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2018/Type.js": {
-      "id": "qCtr",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/Loader/Loader.js": {
-      "id": "qe4j",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/photoshop/PhotoshopPreviews.js": {
-      "id": "qvUu",
-      "buildMeta": { "providedExports": true }
-    },
-    "./array-includes/implementation.js": {
-      "id": "qztG",
-      "buildMeta": { "providedExports": true }
-    },
-    "./array-includes/shim.js": {
-      "id": "rKBo",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/SameValue.js": {
-      "id": "sbJ0",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/modules/es.number.is-nan.js": {
-      "id": "ssvU",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/ToBoolean.js": {
-      "id": "u8r+",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2018/IsConstructor.js": {
-      "id": "ufZ+",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/helpers/isPrimitive.js": {
-      "id": "vYa2",
-      "buildMeta": { "providedExports": true }
-    },
-    "./has/src/index.js": {
-      "id": "wSS7",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/5/CheckObjectCoercible.js": {
-      "id": "wszz",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/ToObject.js": {
-      "id": "xGSD",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object.values/shim.js": {
-      "id": "xQ8p",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/IsArray.js": {
-      "id": "xkbi",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/helpers/regexTester.js": {
-      "id": "xyEj",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/swatches/Swatches.js": {
-      "id": "y2LB",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/IsExtensible.js": {
-      "id": "yL4z",
-      "buildMeta": { "providedExports": true }
-    },
-    "./promise.prototype.finally/implementation.js": {
-      "id": "z6U0",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/internals/number-parse-float.js": {
-      "id": "zBiQ",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/photoshop/PhotoshopButton.js": {
-      "id": "zUDj",
-      "buildMeta": { "providedExports": true }
-    },
-    "./side-channel/index.js": {
-      "id": "+1S0",
+    "../lib/ui/dist/containers/panel.js": {
+      "id": "+7uE",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/xml.js": {
       "id": "+8uX",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/ranges/subset.js": {
-      "id": "+BR1",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/lt.js": {
-      "id": "+Ble",
       "buildMeta": { "providedExports": true }
     },
     "./react-syntax-highlighter/dist/cjs/languages/prism/css.js": {
@@ -625,10 +297,6 @@
       "id": "+Owd",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/ranges/to-comparators.js": {
-      "id": "+PvE",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/monkey.js": {
       "id": "+ZtN",
       "buildMeta": { "providedExports": true }
@@ -641,10 +309,6 @@
       "id": "+fUG",
       "buildMeta": { "providedExports": true }
     },
-    "./internal-slot/index.js": {
-      "id": "+jgp",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/internals/set-to-string-tag.js": {
       "id": "+kY7",
       "buildMeta": { "providedExports": true }
@@ -654,24 +318,6 @@
       "buildMeta": {
         "exportsType": "namespace",
         "providedExports": ["default"]
-      }
-    },
-    "./react-hotkeys/es/index.js": {
-      "id": "+o3e",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": [
-          "HotKeys",
-          "GlobalHotKeys",
-          "IgnoreKeys",
-          "ObserveKeys",
-          "withHotKeys",
-          "withIgnoreKeys",
-          "withObserveKeys",
-          "configure",
-          "getApplicationKeyMap",
-          "recordKeyCombination"
-        ]
       }
     },
     "./lodash/_ListCache.js": {
@@ -694,10 +340,6 @@
         ]
       }
     },
-    "./lodash/_isStrictComparable.js": {
-      "id": "+tCn",
-      "buildMeta": { "providedExports": true }
-    },
     "./@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js": {
       "id": "+wNj",
       "buildMeta": {
@@ -712,13 +354,6 @@
     "./lodash/_baseIsArguments.js": {
       "id": "/30y",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/utils/array/removeAtIndex.js": {
-      "id": "/3of",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./highlight.js/lib/languages/oxygene.js": {
       "id": "/485",
@@ -736,35 +371,21 @@
       "id": "/Cka",
       "buildMeta": { "providedExports": true }
     },
+    "./string.prototype.padstart/implementation.js": {
+      "id": "/HEY",
+      "buildMeta": { "providedExports": true }
+    },
     "./highlight.js/lib/languages/vim.js": {
       "id": "/I3Z",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/lib/KeyEventManager.js": {
-      "id": "/Iz2",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./react-syntax-highlighter/dist/cjs/languages/prism/bash.js": {
       "id": "/JuR",
       "buildMeta": { "providedExports": true }
     },
-    "./symbol.prototype.description/shim.js": {
-      "id": "/OF8",
-      "buildMeta": { "providedExports": true }
-    },
     "./timers-browserify/main.js": {
       "id": "/Qos",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/const/reverse-dictionaries/UnaltShiftedKeysDictionary.js": {
-      "id": "/R6o",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./lodash/_nativeKeysIn.js": {
       "id": "/UTG",
@@ -772,10 +393,6 @@
     },
     "./react-syntax-highlighter/dist/cjs/languages/prism/jsx.js": {
       "id": "/bc2",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/blocks/ArgsTable/ArgControl.js": {
-      "id": "/bff",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/arduino.js": {
@@ -786,16 +403,12 @@
       "id": "/gLa",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/ToPropertyKey.js": {
-      "id": "/gYh",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/isSet.js": {
-      "id": "/iLo",
-      "buildMeta": { "providedExports": true }
-    },
     "./hastscript/factory.js": {
       "id": "/rxr",
+      "buildMeta": { "providedExports": true }
+    },
+    "./semver/semver.js": {
+      "id": "/sRG",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_getPrototype.js": {
@@ -804,10 +417,6 @@
     },
     "./lodash/_memoizeCapped.js": {
       "id": "0+aC",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/internals/date-to-primitive.js": {
-      "id": "034l",
       "buildMeta": { "providedExports": true }
     },
     "./copy-to-clipboard/index.js": {
@@ -834,24 +443,9 @@
       "id": "0HyS",
       "buildMeta": { "providedExports": true }
     },
-    "./object.fromentries/shim.js": {
-      "id": "0Ngc",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_baseSlice.js": {
       "id": "0Ocv",
       "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_matchesStrictComparable.js": {
-      "id": "0Ss3",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/helpers/resolving-handlers/resolveUnshiftedAlias.js": {
-      "id": "0U4m",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "../lib/components/dist/bar/bar.js": {
       "id": "0bDP",
@@ -861,10 +455,6 @@
       "id": "0cIl",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/common/Alpha.js": {
-      "id": "0eDR",
-      "buildMeta": { "providedExports": true }
-    },
     "./property-information/lib/util/schema.js": {
       "id": "0mzR",
       "buildMeta": { "providedExports": true }
@@ -872,13 +462,6 @@
     "./es-abstract/helpers/callBind.js": {
       "id": "0n68",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/const/KeysWithKeyUpHiddenByCmd.js": {
-      "id": "0pTc",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./refractor/lang/flow.js": {
       "id": "0ti/",
@@ -896,19 +479,8 @@
       "id": "10kd",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/parsing-key-maps/stateFromEvent.js": {
-      "id": "12QY",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./highlight.js/lib/languages/coffeescript.js": {
       "id": "1Bwg",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/property.js": {
-      "id": "1EDM",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/glsl.js": {
@@ -921,6 +493,10 @@
     },
     "./core-js/modules/es.string.bold.js": {
       "id": "1Iuc",
+      "buildMeta": { "providedExports": true }
+    },
+    "./object.values/implementation.js": {
+      "id": "1JZ3",
       "buildMeta": { "providedExports": true }
     },
     "./toggle-selection/index.js": {
@@ -962,6 +538,10 @@
       "id": "1t7P",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/2019/ToLength.js": {
+      "id": "1xT+",
+      "buildMeta": { "providedExports": true }
+    },
     "./lodash/flatten.js": {
       "id": "1xil",
       "buildMeta": { "providedExports": true }
@@ -974,12 +554,12 @@
       "id": "25lF",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/compare-build.js": {
-      "id": "26Tk",
-      "buildMeta": { "providedExports": true }
-    },
     "../lib/components/dist/blocks/Description.js": {
       "id": "26z1",
+      "buildMeta": { "providedExports": true }
+    },
+    "./is-callable/index.js": {
+      "id": "27K6",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_hashClear.js": {
@@ -994,17 +574,6 @@
       "id": "2Osh",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/lib/shared/KeyCombinationSerializer.js": {
-      "id": "2QaY",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "../lib/ui/dist/components/preview/tools/eject.js": {
-      "id": "2Vfb",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_baseTimes.js": {
       "id": "2ZvR",
       "buildMeta": { "providedExports": true }
@@ -1012,17 +581,6 @@
     "./refractor/lang/abap.js": {
       "id": "2b/2",
       "buildMeta": { "providedExports": true }
-    },
-    "./string.prototype.matchall/regexp-matchall.js": {
-      "id": "2bca",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/lib/listening/EventPropagator.js": {
-      "id": "2dAA",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./core-js/internals/classof.js": {
       "id": "2gZs",
@@ -1040,20 +598,12 @@
       "id": "2lh0",
       "buildMeta": { "providedExports": true }
     },
-    "./string.prototype.matchall/implementation.js": {
-      "id": "2mwS",
-      "buildMeta": { "providedExports": true }
-    },
     "../lib/api/dist/version.js": {
       "id": "2n2P",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/helpers/color.js": {
-      "id": "2nKb",
-      "buildMeta": { "providedExports": true }
-    },
-    "./array.prototype.flatmap/implementation.js": {
-      "id": "2oWz",
+    "./airbnb-js-shims/target/es5.js": {
+      "id": "2nwC",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/isFunction.js": {
@@ -1074,10 +624,6 @@
     },
     "../lib/addons/dist/storybook-channel-mock.js": {
       "id": "2u70",
-      "buildMeta": { "providedExports": true }
-    },
-    "./scheduler/tracing.js": {
-      "id": "2wf7",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/openscad.js": {
@@ -1122,10 +668,6 @@
       "id": "3NXE",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_initCloneArray.js": {
-      "id": "3Qlq",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/maxima.js": {
       "id": "3R1p",
       "buildMeta": { "providedExports": true }
@@ -1142,6 +684,10 @@
       "id": "3gYs",
       "buildMeta": { "providedExports": true }
     },
+    "./string.prototype.padstart/shim.js": {
+      "id": "3hAs",
+      "buildMeta": { "providedExports": true }
+    },
     "./deep-object-diff/dist/index.js": {
       "id": "3kp9",
       "buildMeta": { "providedExports": true }
@@ -1152,10 +698,6 @@
     },
     "../lib/components/dist/blocks/index.js": {
       "id": "3wLT",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/common/Hue.js": {
-      "id": "3xJ+",
       "buildMeta": { "providedExports": true }
     },
     "./@emotion/utils/dist/utils.browser.esm.js": {
@@ -1185,14 +727,6 @@
       "id": "4/va",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/internals/flatten-into-array.js": {
-      "id": "42ly",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/helpers/getSymbolDescription.js": {
-      "id": "43e9",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/haxe.js": {
       "id": "440S",
       "buildMeta": { "providedExports": true }
@@ -1217,42 +751,8 @@
       "id": "4EDi",
       "buildMeta": { "providedExports": true }
     },
-    "./material-colors/dist/colors.es2015.js": {
-      "id": "4Il9",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": [
-          "red",
-          "pink",
-          "purple",
-          "deepPurple",
-          "indigo",
-          "blue",
-          "lightBlue",
-          "cyan",
-          "teal",
-          "green",
-          "lightGreen",
-          "lime",
-          "yellow",
-          "amber",
-          "orange",
-          "deepOrange",
-          "brown",
-          "grey",
-          "blueGrey",
-          "darkText",
-          "lightText",
-          "darkIcons",
-          "lightIcons",
-          "white",
-          "black",
-          "default"
-        ]
-      }
-    },
-    "../lib/ui/dist/components/preview/utils/stringifyQueryParams.js": {
-      "id": "4Mjm",
+    "../lib/components/dist/blocks/Typeset.js": {
+      "id": "4KUs",
       "buildMeta": { "providedExports": true }
     },
     "../lib/ui/dist/components/layout/container.js": {
@@ -1275,10 +775,6 @@
       "id": "4YY5",
       "buildMeta": { "providedExports": true }
     },
-    "./scheduler/cjs/scheduler.development.js": {
-      "id": "4i61",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_getValue.js": {
       "id": "4p/L",
       "buildMeta": { "providedExports": true }
@@ -1287,20 +783,9 @@
       "id": "4sFI",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/ranges/outside.js": {
-      "id": "4t+U",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_baseKeys.js": {
       "id": "4uJK",
       "buildMeta": { "providedExports": true }
-    },
-    "./@babel/runtime/helpers/esm/typeof.js": {
-      "id": "4wDe",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./lodash/_createCompounder.js": {
       "id": "4ygQ",
@@ -1318,10 +803,6 @@
         ]
       }
     },
-    "../lib/api/dist/lib/events.js": {
-      "id": "5+dW",
-      "buildMeta": { "providedExports": true }
-    },
     "../lib/ui/dist/app.js": {
       "id": "50Ef",
       "buildMeta": { "providedExports": true }
@@ -1337,10 +818,6 @@
           "createMemorySource"
         ]
       }
-    },
-    "./react-color/lib/components/circle/CircleSwatch.js": {
-      "id": "51P1",
-      "buildMeta": { "providedExports": true }
     },
     "../lib/api/dist/modules/layout.js": {
       "id": "558e",
@@ -1389,10 +866,6 @@
       "id": "5LOU",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/chrome/ChromeFields.js": {
-      "id": "5TM+",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_listCacheGet.js": {
       "id": "5VYK",
       "buildMeta": { "providedExports": true }
@@ -1411,6 +884,14 @@
     },
     "./refractor/lang/t4-vb.js": {
       "id": "5gGz",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/helpers/sign.js": {
+      "id": "5kLD",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/2019/OrdinaryGetOwnProperty.js": {
+      "id": "5n2z",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_baseIsNative.js": {
@@ -1457,22 +938,6 @@
       "id": "69KV",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/patch.js": {
-      "id": "6BRe",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/AddEntriesFromIterable.js": {
-      "id": "6Dz6",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/rcompare.js": {
-      "id": "6FJ6",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_baseIsSet.js": {
-      "id": "6I2w",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/java.js": {
       "id": "6JEi",
       "buildMeta": { "providedExports": true }
@@ -1517,20 +982,12 @@
       "id": "6h66",
       "buildMeta": { "providedExports": true }
     },
-    "./react-draggable/build/cjs/utils/log.js": {
-      "id": "6iX0",
-      "buildMeta": { "providedExports": true }
-    },
     "../lib/api/dist/modules/addons.js": {
       "id": "6kKK",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/erlang.js": {
       "id": "6nz7",
-      "buildMeta": { "providedExports": true }
-    },
-    "./array.prototype.map/index.js": {
-      "id": "6oy7",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/autoit.js": {
@@ -1541,23 +998,20 @@
       "id": "6rd3",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/lib/matching/KeyHistoryMatcher.js": {
-      "id": "6u04",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./refractor/lang/batch.js": {
       "id": "6vQe",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_baseIsTypedArray.js": {
-      "id": "7/jS",
+    "./lodash.memoize/index.js": {
+      "id": "6w+j",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_baseMatches.js": {
-      "id": "7/we",
+    "../lib/ui/dist/components/preview/zoom.js": {
+      "id": "6xUn",
+      "buildMeta": { "providedExports": true }
+    },
+    "./lodash/_baseIsTypedArray.js": {
+      "id": "7/jS",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_getSymbols.js": {
@@ -1572,18 +1026,6 @@
       "id": "7Az2",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/compact/CompactFields.js": {
-      "id": "7JMk",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/internal/re.js": {
-      "id": "7LL4",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_initCloneByTag.js": {
-      "id": "7No3",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_setToString.js": {
       "id": "7Pat",
       "buildMeta": { "providedExports": true }
@@ -1596,13 +1038,84 @@
       "id": "7St7",
       "buildMeta": { "providedExports": true }
     },
-    "./symbol.prototype.description/auto.js": {
-      "id": "7TIr",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/tcl.js": {
       "id": "7Xcq",
       "buildMeta": { "providedExports": true }
+    },
+    "./polished/dist/polished.es.js": {
+      "id": "7Zgl",
+      "buildMeta": {
+        "exportsType": "namespace",
+        "providedExports": [
+          "adjustHue",
+          "animation",
+          "backgroundImages",
+          "backgrounds",
+          "between",
+          "border",
+          "borderColor",
+          "borderRadius",
+          "borderStyle",
+          "borderWidth",
+          "buttons",
+          "clearFix",
+          "complement",
+          "cover",
+          "darken",
+          "desaturate",
+          "directionalProperty",
+          "ellipsis",
+          "em",
+          "fluidRange",
+          "fontFace",
+          "getContrast",
+          "getLuminance",
+          "getValueAndUnit",
+          "grayscale",
+          "hiDPI",
+          "hideText",
+          "hideVisually",
+          "hsl",
+          "hslToColorString",
+          "hsla",
+          "invert",
+          "lighten",
+          "linearGradient",
+          "margin",
+          "math",
+          "meetsContrastGuidelines",
+          "mix",
+          "modularScale",
+          "normalize",
+          "opacify",
+          "padding",
+          "parseToHsl",
+          "parseToRgb",
+          "position",
+          "radialGradient",
+          "readableColor",
+          "rem",
+          "retinaImage",
+          "rgb",
+          "rgbToColorString",
+          "rgba",
+          "saturate",
+          "setHue",
+          "setLightness",
+          "setSaturation",
+          "shade",
+          "size",
+          "stripUnit",
+          "textInputs",
+          "timingFunctions",
+          "tint",
+          "toColorString",
+          "transitions",
+          "transparentize",
+          "triangle",
+          "wordWrap"
+        ]
+      }
     },
     "./highlight.js/lib/languages/livescript.js": {
       "id": "7ZkB",
@@ -1620,16 +1133,12 @@
       "id": "7dDj",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/lte.js": {
-      "id": "7dK9",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/css-extras.js": {
       "id": "7dyu",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/material/Material.js": {
-      "id": "7k7L",
+    "./es5-shim/es5-sham.js": {
+      "id": "7h/X",
       "buildMeta": { "providedExports": true }
     },
     "./@reach/router/es/lib/utils.js": {
@@ -1663,20 +1172,16 @@
       "id": "7tqJ",
       "buildMeta": { "providedExports": true }
     },
-    "./symbol.prototype.description/polyfill.js": {
-      "id": "7vSd",
+    "./core-js/modules/es.object.to-string.js": {
+      "id": "7x/C",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/utils/array/arrayFrom.js": {
-      "id": "7vkv",
+    "./simplebar-react/dist/simplebar-react.esm.js": {
+      "id": "7x0g",
       "buildMeta": {
         "exportsType": "namespace",
         "providedExports": ["default"]
       }
-    },
-    "./core-js/modules/es.object.to-string.js": {
-      "id": "7x/C",
-      "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.array.join.js": {
       "id": "7xRU",
@@ -1686,27 +1191,13 @@
       "id": "8+RD",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/ranges/simplify.js": {
-      "id": "8/M0",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/vendor/react-dom/translateToKey.js": {
-      "id": "8/S0",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./refractor/lang/js-extras.js": {
       "id": "80J6",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/resolving-handlers/resolveUnaltedAlias.js": {
-      "id": "85Ww",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "./es-abstract/2019/FromPropertyDescriptor.js": {
+      "id": "85E9",
+      "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.string.iterator.js": {
       "id": "87if",
@@ -1714,10 +1205,6 @@
     },
     "../lib/components/dist/typography/link/link.js": {
       "id": "8CTL",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/clean.js": {
-      "id": "8Imt",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/step21.js": {
@@ -1744,27 +1231,12 @@
       "id": "8ViA",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/lib/config/Configuration.js": {
-      "id": "8Wdz",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./iterate-iterator/index.js": {
-      "id": "8Ysr",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_listCacheClear.js": {
       "id": "8Zrg",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/has.js": {
       "id": "8aeu",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/GetMethod.js": {
-      "id": "8f7m",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/crmsh.js": {
@@ -1799,16 +1271,16 @@
       "id": "90BI",
       "buildMeta": { "providedExports": true }
     },
+    "./object.entries/implementation.js": {
+      "id": "90uY",
+      "buildMeta": { "providedExports": true }
+    },
     "./@babel/runtime/helpers/extends.js": {
       "id": "97Jx",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/renpy.js": {
       "id": "984s",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/helpers/alpha.js": {
-      "id": "9EJJ",
       "buildMeta": { "providedExports": true }
     },
     "./deep-object-diff/dist/diff/index.js": {
@@ -1835,16 +1307,8 @@
       "id": "9NtK",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/forEach.js": {
-      "id": "9SCj",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_mapCacheHas.js": {
       "id": "9SKQ",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_createSet.js": {
-      "id": "9TP6",
       "buildMeta": { "providedExports": true }
     },
     "./deep-object-diff/dist/added/index.js": {
@@ -1857,14 +1321,6 @@
     },
     "./property-information/lib/util/types.js": {
       "id": "9j30",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/IteratorStep.js": {
-      "id": "9ppg",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/api/dist/modules/refs.js": {
-      "id": "9rgH",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_isMasked.js": {
@@ -1887,32 +1343,16 @@
       "id": "A3UQ",
       "buildMeta": { "providedExports": true }
     },
-    "./is-map/index.js": {
-      "id": "A5wW",
-      "buildMeta": { "providedExports": true }
-    },
-    "./array.prototype.map/shim.js": {
-      "id": "AA3L",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/circle/Circle.js": {
-      "id": "ADdz",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object-is/implementation.js": {
-      "id": "ARQ1",
+    "./string.prototype.padstart/polyfill.js": {
+      "id": "AO5/",
       "buildMeta": { "providedExports": true }
     },
     "../lib/components/dist/addon-panel/addon-panel.js": {
       "id": "ARk+",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/gt.js": {
-      "id": "AUXR",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/blocks/ArgsTable/ArgJsDoc.js": {
-      "id": "AaGK",
+    "./airbnb-js-shims/index.js": {
+      "id": "ARua",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/llvm.js": {
@@ -1926,12 +1366,26 @@
         "providedExports": ["default"]
       }
     },
+    "./react-hotkeys/es/react-hotkeys.production.min.js": {
+      "id": "AbkR",
+      "buildMeta": {
+        "exportsType": "namespace",
+        "providedExports": [
+          "HotKeys",
+          "GlobalHotKeys",
+          "IgnoreKeys",
+          "ObserveKeys",
+          "withHotKeys",
+          "withIgnoreKeys",
+          "withObserveKeys",
+          "configure",
+          "getApplicationKeyMap",
+          "recordKeyCombination"
+        ]
+      }
+    },
     "../lib/ui/dist/components/notifications/notifications.js": {
       "id": "AgXl",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_copySymbols.js": {
-      "id": "AjPR",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/autohotkey.js": {
@@ -1942,26 +1396,9 @@
       "id": "AuHH",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/utils/object/isObject.js": {
-      "id": "AwLo",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-hotkeys/es/utils/object/copyAttributes.js": {
-      "id": "AyE9",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-hotkeys/es/utils/string/normalizeEventName.js": {
-      "id": "Ayi6",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "./function.prototype.name/shim.js": {
+      "id": "B+yX",
+      "buildMeta": { "providedExports": true }
     },
     "./is-hexadecimal/index.js": {
       "id": "B/kk",
@@ -1986,6 +1423,10 @@
       "id": "BKl4",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/helpers/isFinite.js": {
+      "id": "BNkw",
+      "buildMeta": { "providedExports": true }
+    },
     "./gud/index.js": {
       "id": "BS/m",
       "buildMeta": { "providedExports": true }
@@ -1994,36 +1435,20 @@
       "id": "BSqe",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/classes/semver.js": {
-      "id": "BXjS",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/smalltalk.js": {
       "id": "BcZj",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/throttle.js": {
-      "id": "Bcqe",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/components/sidebar/RefHelpers.js": {
-      "id": "Bh7M",
       "buildMeta": { "providedExports": true }
     },
     "./batch-processor/src/batch-processor.js": {
       "id": "Bi7v",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_copySymbolsIn.js": {
-      "id": "BjSP",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/keys.js": {
       "id": "BlJA",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/common/Swatch.js": {
-      "id": "Bnhm",
+    "./core-js/modules/es.parse-int.js": {
+      "id": "Blm6",
       "buildMeta": { "providedExports": true }
     },
     "./deep-object-diff/dist/deleted/index.js": {
@@ -2038,16 +1463,12 @@
       "id": "BqbV",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_cloneRegExp.js": {
-      "id": "Bstx",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/avrasm.js": {
       "id": "BwrU",
       "buildMeta": { "providedExports": true }
     },
-    "./iterate-value/index.js": {
-      "id": "C+xP",
+    "../lib/components/dist/blocks/IconGallery.js": {
+      "id": "C+Jd",
       "buildMeta": { "providedExports": true }
     },
     "../lib/components/dist/typography/DocumentWrapper.js": {
@@ -2062,20 +1483,8 @@
       "id": "CDwZ",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_basePropertyDeep.js": {
-      "id": "CEyS",
-      "buildMeta": { "providedExports": true }
-    },
-    "./string.prototype.matchall/polyfill-regexp-matchall.js": {
-      "id": "CFUM",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/prolog.js": {
       "id": "CTRr",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/CreateIterResultObject.js": {
-      "id": "CUAF",
       "buildMeta": { "providedExports": true }
     },
     "./markdown-to-jsx/dist/esm.js": {
@@ -2092,10 +1501,6 @@
         "providedExports": ["default"]
       }
     },
-    "./lodash/isUndefined.js": {
-      "id": "CZlo",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/fix.js": {
       "id": "CaZB",
       "buildMeta": { "providedExports": true }
@@ -2104,27 +1509,12 @@
       "id": "CbIe",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/ScrollArea/OverlayScrollbarsComponent.js": {
-      "id": "CbZO",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/utils/string/capitalize.js": {
-      "id": "Cds4",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./core-js/internals/set-species.js": {
       "id": "Ch6y",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/twig.js": {
       "id": "Ckp0",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/modules/web.url.js": {
-      "id": "Cm4o",
       "buildMeta": { "providedExports": true }
     },
     "./regexp.prototype.flags/shim.js": {
@@ -2143,46 +1533,20 @@
       "id": "CsIC",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/sidebar/Brand.js": {
-      "id": "CyLg",
+    "../lib/ui/dist/components/preview/components.js": {
+      "id": "Cx9A",
       "buildMeta": { "providedExports": true }
     },
     "../lib/components/dist/blocks/ZoomContext.js": {
       "id": "D2QX",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_castFunction.js": {
-      "id": "D49j",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/helpers/parsing-key-maps/isNonPrintableKeyName.js": {
-      "id": "D4xb",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./core-js/internals/object-keys.js": {
       "id": "DEeE",
       "buildMeta": { "providedExports": true }
     },
-    "./prop-types/checkPropTypes.js": {
-      "id": "DEny",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/lolcode.js": {
       "id": "DHsN",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/utils/collection/size.js": {
-      "id": "DMbW",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-color/lib/components/alpha/Alpha.js": {
-      "id": "DN+L",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/pure.js": {
@@ -2195,6 +1559,14 @@
     },
     "./highlight.js/lib/languages/handlebars.js": {
       "id": "DTwm",
+      "buildMeta": { "providedExports": true }
+    },
+    "./react-draggable/build/web/react-draggable.min.js": {
+      "id": "DUbS",
+      "buildMeta": { "providedExports": true }
+    },
+    "./can-use-dom/index.js": {
+      "id": "DXHJ",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/twig.js": {
@@ -2210,18 +1582,6 @@
     },
     "./core-js/modules/es.regexp.to-string.js": {
       "id": "DZ+c",
-      "buildMeta": { "providedExports": true }
-    },
-    "./globalthis/shim.js": {
-      "id": "Dauz",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/ranges/valid.js": {
-      "id": "Dcbe",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/github/Github.js": {
-      "id": "Dci0",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.array.every.js": {
@@ -2248,28 +1608,32 @@
       "id": "DpO5",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_baseFindIndex.js": {
-      "id": "DuXo",
-      "buildMeta": { "providedExports": true }
-    },
     "../lib/theming/dist/themes/light.js": {
       "id": "Dv/8",
+      "buildMeta": { "providedExports": true }
+    },
+    "./lodash.debounce/index.js": {
+      "id": "E/ZA",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/arduino.js": {
       "id": "E2IJ",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/2018/SpeciesConstructor.js": {
+      "id": "E4PL",
+      "buildMeta": { "providedExports": true }
+    },
     "./lodash/_stackDelete.js": {
       "id": "E4ao",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_cloneArrayBuffer.js": {
-      "id": "EAGB",
+    "./airbnb-js-shims/target/es2018.js": {
+      "id": "E63F",
       "buildMeta": { "providedExports": true }
     },
-    "./array.prototype.map/polyfill.js": {
-      "id": "EAfU",
+    "./lodash/_cloneArrayBuffer.js": {
+      "id": "EAGB",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/scala.js": {
@@ -2290,10 +1654,6 @@
         "exportsType": "namespace",
         "providedExports": ["default"]
       }
-    },
-    "./lodash/_baseProperty.js": {
-      "id": "EI7Z",
-      "buildMeta": { "providedExports": true }
     },
     "./lodash/now.js": {
       "id": "ENE1",
@@ -2343,16 +1703,13 @@
       "id": "EmSj",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/helpers/DefineOwnProperty.js": {
+      "id": "EnL0",
+      "buildMeta": { "providedExports": true }
+    },
     "./core-js/internals/dom-iterables.js": {
       "id": "Ew2P",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/lib/matching/KeyCombinationMatcher.js": {
-      "id": "ExQP",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./core-js/internals/object-assign.js": {
       "id": "F01M",
@@ -2378,12 +1735,12 @@
       "id": "F7cB",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_hasUnicodeWord.js": {
-      "id": "FBwQ",
+    "../lib/ui/dist/components/sidebar/treeview/treeview.js": {
+      "id": "FAOb",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/controls/Array.js": {
-      "id": "FDHh",
+    "./lodash/_hasUnicodeWord.js": {
+      "id": "FBwQ",
       "buildMeta": { "providedExports": true }
     },
     "../lib/addons/dist/types.js": {
@@ -2394,19 +1751,8 @@
       "id": "FGYX",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/lib/shared/KeyEventStateArrayManager.js": {
-      "id": "FL8e",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./core-js/internals/same-value.js": {
       "id": "FNAH",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/IteratorValue.js": {
-      "id": "FOyT",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/sql.js": {
@@ -2423,10 +1769,6 @@
     },
     "./core-js/internals/an-object.js": {
       "id": "FXyv",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/controls/Color.js": {
-      "id": "FcJm",
       "buildMeta": { "providedExports": true }
     },
     "../lib/router/dist/utils.js": {
@@ -2449,15 +1791,16 @@
       "id": "G90k",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/logging/describeKeyEventType.js": {
-      "id": "GC8X",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "../lib/ui/dist/components/sidebar/SidebarSubheading.js": {
+      "id": "GElu",
+      "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/object-get-own-property-descriptor.js": {
       "id": "GFpt",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/2018/ToLength.js": {
+      "id": "GG0B",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/array-method-has-species-support.js": {
@@ -2647,20 +1990,8 @@
       "id": "H87J",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/merge.js": {
-      "id": "H8sf",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/settings/release_notes.js": {
-      "id": "H9jU",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/io.js": {
       "id": "HEdH",
-      "buildMeta": { "providedExports": true }
-    },
-    "./airbnb-js-shims/target/es2020.js": {
-      "id": "HGf9",
       "buildMeta": { "providedExports": true }
     },
     "../lib/api/dist/store.js": {
@@ -2671,30 +2002,12 @@
       "id": "HO+h",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/const/ModifierFlagsDictionary.js": {
-      "id": "HTh/",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-hotkeys/es/lib/strategies/GlobalKeyEventStrategy.js": {
-      "id": "HTo+",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./react-lifecycles-compat/react-lifecycles-compat.es.js": {
       "id": "HUCg",
       "buildMeta": {
         "exportsType": "namespace",
         "providedExports": ["polyfill"]
       }
-    },
-    "./core-js/modules/es.date.to-primitive.js": {
-      "id": "HUPx",
-      "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/uid.js": {
       "id": "HYrn",
@@ -2703,13 +2016,6 @@
     "./refractor/lang/gml.js": {
       "id": "Hayl",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/ObserveKeys.js": {
-      "id": "Hiwv",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "../lib/ui/dist/components/preview/iframe.js": {
       "id": "HkWK",
@@ -2727,27 +2033,12 @@
       "id": "Hvd2",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/ranges/max-satisfying.js": {
-      "id": "HvdC",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/utils/string/isString.js": {
-      "id": "Hx1K",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./emotion-theming/dist/emotion-theming.browser.esm.js": {
       "id": "I2fK",
       "buildMeta": {
         "exportsType": "namespace",
         "providedExports": ["ThemeProvider", "useTheme", "withTheme"]
       }
-    },
-    "./react-draggable/build/cjs/utils/domFns.js": {
-      "id": "I5Pb",
-      "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/autohotkey.js": {
       "id": "I6Te",
@@ -2781,20 +2072,9 @@
       "id": "IL9G",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/ObjectCreate.js": {
-      "id": "IM4n",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/reasonml.js": {
       "id": "IMwR",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/withObserveKeys.js": {
-      "id": "IRQ9",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./core-js/internals/function-bind-context.js": {
       "id": "IRf+",
@@ -2812,9 +2092,12 @@
       "id": "IlOi",
       "buildMeta": { "providedExports": true }
     },
-    "./array.prototype.map/implementation.js": {
-      "id": "IrHP",
-      "buildMeta": { "providedExports": true }
+    "./simplebar/dist/simplebar.esm.js": {
+      "id": "ImZ4",
+      "buildMeta": {
+        "exportsType": "namespace",
+        "providedExports": ["default"]
+      }
     },
     "./refractor/lang/nix.js": {
       "id": "IsCb",
@@ -2835,26 +2118,6 @@
       "id": "IyI1",
       "buildMeta": { "providedExports": true }
     },
-    "./globalthis/implementation.browser.js": {
-      "id": "J+r7",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/chrome/Chrome.js": {
-      "id": "J1ej",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/components/preview/tools/zoom.js": {
-      "id": "J3Tf",
-      "buildMeta": { "providedExports": true }
-    },
-    "./promise.allsettled/requirePromise.js": {
-      "id": "J6ay",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/common/index.js": {
-      "id": "J6he",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/internals/object-get-own-property-symbols.js": {
       "id": "JAL5",
       "buildMeta": { "providedExports": true }
@@ -2869,10 +2132,6 @@
     },
     "./core-js/internals/task.js": {
       "id": "JDXi",
-      "buildMeta": { "providedExports": true }
-    },
-    "./is-set/index.js": {
-      "id": "JJ27",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/vala.js": {
@@ -2903,19 +2162,13 @@
       "id": "JcJ6",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/vendor/react-dom/reactsGetEventKey.js": {
-      "id": "Je3p",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "./es-abstract/2019/RequireObjectCoercible.js": {
+      "id": "JcO1",
+      "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/utils/invertArrayDictionary.js": {
-      "id": "Jfyn",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "./es-abstract/2019/IsDataDescriptor.js": {
+      "id": "JfuD",
+      "buildMeta": { "providedExports": true }
     },
     "./react-syntax-highlighter/dist/cjs/languages/prism/tsx.js": {
       "id": "JmTi",
@@ -2929,27 +2182,8 @@
       "id": "JtPf",
       "buildMeta": { "providedExports": true }
     },
-    "./globalthis/polyfill.js": {
-      "id": "JvF+",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/pcaxis.js": {
       "id": "K/Mc",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@babel/runtime/helpers/esm/possibleConstructorReturn.js": {
-      "id": "K/z8",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "../lib/ui/dist/components/sidebar/Menu.js": {
-      "id": "K4XB",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_baseMatchesProperty.js": {
-      "id": "KAo/",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_getRawTag.js": {
@@ -2962,6 +2196,14 @@
     },
     "./@babel/runtime/helpers/defineProperty.js": {
       "id": "KEM+",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/2018/SameValueZero.js": {
+      "id": "KI0m",
+      "buildMeta": { "providedExports": true }
+    },
+    "./object.getownpropertydescriptors/implementation.js": {
+      "id": "KI8r",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.array.reduce.js": {
@@ -2980,35 +2222,16 @@
       "id": "KTRZ",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/resolving-handlers/resolveAltShiftedAlias.js": {
-      "id": "KWLD",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./element-resize-detector/src/element-utils.js": {
       "id": "Kbgz",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/internals/array-fill.js": {
-      "id": "Kc2x",
       "buildMeta": { "providedExports": true }
     },
     "./property-information/lib/xlink.js": {
       "id": "Kc5Y",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/eq.js": {
-      "id": "Kcc9",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/components/preview/tools/copy.js": {
-      "id": "KheY",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/components/sidebar/Loader.js": {
-      "id": "KivP",
+    "./airbnb-js-shims/target/es2019.js": {
+      "id": "KhaS",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/isPlainObject.js": {
@@ -3023,10 +2246,6 @@
       "id": "KqXw",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/modules/web.url-search-params.js": {
-      "id": "KrtT",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/javastacktrace.js": {
       "id": "KtrE",
       "buildMeta": { "providedExports": true }
@@ -3037,6 +2256,10 @@
     },
     "./refractor/lang/graphql.js": {
       "id": "Kuex",
+      "buildMeta": { "providedExports": true }
+    },
+    "./string.prototype.padend/implementation.js": {
+      "id": "KviE",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/vbnet.js": {
@@ -3050,13 +2273,6 @@
     "./core-js/internals/regexp-sticky-helpers.js": {
       "id": "L2rT",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/helpers/resolving-handlers/resolveShiftedAlias.js": {
-      "id": "L3js",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./lodash/_stackHas.js": {
       "id": "L6um",
@@ -3085,12 +2301,8 @@
       "id": "LL3N",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/valid.js": {
-      "id": "LL8p",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/AdvanceStringIndex.js": {
-      "id": "LNwn",
+    "./es-abstract/helpers/getOwnPropertyDescriptor.js": {
+      "id": "LN0W",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/shell-session.js": {
@@ -3105,16 +2317,19 @@
       "id": "LW0h",
       "buildMeta": { "providedExports": true }
     },
+    "./resize-observer-polyfill/dist/ResizeObserver.es.js": {
+      "id": "LaGA",
+      "buildMeta": {
+        "exportsType": "namespace",
+        "providedExports": ["default"]
+      }
+    },
     "../lib/components/dist/ScrollArea/ScrollArea.js": {
       "id": "LaR9",
       "buildMeta": { "providedExports": true }
     },
     "./@babel/runtime/helpers/objectWithoutPropertiesLoose.js": {
       "id": "LdEA",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/internals/string-punycode-to-ascii.js": {
-      "id": "Ldhn",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/define-iterator.js": {
@@ -3127,14 +2342,6 @@
     },
     "./core-js/internals/create-iterator-constructor.js": {
       "id": "Lj86",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/components/preview/wrappers.js": {
-      "id": "LlBb",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_arrayEach.js": {
-      "id": "LmOH",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/json.js": {
@@ -3153,19 +2360,8 @@
       "id": "LtXa",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/utils/object/hasKey.js": {
-      "id": "LteF",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./highlight.js/lib/languages/ini.js": {
       "id": "Lwqc",
-      "buildMeta": { "providedExports": true }
-    },
-    "./string.prototype.matchall/shim.js": {
-      "id": "Ly6n",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_listCacheSet.js": {
@@ -3174,14 +2370,6 @@
     },
     "./core-js/modules/es.array.slice.js": {
       "id": "M+/F",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/inc.js": {
-      "id": "M2cH",
-      "buildMeta": { "providedExports": true }
-    },
-    "./globalthis/auto.js": {
-      "id": "M8td",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/cpp.js": {
@@ -3196,10 +2384,6 @@
       "id": "MBcr",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/sidebar/Heading.js": {
-      "id": "MDsu",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/gauss.js": {
       "id": "MKMM",
       "buildMeta": { "providedExports": true }
@@ -3212,17 +2396,6 @@
       "id": "MP1Z",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/controls/index.js": {
-      "id": "MSaq",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/helpers/resolving-handlers/keyupIsHiddenByCmd.js": {
-      "id": "MVJf",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "../lib/ui/dist/components/notifications/item.js": {
       "id": "MX2/",
       "buildMeta": { "providedExports": true }
@@ -3231,27 +2404,8 @@
       "id": "MhFt",
       "buildMeta": { "providedExports": true }
     },
-    "./object-is/shim.js": {
-      "id": "Mi3R",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/nim.js": {
       "id": "MiO/",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/const/AltedKeysDictionary.js": {
-      "id": "Mm16",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./es-abstract/2019/GetV.js": {
-      "id": "MmKw",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-syntax-highlighter/dist/cjs/create-element.js": {
-      "id": "Monn",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/nginx.js": {
@@ -3294,16 +2448,17 @@
       "id": "N4z3",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/2019/ToInteger.js": {
+      "id": "N5La",
+      "buildMeta": { "providedExports": true }
+    },
     "./core-js/internals/to-object.js": {
       "id": "N9G2",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/utils/object/dictionaryFrom.js": {
-      "id": "N9zp",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "../lib/ui/dist/components/sidebar/SidebarHeading.js": {
+      "id": "NDUE",
+      "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/n1ql.js": {
       "id": "NHma",
@@ -3317,19 +2472,8 @@
       "id": "NMCy",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/getApplicationKeyMap.js": {
-      "id": "NPeB",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./highlight.js/lib/languages/parser3.js": {
       "id": "NPq7",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-draggable/build/cjs/utils/positionFns.js": {
-      "id": "NPwy",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/hasIn.js": {
@@ -3344,12 +2488,12 @@
       "id": "NaaV",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/isMap.js": {
-      "id": "NbvU",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/isArrayLikeObject.js": {
       "id": "Ndl3",
+      "buildMeta": { "providedExports": true }
+    },
+    "./is-string/index.js": {
+      "id": "NvbO",
       "buildMeta": { "providedExports": true }
     },
     "../lib/ui/dist/settings/SettingsFooter.js": {
@@ -3376,10 +2520,6 @@
       "id": "O5tK",
       "buildMeta": { "providedExports": true }
     },
-    "./classnames/index.js": {
-      "id": "O94r",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_Set.js": {
       "id": "OBn4",
       "buildMeta": { "providedExports": true }
@@ -3395,43 +2535,25 @@
       "id": "ODNi",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/RegExpExec.js": {
-      "id": "ODz2",
+    "./es5-shim/es5-shim.js": {
+      "id": "OLuu",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/const/KeyEventType.js": {
-      "id": "OTda",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./promise.allsettled/implementation.js": {
-      "id": "OW5c",
+    "../lib/ui/dist/containers/nav.js": {
+      "id": "OSl8",
       "buildMeta": { "providedExports": true }
     },
     "../lib/components/dist/ScrollArea/ScrollAreaStyles.js": {
       "id": "OY1f",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/modules/es.reflect.construct.js": {
-      "id": "OZaJ",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_arrayIncludes.js": {
-      "id": "OfKG",
+    "./es-abstract/2018/ToObject.js": {
+      "id": "OmNY",
       "buildMeta": { "providedExports": true }
     },
     "./es-abstract/GetIntrinsic.js": {
       "id": "OsbC",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/utils/isUndefined.js": {
-      "id": "Oszp",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./lodash/_nativeKeys.js": {
       "id": "OtNC",
@@ -3445,39 +2567,21 @@
       "id": "P14U",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/internals/get-iterator.js": {
-      "id": "P1pQ",
-      "buildMeta": { "providedExports": true }
-    },
     "./util-deprecate/browser.js": {
       "id": "P2aG",
       "buildMeta": { "providedExports": true }
     },
-    "./string.prototype.matchall/auto.js": {
-      "id": "P7oP",
+    "./array-includes/polyfill.js": {
+      "id": "P8pT",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/to-string-tag-support.js": {
       "id": "POz8",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/lib/strategies/AbstractKeyEventStrategy.js": {
-      "id": "PUYz",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./highlight.js/lib/languages/ocaml.js": {
       "id": "PX6D",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/configure.js": {
-      "id": "PYT6",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./highlight.js/lib/languages/go.js": {
       "id": "PduK",
@@ -3495,6 +2599,10 @@
       "id": "PjZX",
       "buildMeta": { "providedExports": true }
     },
+    "./airbnb-js-shims/target/es2017.js": {
+      "id": "PrxZ",
+      "buildMeta": { "providedExports": true }
+    },
     "./shallowequal/index.js": {
       "id": "Pu0A",
       "buildMeta": { "providedExports": true }
@@ -3503,12 +2611,16 @@
       "id": "PuIx",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/2019/IsRegExp.js": {
+      "id": "PxtS",
+      "buildMeta": { "providedExports": true }
+    },
     "./lodash/_defineProperty.js": {
       "id": "Pz+s",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/sidebar/Tree/components.js": {
-      "id": "Q+qq",
+    "./promise.prototype.finally/shim.js": {
+      "id": "Q+zw",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/arff.js": {
@@ -3518,17 +2630,6 @@
     "../lib/components/dist/spaced/Spaced.js": {
       "id": "Q4h4",
       "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_baseEach.js": {
-      "id": "Q4oW",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/withIgnoreKeys.js": {
-      "id": "QBg/",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./lodash/_DataView.js": {
       "id": "QF3D",
@@ -3554,14 +2655,6 @@
       "id": "QawS",
       "buildMeta": { "providedExports": true }
     },
-    "./tinycolor2/tinycolor.js": {
-      "id": "QbNu",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/common/Raised.js": {
-      "id": "Qd12",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/isTypedArray.js": {
       "id": "Qd2C",
       "buildMeta": { "providedExports": true }
@@ -3574,8 +2667,12 @@
       "id": "Qi22",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_baseAssignIn.js": {
-      "id": "QrYh",
+    "./core-js/internals/number-parse-int.js": {
+      "id": "QkOM",
+      "buildMeta": { "providedExports": true }
+    },
+    "./object.entries/shim.js": {
+      "id": "Qq1D",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/perform.js": {
@@ -3634,6 +2731,10 @@
       "id": "RFxK",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/2019/IsCallable.js": {
+      "id": "RIgF",
+      "buildMeta": { "providedExports": true }
+    },
     "./lodash/_stackClear.js": {
       "id": "RNlM",
       "buildMeta": { "providedExports": true }
@@ -3666,44 +2767,13 @@
       "id": "Ra4B",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/api/dist/modules/globals.js": {
-      "id": "RaCC",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/internal/constants.js": {
-      "id": "RjO2",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/blocks/ArgsTable/types.js": {
-      "id": "RkMy",
-      "buildMeta": { "providedExports": true }
-    },
-    "./isarray/index.js": {
-      "id": "Rl48",
-      "buildMeta": { "providedExports": true }
-    },
     "../lib/ui/dist/components/layout/persist.js": {
       "id": "RlQt",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-is/cjs/react-is.development.js": {
-      "id": "RyRT",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_cacheHas.js": {
       "id": "S0iI",
       "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_baseIteratee.js": {
-      "id": "S3pA",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/helpers/resolving-handlers/resolveKeyAlias.js": {
-      "id": "S7EW",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./highlight.js/lib/languages/accesslog.js": {
       "id": "S7zQ",
@@ -3713,8 +2783,8 @@
       "id": "SAsA",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/cmp.js": {
-      "id": "SInv",
+    "./es-abstract/2018/ToInteger.js": {
+      "id": "SBCY",
       "buildMeta": { "providedExports": true }
     },
     "./property-information/lib/util/defined-info.js": {
@@ -3723,10 +2793,6 @@
     },
     "./lodash/_baseUnary.js": {
       "id": "SU8Q",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/index.js": {
-      "id": "SVUN",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_asciiWords.js": {
@@ -3739,14 +2805,6 @@
     },
     "./qs/lib/stringify.js": {
       "id": "SYP+",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/alpha/AlphaPointer.js": {
-      "id": "SZZZ",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/index.js": {
-      "id": "SbT1",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/gcode.js": {
@@ -3776,6 +2834,10 @@
       "id": "SoOq",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/2019/ToPropertyDescriptor.js": {
+      "id": "Su2Q",
+      "buildMeta": { "providedExports": true }
+    },
     "./refractor/lang/ada.js": {
       "id": "Sukb",
       "buildMeta": { "providedExports": true }
@@ -3790,6 +2852,10 @@
     },
     "./core-js/internals/engine-v8-version.js": {
       "id": "T+0C",
+      "buildMeta": { "providedExports": true }
+    },
+    "./object.getownpropertydescriptors/polyfill.js": {
+      "id": "T/Xf",
       "buildMeta": { "providedExports": true }
     },
     "./@babel/runtime/helpers/typeof.js": {
@@ -3807,6 +2873,10 @@
       "id": "T6vp",
       "buildMeta": { "providedExports": true }
     },
+    "./es-to-primitive/es2015.js": {
+      "id": "T8ea",
+      "buildMeta": { "providedExports": true }
+    },
     "./lodash/_overArg.js": {
       "id": "TAtK",
       "buildMeta": { "providedExports": true }
@@ -3815,12 +2885,9 @@
       "id": "TBbb",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/parsing-key-maps/isCmdKey.js": {
-      "id": "TKs5",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "../lib/components/dist/blocks/PropsTable/PropJsDoc.js": {
+      "id": "TEDn",
+      "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/an-instance.js": {
       "id": "TM4o",
@@ -3842,10 +2909,6 @@
       "id": "TOa8",
       "buildMeta": { "providedExports": true }
     },
-    "./react-draggable/build/cjs/DraggableCore.js": {
-      "id": "TPNd",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/vhdl.js": {
       "id": "TPw7",
       "buildMeta": { "providedExports": true }
@@ -3862,15 +2925,12 @@
       "id": "Tavh",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/lib/logging/Logger.js": {
-      "id": "Tay6",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./core-js/internals/use-symbol-as-uid.js": {
       "id": "TbR9",
+      "buildMeta": { "providedExports": true }
+    },
+    "./airbnb-js-shims/target/es2015.js": {
+      "id": "Tk4B",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/well-known-symbol-wrapped.js": {
@@ -3885,28 +2945,12 @@
       "id": "Tnop",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/parse.js": {
-      "id": "Tq7g",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/gte.js": {
-      "id": "TqtJ",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@icons/material/UnfoldMoreHorizontalIcon.js": {
-      "id": "Ts6v",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/photoshop/PhotoshopFields.js": {
-      "id": "TtEy",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/IteratorComplete.js": {
-      "id": "Tuui",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_Hash.js": {
       "id": "Tv3l",
+      "buildMeta": { "providedExports": true }
+    },
+    "./function.prototype.name/implementation.js": {
+      "id": "Txjs",
       "buildMeta": { "providedExports": true }
     },
     "../lib/router/dist/router.js": {
@@ -3927,10 +2971,6 @@
     },
     "./refractor/lang/n4js.js": {
       "id": "UN9u",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/compact/CompactColor.js": {
-      "id": "UTWu",
       "buildMeta": { "providedExports": true }
     },
     "./is-regex/index.js": {
@@ -3981,20 +3021,6 @@
       "id": "V/Lb",
       "buildMeta": { "providedExports": true }
     },
-    "./react-textarea-autosize/dist/react-textarea-autosize.browser.esm.js": {
-      "id": "V0IW",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-hotkeys/es/utils/backwardsCompatibleContext.js": {
-      "id": "V1jI",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./refractor/lang/keyman.js": {
       "id": "V4xR",
       "buildMeta": { "providedExports": true }
@@ -4018,35 +3044,25 @@
       "id": "VGXY",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_hashDelete.js": {
-      "id": "VPai",
+    "./promise.prototype.finally/auto.js": {
+      "id": "VJ/d",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/api/dist/modules/provider.js": {
-      "id": "VSIf",
+    "./lodash/_hashDelete.js": {
+      "id": "VPai",
       "buildMeta": { "providedExports": true }
     },
     "../lib/theming/dist/index.js": {
       "id": "VSTh",
       "buildMeta": { "providedExports": true }
     },
-    "./reactcss/lib/components/active.js": {
-      "id": "VXrw",
+    "./es-abstract/helpers/callBound.js": {
+      "id": "VWqj",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/resolving-handlers/hasKeyPressEvent.js": {
-      "id": "VdDr",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-hotkeys/es/const/AltShiftedKeysDictionary.js": {
-      "id": "VeC2",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "../lib/ui/dist/components/sidebar/SidebarItem.js": {
+      "id": "Vhia",
+      "buildMeta": { "providedExports": true }
     },
     "./@babel/runtime/helpers/classCallCheck.js": {
       "id": "VrFO",
@@ -4060,13 +3076,6 @@
       "id": "W/Kd",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/const/KeyShorthandDictionary.js": {
-      "id": "W/kM",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./lodash/_arrayFilter.js": {
       "id": "W0vE",
       "buildMeta": { "providedExports": true }
@@ -4079,20 +3088,12 @@
       "id": "W2GR",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/rsort.js": {
-      "id": "W4Ev",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object.fromentries/implementation.js": {
-      "id": "W5AF",
+    "../lib/components/dist/blocks/ColorPalette.js": {
+      "id": "W4lp",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/iterators.js": {
       "id": "W7cG",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/neq.js": {
-      "id": "WHzP",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.string.match.js": {
@@ -4127,17 +3128,6 @@
       "id": "WlFG",
       "buildMeta": { "providedExports": true }
     },
-    "./react-syntax-highlighter/dist/cjs/languages/prism/markdown.js": {
-      "id": "WoRU",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/const/MousetrapToReactKeyNamesDictionary.js": {
-      "id": "Wq9a",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "../lib/theming/dist/themes/dark.js": {
       "id": "WrkA",
       "buildMeta": { "providedExports": true }
@@ -4146,8 +3136,8 @@
       "id": "WxKw",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/helpers/interaction.js": {
-      "id": "Wxbn",
+    "./object.getownpropertydescriptors/shim.js": {
+      "id": "X+5D",
       "buildMeta": { "providedExports": true }
     },
     "../lib/ui/dist/components/layout/draggers.js": {
@@ -4173,6 +3163,10 @@
         "providedExports": ["default"]
       }
     },
+    "./es-abstract/2019/ToNumber.js": {
+      "id": "XCl4",
+      "buildMeta": { "providedExports": true }
+    },
     "./highlight.js/lib/languages/bnf.js": {
       "id": "XEt6",
       "buildMeta": { "providedExports": true }
@@ -4181,16 +3175,12 @@
       "id": "XNf4",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/compact/Compact.js": {
-      "id": "XWZJ",
+    "./lodash.throttle/index.js": {
+      "id": "XORh",
       "buildMeta": { "providedExports": true }
     },
     "../lib/ui/dist/components/layout/desktop.js": {
       "id": "XZVn",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/prerelease.js": {
-      "id": "Xb4r",
       "buildMeta": { "providedExports": true }
     },
     "./@babel/runtime/helpers/esm/setPrototypeOf.js": {
@@ -4199,14 +3189,6 @@
         "exportsType": "namespace",
         "providedExports": ["default"]
       }
-    },
-    "./lodash/_getSymbolsIn.js": {
-      "id": "Xidw",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/internals/native-url.js": {
-      "id": "XjkJ",
-      "buildMeta": { "providedExports": true }
     },
     "./lodash/_setToArray.js": {
       "id": "XlL0",
@@ -4223,17 +3205,6 @@
     "../lib/api/dist/modules/url.js": {
       "id": "Xs+u",
       "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/ranges/intersects.js": {
-      "id": "XvBj",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/IgnoreKeys.js": {
-      "id": "Xxi5",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./element-resize-detector/src/id-handler.js": {
       "id": "Y+ZY",
@@ -4263,13 +3234,6 @@
       "id": "YZE+",
       "buildMeta": { "providedExports": true }
     },
-    "./use-latest/dist/use-latest.esm.js": {
-      "id": "YZNk",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./core-js/internals/string-trim.js": {
       "id": "Ya2h",
       "buildMeta": { "providedExports": true }
@@ -4280,6 +3244,10 @@
     },
     "./prop-types/lib/ReactPropTypesSecret.js": {
       "id": "YjNL",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/5/ToInteger.js": {
+      "id": "Ymn5",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/inform7.js": {
@@ -4302,14 +3270,6 @@
       "id": "Ysgh",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/sidebar/RefBlocks.js": {
-      "id": "YvZU",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object-is/polyfill.js": {
-      "id": "Z4rD",
-      "buildMeta": { "providedExports": true }
-    },
     "./prismjs/components/prism-core.js": {
       "id": "Z5YN",
       "buildMeta": { "providedExports": true }
@@ -4318,23 +3278,9 @@
       "id": "ZAK3",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/withHotKeysIgnoreOverride.js": {
-      "id": "ZCuB",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./core-js/internals/engine-user-agent.js": {
       "id": "ZORK",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/helpers/logging/describeKeyEvent.js": {
-      "id": "ZQUV",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./core-js/modules/es.weak-map.js": {
       "id": "ZUdG",
@@ -4356,13 +3302,6 @@
       "id": "ZZ+W",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/resolving-handlers/resolveUnaltShiftedAlias.js": {
-      "id": "ZZLz",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "../lib/api/dist/lib/shortcut.js": {
       "id": "ZaTE",
       "buildMeta": { "providedExports": true }
@@ -4373,10 +3312,6 @@
     },
     "./highlight.js/lib/languages/purebasic.js": {
       "id": "ZiYa",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_baseIsMatch.js": {
-      "id": "ZjRn",
       "buildMeta": { "providedExports": true }
     },
     "./@emotion/weak-memoize/dist/weak-memoize.browser.esm.js": {
@@ -4394,13 +3329,6 @@
       "id": "a88S",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/const/KeyEventSequenceIndex.js": {
-      "id": "aBQb",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./element-resize-detector/src/element-resize-detector.js": {
       "id": "aEOh",
       "buildMeta": { "providedExports": true }
@@ -4415,10 +3343,6 @@
     },
     "./highlight.js/lib/languages/scss.js": {
       "id": "aHRY",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/helpers/checkboard.js": {
-      "id": "aJiR",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/c.js": {
@@ -4441,6 +3365,10 @@
       "id": "aO41",
       "buildMeta": { "providedExports": true }
     },
+    "./function.prototype.name/polyfill.js": {
+      "id": "aP1Z",
+      "buildMeta": { "providedExports": true }
+    },
     "../lib/core-events/dist/index.js": {
       "id": "aPAC",
       "buildMeta": { "providedExports": true }
@@ -4453,6 +3381,10 @@
       "id": "aURW",
       "buildMeta": { "providedExports": true }
     },
+    "../lib/ui/dist/components/sidebar/treeview/utils.js": {
+      "id": "aWTr",
+      "buildMeta": { "providedExports": true }
+    },
     "./prop-types/index.js": {
       "id": "aWzz",
       "buildMeta": { "providedExports": true }
@@ -4463,10 +3395,6 @@
     },
     "./webpack/buildin/module.js": {
       "id": "aYSr",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-abstract/2019/Set.js": {
-      "id": "adRX",
       "buildMeta": { "providedExports": true }
     },
     "../lib/components/dist/index.js": {
@@ -4484,13 +3412,6 @@
         "providedExports": ["default"]
       }
     },
-    "./react-hotkeys/es/lib/listening/KeyCombination.js": {
-      "id": "alqA",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./core-js/internals/classof-raw.js": {
       "id": "amH4",
       "buildMeta": { "providedExports": true }
@@ -4499,20 +3420,13 @@
       "id": "amiU",
       "buildMeta": { "providedExports": true }
     },
-    "./reactcss/lib/loop.js": {
-      "id": "amta",
+    "./es-abstract/2019/Type.js": {
+      "id": "amkT",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/haml.js": {
       "id": "an60",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/helpers/parsing-key-maps/standardizeKeyName.js": {
-      "id": "anse",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./core-js/internals/array-species-create.js": {
       "id": "aoZ+",
@@ -4520,10 +3434,6 @@
     },
     "./core-js/internals/define-well-known-symbol.js": {
       "id": "aokA",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/containers/menu.js": {
-      "id": "atMM",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/export.js": {
@@ -4557,16 +3467,12 @@
       "id": "bDYB",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_baseMap.js": {
-      "id": "bFjY",
+    "../lib/components/dist/blocks/PropsTable/PropDef.js": {
+      "id": "bHKz",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/mel.js": {
       "id": "bHon",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/compare.js": {
-      "id": "bJbZ",
       "buildMeta": { "providedExports": true }
     },
     "../lib/components/dist/tooltip/TooltipNote.js": {
@@ -4581,24 +3487,8 @@
       "id": "bRp0",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/IteratorNext.js": {
-      "id": "bTMt",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_cloneSymbol.js": {
-      "id": "bVbG",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/common/EditableInput.js": {
-      "id": "bZei",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/makefile.js": {
       "id": "bbSF",
-      "buildMeta": { "providedExports": true }
-    },
-    "./reactcss/lib/mergeClasses.js": {
-      "id": "bep4",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/xquery.js": {
@@ -4609,8 +3499,16 @@
       "id": "bjJz",
       "buildMeta": { "providedExports": true }
     },
+    "./string.prototype.padend/shim.js": {
+      "id": "bjNx",
+      "buildMeta": { "providedExports": true }
+    },
     "./highlight.js/lib/languages/shell.js": {
       "id": "bm7F",
+      "buildMeta": { "providedExports": true }
+    },
+    "../lib/components/dist/blocks/Story.js": {
+      "id": "bsDQ",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/gams.js": {
@@ -4633,50 +3531,28 @@
       "id": "bxEt",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_createBaseEach.js": {
-      "id": "bz5b",
+    "./es6-shim/es6-shim.js": {
+      "id": "bzxO",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_toSource.js": {
       "id": "c18h",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/const/KeyEventState.js": {
-      "id": "c2Uy",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./refractor/lang/jsonp.js": {
       "id": "c2eI",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/cloneDeep.js": {
-      "id": "c2re",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_assignValue.js": {
       "id": "c72w",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_baseIndexOf.js": {
-      "id": "c7Qd",
+    "../lib/components/dist/blocks/IFrame.js": {
+      "id": "c9Df",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/utils/array/indexFromEnd.js": {
-      "id": "c8Rq",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./core-js/modules/es.date.to-string.js": {
       "id": "cARO",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-draggable/build/cjs/utils/shims.js": {
-      "id": "cCoX",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_setCacheHas.js": {
@@ -4691,20 +3567,13 @@
       "id": "cL9q",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/common/Saturation.js": {
-      "id": "cMe2",
-      "buildMeta": { "providedExports": true }
-    },
     "../lib/theming/dist/global.js": {
       "id": "cMze",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/lib/definitions/ComponentOptionsListIterator.js": {
-      "id": "cMzi",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "./string.prototype.padend/polyfill.js": {
+      "id": "cP4u",
+      "buildMeta": { "providedExports": true }
     },
     "./lodash/_arrayReduce.js": {
       "id": "cPMt",
@@ -4738,10 +3607,6 @@
       "id": "cdn5",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/hue/HuePointer.js": {
-      "id": "chjL",
-      "buildMeta": { "providedExports": true }
-    },
     "./property-information/lib/html.js": {
       "id": "cjmc",
       "buildMeta": { "providedExports": true }
@@ -4750,12 +3615,12 @@
       "id": "cpcO",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/internals/fails.js": {
-      "id": "ct80",
+    "./promise.prototype.finally/requirePromise.js": {
+      "id": "cqYI",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/ToUint32.js": {
-      "id": "cvSA",
+    "./core-js/internals/fails.js": {
+      "id": "ct80",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/require-object-coercible.js": {
@@ -4772,10 +3637,6 @@
         "exportsType": "namespace",
         "providedExports": ["default"]
       }
-    },
-    "./react/cjs/react.development.js": {
-      "id": "cysK",
-      "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/erlang.js": {
       "id": "d++n",
@@ -4800,34 +3661,16 @@
       "id": "d5rw",
       "buildMeta": { "providedExports": true }
     },
-    "./@babel/runtime/helpers/esm/isNativeReflectConstruct.js": {
-      "id": "d8ec",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-draggable/build/cjs/Draggable.js": {
-      "id": "dB0S",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/const/reverse-dictionaries/UnaltedKeysDictionary.js": {
-      "id": "dGGI",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-color/lib/helpers/hue.js": {
-      "id": "dIvs",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/internals/is-object.js": {
       "id": "dSaG",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/nand2tetris-hdl.js": {
       "id": "dTrc",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/2018/ToNumber.js": {
+      "id": "diqe",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/julia-repl.js": {
@@ -4838,16 +3681,8 @@
       "id": "dlmX",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/api/dist/modules/settings.js": {
-      "id": "dnAw",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/vim.js": {
       "id": "doiL",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/block/Block.js": {
-      "id": "dqzG",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/julia.js": {
@@ -4870,6 +3705,10 @@
       "id": "e5IG",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/2018/RequireObjectCoercible.js": {
+      "id": "e6+5",
+      "buildMeta": { "providedExports": true }
+    },
     "./lodash/_mapCacheSet.js": {
       "id": "e63W",
       "buildMeta": { "providedExports": true }
@@ -4878,20 +3717,9 @@
       "id": "e93E",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/GetIterator.js": {
-      "id": "e9sm",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/core.js": {
       "id": "eCcN",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/utils/collection/contains.js": {
-      "id": "eGL6",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./lodash/constant.js": {
       "id": "eN33",
@@ -4912,16 +3740,12 @@
         "providedExports": ["serializeStyles"]
       }
     },
-    "./es-abstract/2019/SpeciesConstructor.js": {
-      "id": "eSgV",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/blocks/ArgsTable/index.js": {
-      "id": "eUrs",
-      "buildMeta": { "providedExports": true }
-    },
     "./object-is/index.js": {
       "id": "eYkv",
+      "buildMeta": { "providedExports": true }
+    },
+    "./functions-have-names/index.js": {
+      "id": "eaYl",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_mapCacheGet.js": {
@@ -4940,6 +3764,10 @@
       "id": "ejqM",
       "buildMeta": { "providedExports": true }
     },
+    "./prop-types/factoryWithThrowingShims.js": {
+      "id": "emlf",
+      "buildMeta": { "providedExports": true }
+    },
     "./object-keys/index.js": {
       "id": "ey2t",
       "buildMeta": { "providedExports": true }
@@ -4952,16 +3780,8 @@
       "id": "f2p0",
       "buildMeta": { "providedExports": true }
     },
-    "./promise.allsettled/polyfill.js": {
-      "id": "f4Rk",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/internals/array-method-is-strict.js": {
       "id": "f4p7",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/pickBy.js": {
-      "id": "f9bD",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/ie8-dom-define.js": {
@@ -4980,10 +3800,6 @@
       "id": "fRV1",
       "buildMeta": { "providedExports": true }
     },
-    "./es-abstract/2019/IteratorClose.js": {
-      "id": "fRg2",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/internals/well-known-symbol.js": {
       "id": "fVMg",
       "buildMeta": { "providedExports": true }
@@ -4991,13 +3807,6 @@
     "../lib/ui/dist/containers/notifications.js": {
       "id": "fcpJ",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/lib/listening/KeyEventCounter.js": {
-      "id": "fhSP",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./@babel/runtime/helpers/esm/taggedTemplateLiteralLoose.js": {
       "id": "fhSp",
@@ -5021,10 +3830,6 @@
       "id": "flvL",
       "buildMeta": { "providedExports": true }
     },
-    "./overlayscrollbars/js/OverlayScrollbars.js": {
-      "id": "fmNP",
-      "buildMeta": { "providedExports": true }
-    },
     "../lib/ui/dist/components/layout/mobile.js": {
       "id": "g2d/",
       "buildMeta": { "providedExports": true }
@@ -5032,13 +3837,6 @@
     "./core-js/internals/indexed-object.js": {
       "id": "g6a+",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/GlobalHotKeys.js": {
-      "id": "g9gG",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./refractor/lang/python.js": {
       "id": "gA9I",
@@ -5057,10 +3855,6 @@
     },
     "./core-js/internals/correct-prototype-getter.js": {
       "id": "gC6d",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_baseIsMap.js": {
-      "id": "gEWz",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_asciiToArray.js": {
@@ -5095,6 +3889,10 @@
       "id": "gXDU",
       "buildMeta": { "providedExports": true }
     },
+    "./object.values/polyfill.js": {
+      "id": "ghTS",
+      "buildMeta": { "providedExports": true }
+    },
     "../lib/addons/dist/hooks.js": {
       "id": "glgB",
       "buildMeta": { "providedExports": true }
@@ -5103,16 +3901,8 @@
       "id": "gp/K",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/modules/es.symbol.to-primitive.js": {
-      "id": "gqY9",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/internals/object-create.js": {
       "id": "guiJ",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/helpers/saturation.js": {
-      "id": "gyS+",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/smarty.js": {
@@ -5126,10 +3916,6 @@
         "providedExports": ["default"]
       }
     },
-    "./lodash/each.js": {
-      "id": "h4um",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/modules/es.array.find.js": {
       "id": "hBpG",
       "buildMeta": { "providedExports": true }
@@ -5142,24 +3928,16 @@
       "id": "hCOa",
       "buildMeta": { "providedExports": true }
     },
-    "./scheduler/cjs/scheduler-tracing.development.js": {
-      "id": "hFAP",
+    "../lib/components/dist/blocks/PropsTable/PropRow.js": {
+      "id": "hISC",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/elm.js": {
       "id": "hKHv",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/sidebar/Tree/ListItem.js": {
-      "id": "hMDV",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_getMatchData.js": {
-      "id": "hMsr",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/chrome/ChromePointerCircle.js": {
-      "id": "hMtR",
+    "./react/cjs/react.production.min.js": {
+      "id": "hLw4",
       "buildMeta": { "providedExports": true }
     },
     "./telejson/dist/index.js": {
@@ -5173,8 +3951,12 @@
       "id": "hRP2",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/sidebar/Tree/utils.js": {
-      "id": "hWui",
+    "./react-is/cjs/react-is.production.min.js": {
+      "id": "hTPx",
+      "buildMeta": { "providedExports": true }
+    },
+    "./airbnb-js-shims/target/es2016.js": {
+      "id": "hVge",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/microtask.js": {
@@ -5189,27 +3971,8 @@
       "id": "hZBN",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/preview/FramesRenderer.js": {
-      "id": "ha2j",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/chrome/ChromePointer.js": {
-      "id": "hafC",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/lib/strategies/FocusOnlyKeyEventStrategy.js": {
-      "id": "hdu4",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-color/lib/components/github/GithubSwatch.js": {
-      "id": "hhJF",
-      "buildMeta": { "providedExports": true }
-    },
-    "./object.fromentries/polyfill.js": {
-      "id": "hkiR",
+    "./scheduler/cjs/scheduler.production.min.js": {
+      "id": "hf2P",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.function.name.js": {
@@ -5265,6 +4028,10 @@
       "id": "hur+",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/helpers/maxSafeInteger.js": {
+      "id": "hyiC",
+      "buildMeta": { "providedExports": true }
+    },
     "./lodash/_MapCache.js": {
       "id": "hyzI",
       "buildMeta": { "providedExports": true }
@@ -5277,10 +4044,6 @@
       "id": "i1t3",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/modules/es.array.fill.js": {
-      "id": "i4UL",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/internals/to-integer.js": {
       "id": "i7Kn",
       "buildMeta": { "providedExports": true }
@@ -5291,10 +4054,6 @@
     },
     "./refractor/lang/fortran.js": {
       "id": "i7oW",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/controls/types.js": {
-      "id": "i9Ne",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/new-promise-capability.js": {
@@ -5316,10 +4075,6 @@
       "id": "iHSk",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/modules/es.regexp.constructor.js": {
-      "id": "iKE+",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/xquery.js": {
       "id": "iNb8",
       "buildMeta": { "providedExports": true }
@@ -5332,18 +4087,6 @@
       "id": "iaLq",
       "buildMeta": { "providedExports": true }
     },
-    "./reactcss/lib/autoprefix.js": {
-      "id": "ieKE",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/blocks/ArgsTable/ArgsTable.js": {
-      "id": "ikV+",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/api/dist/modules/release-notes.js": {
-      "id": "ime3",
-      "buildMeta": { "providedExports": true }
-    },
     "./create-react-context/lib/implementation.js": {
       "id": "ionY",
       "buildMeta": { "providedExports": true }
@@ -5352,38 +4095,24 @@
       "id": "iu90",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/utils/collection/without.js": {
-      "id": "iycY",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "./es-abstract/helpers/isNaN.js": {
+      "id": "j1AC",
+      "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/containers/sidebar.js": {
-      "id": "j3OO",
+    "./es-abstract/5/Type.js": {
+      "id": "j3if",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.object.create.js": {
       "id": "j4Sf",
       "buildMeta": { "providedExports": true }
     },
-    "./string.prototype.matchall/helpers/RegExpStringIterator.js": {
-      "id": "j5P9",
+    "./es-abstract/2019/ToString.js": {
+      "id": "j5NJ",
       "buildMeta": { "providedExports": true }
     },
     "./property-information/find.js": {
       "id": "j5Vs",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/helpers/parsing-key-maps/isCustomKeyName.js": {
-      "id": "j6D8",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-draggable/build/cjs/cjs.js": {
-      "id": "j6Rw",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/inherit-if-required.js": {
@@ -5392,10 +4121,6 @@
     },
     "./refractor/lang/objectivec.js": {
       "id": "jJvC",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/uniq.js": {
-      "id": "jLkM",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/xojo.js": {
@@ -5414,20 +4139,8 @@
       "id": "jZVo",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/layout/Root.js": {
-      "id": "jZbF",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/sort.js": {
-      "id": "jZxU",
-      "buildMeta": { "providedExports": true }
-    },
     "./scheduler/index.js": {
       "id": "jiMj",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/satisfies.js": {
-      "id": "jiWn",
       "buildMeta": { "providedExports": true }
     },
     "./@emotion/memoize/dist/memoize.browser.esm.js": {
@@ -5441,22 +4154,12 @@
       "id": "jl0/",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/resolving-handlers/isFromFocusOnlyComponent.js": {
-      "id": "jnu3",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-hotkeys/es/const/NonPrintableKeysDictionary.js": {
-      "id": "jo+T",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./space-separated-tokens/index.js": {
       "id": "jq3p",
+      "buildMeta": { "providedExports": true }
+    },
+    "../lib/ui/dist/components/sidebar/SidebarStories.js": {
+      "id": "jtfq",
       "buildMeta": { "providedExports": true }
     },
     "../lib/components/dist/icon/icon.js": {
@@ -5482,16 +4185,12 @@
       "id": "k7yZ",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/index.js": {
-      "id": "kA4r",
+    "./object.entries/polyfill.js": {
+      "id": "kDzb",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_shortOut.js": {
       "id": "kG2z",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/modules/es.number.max-safe-integer.js": {
-      "id": "kH1Z",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/ini.js": {
@@ -5500,6 +4199,10 @@
     },
     "./lodash/_objectToString.js": {
       "id": "kHoZ",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/2019/ToPrimitive.js": {
+      "id": "kOpY",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/scala.js": {
@@ -5530,19 +4233,8 @@
       "id": "khDs",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/const/EventResponse.js": {
-      "id": "kiRW",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./lodash/_getTag.js": {
       "id": "kkM+",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_baseClone.js": {
-      "id": "kn3Q",
       "buildMeta": { "providedExports": true }
     },
     "./react-is/index.js": {
@@ -5556,17 +4248,6 @@
     "./core-js/internals/html.js": {
       "id": "kySU",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/photoshop/Photoshop.js": {
-      "id": "l+v+",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-popper/lib/esm/index.js": {
-      "id": "l/oz",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["Popper", "placements", "Manager", "Reference"]
-      }
     },
     "./@emotion/core/dist/core.browser.esm.js": {
       "id": "l1C2",
@@ -5592,90 +4273,6 @@
       "id": "lEaq",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/sidebar/Search.js": {
-      "id": "lHZh",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_cloneDataView.js": {
-      "id": "lN3w",
-      "buildMeta": { "providedExports": true }
-    },
-    "./polished/dist/polished.esm.js": {
-      "id": "lN5B",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": [
-          "adjustHue",
-          "animation",
-          "backgroundImages",
-          "backgrounds",
-          "between",
-          "border",
-          "borderColor",
-          "borderRadius",
-          "borderStyle",
-          "borderWidth",
-          "buttons",
-          "clearFix",
-          "complement",
-          "cover",
-          "cssVar",
-          "darken",
-          "desaturate",
-          "directionalProperty",
-          "ellipsis",
-          "em",
-          "fluidRange",
-          "fontFace",
-          "getContrast",
-          "getLuminance",
-          "getValueAndUnit",
-          "grayscale",
-          "hiDPI",
-          "hideText",
-          "hideVisually",
-          "hsl",
-          "hslToColorString",
-          "hsla",
-          "invert",
-          "lighten",
-          "linearGradient",
-          "margin",
-          "math",
-          "meetsContrastGuidelines",
-          "mix",
-          "modularScale",
-          "normalize",
-          "opacify",
-          "padding",
-          "parseToHsl",
-          "parseToRgb",
-          "position",
-          "radialGradient",
-          "readableColor",
-          "rem",
-          "retinaImage",
-          "rgb",
-          "rgbToColorString",
-          "rgba",
-          "saturate",
-          "setHue",
-          "setLightness",
-          "setSaturation",
-          "shade",
-          "size",
-          "stripUnit",
-          "textInputs",
-          "timingFunctions",
-          "tint",
-          "toColorString",
-          "transitions",
-          "transparentize",
-          "triangle",
-          "wordWrap"
-        ]
-      }
-    },
     "./core-js/modules/es.array.iterator.js": {
       "id": "lTEL",
       "buildMeta": { "providedExports": true }
@@ -5684,23 +4281,12 @@
       "id": "lYDu",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/lib/listening/KeyHistory.js": {
-      "id": "lZCd",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./core-js/internals/freezing.js": {
       "id": "la3R",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/fix-regexp-well-known-symbol-logic.js": {
       "id": "lbJE",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/minor.js": {
-      "id": "lc9y",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/properties.js": {
@@ -5719,12 +4305,20 @@
       "id": "lkAK",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/2018/IsCallable.js": {
+      "id": "lqQZ",
+      "buildMeta": { "providedExports": true }
+    },
     "./react-syntax-highlighter/dist/esm/light.js": {
       "id": "lvE1",
       "buildMeta": {
         "exportsType": "namespace",
         "providedExports": ["default"]
       }
+    },
+    "./array.prototype.flat/auto.js": {
+      "id": "m0l7",
+      "buildMeta": { "providedExports": true }
     },
     "./@babel/runtime/helpers/objectWithoutProperties.js": {
       "id": "m3Bd",
@@ -5742,21 +4336,6 @@
       "id": "m5o6",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/modules/es.map.js": {
-      "id": "m9LP",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/lib/definitions/ComponentTree.js": {
-      "id": "mABi",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "../lib/ui/dist/components/sidebar/Tree/State.js": {
-      "id": "mBhG",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_Uint8Array.js": {
       "id": "mGzy",
       "buildMeta": { "providedExports": true }
@@ -5768,13 +4347,6 @@
     "./core-js/internals/array-reduce.js": {
       "id": "mPOS",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/lib/definitions/ComponentOptionsList.js": {
-      "id": "mQvY",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "../lib/components/dist/blocks/Toolbar.js": {
       "id": "mTTi",
@@ -5796,10 +4368,6 @@
       "id": "maj8",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/map.js": {
-      "id": "mbB6",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/ruleslanguage.js": {
       "id": "md2e",
       "buildMeta": { "providedExports": true }
@@ -5812,12 +4380,19 @@
       "id": "ml/U",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/modules/es.string.ends-with.js": {
-      "id": "mlET",
-      "buildMeta": { "providedExports": true }
+    "./react-textarea-autosize/dist/react-textarea-autosize.esm.browser.js": {
+      "id": "mmUj",
+      "buildMeta": {
+        "exportsType": "namespace",
+        "providedExports": ["default"]
+      }
     },
     "./refractor/lang/cil.js": {
       "id": "mn0z",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/2019/CreateDataProperty.js": {
+      "id": "mnAq",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/haxe.js": {
@@ -5828,16 +4403,16 @@
       "id": "mu+t",
       "buildMeta": { "providedExports": true }
     },
-    "./react-syntax-highlighter/dist/cjs/languages/prism/json.js": {
-      "id": "muFx",
-      "buildMeta": { "providedExports": true }
-    },
     "./react-helmet-async/lib/index.module.js": {
       "id": "muX9",
       "buildMeta": {
         "exportsType": "namespace",
         "providedExports": ["Helmet", "HelmetProvider"]
       }
+    },
+    "./es-abstract/2018/ToPrimitive.js": {
+      "id": "my5u",
+      "buildMeta": { "providedExports": true }
     },
     "./lodash/_arraySome.js": {
       "id": "myUI",
@@ -5847,20 +4422,20 @@
       "id": "mzLy",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_strictIndexOf.js": {
-      "id": "n1QJ",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/tsx.js": {
       "id": "n1eb",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/internals/promise-resolve.js": {
-      "id": "nDYR",
+    "./promise.prototype.finally/polyfill.js": {
+      "id": "n4Ch",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/isString.js": {
-      "id": "nDih",
+    "./shallow-equal/objects/index.js": {
+      "id": "nChe",
+      "buildMeta": { "providedExports": true }
+    },
+    "./core-js/internals/promise-resolve.js": {
+      "id": "nDYR",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/tt2.js": {
@@ -5875,16 +4450,8 @@
       "id": "nOUr",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/block/BlockSwatches.js": {
-      "id": "nUAf",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/clojure.js": {
       "id": "nZzO",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/ranges/min-version.js": {
-      "id": "njaF",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/scilab.js": {
@@ -5895,23 +4462,16 @@
       "id": "nnRT",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/noop.js": {
-      "id": "nnm9",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/HotKeys.js": {
-      "id": "noxy",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./refractor/lang/velocity.js": {
       "id": "nqcG",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/lilypond.js": {
       "id": "ns+h",
+      "buildMeta": { "providedExports": true }
+    },
+    "./lodash/lodash.js": {
+      "id": "nsO7",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/markdown.js": {
@@ -5929,21 +4489,6 @@
     "./refractor/index.js": {
       "id": "nzBT",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-syntax-highlighter/dist/cjs/languages/prism/yaml.js": {
-      "id": "o3fS",
-      "buildMeta": { "providedExports": true }
-    },
-    "./es-array-method-boxes-properly/index.js": {
-      "id": "o5F1",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/utils/collection/isEmpty.js": {
-      "id": "oAZH",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./lodash/_isFlattenable.js": {
       "id": "oCTG",
@@ -5972,20 +4517,8 @@
       "id": "oXkQ",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/api/dist/lib/stories.js": {
-      "id": "obtL",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/common/Checkboard.js": {
-      "id": "occ2",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/nimrod.js": {
       "id": "ogmT",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/components/sidebar/Refs.js": {
-      "id": "ootT",
       "buildMeta": { "providedExports": true }
     },
     "./fuse.js/dist/fuse.js": {
@@ -6016,27 +4549,13 @@
       "id": "pFUB",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/coerce.js": {
-      "id": "pInR",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_baseGetAllKeys.js": {
       "id": "pIod",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/const/KeyOSAndLayoutAliasesDictionary.js": {
-      "id": "pKNJ",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./use-composed-ref/dist/use-composed-ref.esm.js": {
-      "id": "pNTX",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "./es-abstract/2019/IsPropertyKey.js": {
+      "id": "pIsM",
+      "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/puppet.js": {
       "id": "pOte",
@@ -6048,6 +4567,10 @@
     },
     "./element-resize-detector/src/id-generator.js": {
       "id": "pUG5",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/5/ToNumber.js": {
+      "id": "pWWZ",
       "buildMeta": { "providedExports": true }
     },
     "./@babel/runtime/helpers/esm/assertThisInitialized.js": {
@@ -6068,19 +4591,16 @@
         "providedExports": ["default"]
       }
     },
-    "./react-hotkeys/es/helpers/resolving-handlers/resolveAltedAlias.js": {
-      "id": "pdC7",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "../lib/components/dist/tabs/tabs.js": {
       "id": "phTK",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.array.is-array.js": {
       "id": "plBw",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/helpers/assertRecord.js": {
+      "id": "pmjK",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_isIndex.js": {
@@ -6107,17 +4627,6 @@
       "id": "pv8H",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/recordKeyCombination.js": {
-      "id": "pyYr",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "../lib/components/dist/controls/Boolean.js": {
-      "id": "pydM",
-      "buildMeta": { "providedExports": true }
-    },
     "./react-syntax-highlighter/dist/esm/prism.js": {
       "id": "pzeu",
       "buildMeta": {
@@ -6127,6 +4636,10 @@
     },
     "./core-js/internals/regexp-flags.js": {
       "id": "q/0V",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-to-primitive/helpers/isPrimitive.js": {
+      "id": "q2Ea",
       "buildMeta": { "providedExports": true }
     },
     "./es-get-iterator/index.js": {
@@ -6149,8 +4662,12 @@
       "id": "q9+l",
       "buildMeta": { "providedExports": true }
     },
-    "./react-dom/cjs/react-dom.development.js": {
-      "id": "qBTx",
+    "../lib/components/dist/blocks/PropsTable/SectionRow.js": {
+      "id": "q9Sg",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/2018/Type.js": {
+      "id": "qCtr",
       "buildMeta": { "providedExports": true }
     },
     "./@babel/runtime/helpers/esm/construct.js": {
@@ -6164,10 +4681,6 @@
       "id": "qGiy",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/ranges/gtr.js": {
-      "id": "qMc+",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/javadoclike.js": {
       "id": "qMzS",
       "buildMeta": { "providedExports": true }
@@ -6176,12 +4689,12 @@
       "id": "qQVG",
       "buildMeta": { "providedExports": true }
     },
-    "./property-information/lib/util/case-sensitive-transform.js": {
-      "id": "qWIM",
+    "../lib/ui/dist/libs/shortcut.js": {
+      "id": "qRcm",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/classes/comparator.js": {
-      "id": "qa/o",
+    "./property-information/lib/util/case-sensitive-transform.js": {
+      "id": "qWIM",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_Map.js": {
@@ -6204,16 +4717,16 @@
       "id": "qnX1",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/major.js": {
-      "id": "qv+k",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/jsdoc.js": {
       "id": "qz4k",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/q.js": {
       "id": "qzku",
+      "buildMeta": { "providedExports": true }
+    },
+    "./array-includes/implementation.js": {
+      "id": "qztG",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/mercury.js": {
@@ -6224,12 +4737,9 @@
       "id": "r4WN",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/const/reverse-dictionaries/UnshiftedKeysDictionary.js": {
-      "id": "rJ+l",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
+    "./array-includes/shim.js": {
+      "id": "rKBo",
+      "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/clean.js": {
       "id": "rQjl",
@@ -6271,27 +4781,8 @@
       "id": "rqFa",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/parsing-key-maps/isValidKey.js": {
-      "id": "rqtW",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["InvalidKeyNameError", "default"]
-      }
-    },
     "./refractor/lang/nasm.js": {
       "id": "rx/9",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_baseUniq.js": {
-      "id": "s+R0",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-color/lib/components/common/ColorWrap.js": {
-      "id": "s9D+",
-      "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_arrayIncludesWith.js": {
-      "id": "sCL+",
       "buildMeta": { "providedExports": true }
     },
     "./lodash/_initCloneObject.js": {
@@ -6325,8 +4816,8 @@
       "id": "sX5C",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/ranges/min-satisfying.js": {
-      "id": "saif",
+    "./es-abstract/2019/SameValue.js": {
+      "id": "sbJ0",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/basic.js": {
@@ -6339,10 +4830,6 @@
     },
     "./format/format.js": {
       "id": "sgSn",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/components/preview/utils/components.js": {
-      "id": "sjiH",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/nix.js": {
@@ -6369,17 +4856,6 @@
       "id": "t40j",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/classes/range.js": {
-      "id": "t50g",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/utils/string/stripSuperfluousWhitespace.js": {
-      "id": "t5lR",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./refractor/lang/mel.js": {
       "id": "tBAQ",
       "buildMeta": { "providedExports": true }
@@ -6396,10 +4872,6 @@
       "id": "tOZu",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_baseAssign.js": {
-      "id": "tPQG",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/isObject.js": {
       "id": "tQYX",
       "buildMeta": { "providedExports": true }
@@ -6408,16 +4880,16 @@
       "id": "tQaH",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/modules/es.array.sort.js": {
-      "id": "tQbP",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/internals/collection-weak.js": {
       "id": "tTPa",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/tex.js": {
       "id": "tV+n",
+      "buildMeta": { "providedExports": true }
+    },
+    "../lib/components/dist/blocks/PropsTable/PropValue.js": {
+      "id": "tVFo",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.string.trim.js": {
@@ -6430,10 +4902,6 @@
     },
     "./core-js/internals/iterate.js": {
       "id": "tXjT",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/ranges/ltr.js": {
-      "id": "tXo5",
       "buildMeta": { "providedExports": true }
     },
     "./@reach/router/es/index.js": {
@@ -6474,15 +4942,12 @@
       "id": "tr+p",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/withHotKeys.js": {
-      "id": "tt3m",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./highlight.js/lib/languages/dts.js": {
       "id": "u0FX",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/2019/ToBoolean.js": {
+      "id": "u8r+",
       "buildMeta": { "providedExports": true }
     },
     "./react-syntax-highlighter/dist/esm/async-languages/hljs.js": {
@@ -6495,13 +4960,6 @@
     "./core-js/modules/es.string.small.js": {
       "id": "uFXj",
       "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/helpers/logging/printComponent.js": {
-      "id": "uKaR",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./core-js/internals/redefine.js": {
       "id": "uLp7",
@@ -6519,8 +4977,8 @@
       "id": "ubJa",
       "buildMeta": { "providedExports": true }
     },
-    "./core-js/modules/es.array.flat.js": {
-      "id": "ulNE",
+    "./es-abstract/2018/IsConstructor.js": {
+      "id": "ufZ+",
       "buildMeta": { "providedExports": true }
     },
     "./object.fromentries/auto.js": {
@@ -6529,10 +4987,6 @@
     },
     "./highlight.js/lib/languages/groovy.js": {
       "id": "urfV",
-      "buildMeta": { "providedExports": true }
-    },
-    "./core-js/modules/es.array.unscopables.flat.js": {
-      "id": "urw/",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/htmlbars.js": {
@@ -6547,12 +5001,12 @@
       "id": "v+k5",
       "buildMeta": { "providedExports": true }
     },
-    "./react-color/lib/components/hue/Hue.js": {
-      "id": "v0aH",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/javascript.js": {
       "id": "v53A",
+      "buildMeta": { "providedExports": true }
+    },
+    "../lib/api/dist/init-provider-api.js": {
+      "id": "v5xw",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/brainfuck.js": {
@@ -6575,8 +5029,8 @@
       "id": "vX88",
       "buildMeta": { "providedExports": true }
     },
-    "./reactcss/lib/index.js": {
-      "id": "vZEA",
+    "./es-abstract/helpers/isPrimitive.js": {
+      "id": "vYa2",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/actionscript.js": {
@@ -6585,6 +5039,10 @@
     },
     "./memoizerific/memoizerific.js": {
       "id": "vbDw",
+      "buildMeta": { "providedExports": true }
+    },
+    "../lib/ui/dist/components/sidebar/treeview/components.js": {
+      "id": "vehu",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.array.find-index.js": {
@@ -6615,6 +5073,10 @@
       "id": "vxC8",
       "buildMeta": { "providedExports": true }
     },
+    "./react-dom/cjs/react-dom.production.min.js": {
+      "id": "w/UT",
+      "buildMeta": { "providedExports": true }
+    },
     "./lodash/_baseGet.js": {
       "id": "w2Tz",
       "buildMeta": { "providedExports": true }
@@ -6635,28 +5097,20 @@
       "id": "wC3K",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/api/shortcut.js": {
-      "id": "wDLd",
-      "buildMeta": { "providedExports": true }
-    },
     "./store2/dist/store2.js": {
       "id": "wFLD",
       "buildMeta": { "providedExports": true }
     },
-    "./reactcss/lib/components/hover.js": {
-      "id": "wKPF",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/ui/dist/settings/release_notes_page.js": {
-      "id": "wKg7",
-      "buildMeta": { "providedExports": true }
-    },
-    "./prop-types/factoryWithTypeCheckers.js": {
-      "id": "wMva",
+    "../lib/components/dist/blocks/PropsTable/PropsTable.js": {
+      "id": "wOH+",
       "buildMeta": { "providedExports": true }
     },
     "./refractor/lang/protobuf.js": {
       "id": "wS90",
+      "buildMeta": { "providedExports": true }
+    },
+    "./has/src/index.js": {
+      "id": "wSS7",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/object-set-prototype-of.js": {
@@ -6681,6 +5135,10 @@
       "id": "wpQC",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/5/CheckObjectCoercible.js": {
+      "id": "wszz",
+      "buildMeta": { "providedExports": true }
+    },
     "./highlight.js/lib/languages/css.js": {
       "id": "wx8R",
       "buildMeta": { "providedExports": true }
@@ -6693,13 +5151,6 @@
       "id": "wzaa",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/vendor/react-dom/getEventCharCode.js": {
-      "id": "x3A8",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./refractor/lang/ejs.js": {
       "id": "x4fa",
       "buildMeta": { "providedExports": true }
@@ -6708,26 +5159,12 @@
       "id": "x4t0",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/resolving-handlers/applicableAliasFunctions.js": {
-      "id": "xAug",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
-    "./react-hotkeys/es/lib/shared/KeySequenceParser.js": {
-      "id": "xFJp",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./refractor/lang/vala.js": {
       "id": "xFvy",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/forOwn.js": {
-      "id": "xJZM",
+    "./es-abstract/2019/ToObject.js": {
+      "id": "xGSD",
       "buildMeta": { "providedExports": true }
     },
     "./react-popper/lib/esm/Popper.js": {
@@ -6736,6 +5173,10 @@
         "exportsType": "namespace",
         "providedExports": ["InnerPopper", "placements", "default"]
       }
+    },
+    "./object.values/shim.js": {
+      "id": "xQ8p",
+      "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/crystal.js": {
       "id": "xUr1",
@@ -6749,12 +5190,12 @@
       "id": "xaiR",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/sidebar/Tree/Tree.js": {
-      "id": "xbhT",
-      "buildMeta": { "providedExports": true }
-    },
     "./highlight.js/lib/languages/rust.js": {
       "id": "xeGr",
+      "buildMeta": { "providedExports": true }
+    },
+    "../lib/ui/dist/components/sidebar/SidebarSearch.js": {
+      "id": "xewu",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/shared-store.js": {
@@ -6769,6 +5210,14 @@
       "id": "xkDd",
       "buildMeta": { "providedExports": true }
     },
+    "./es-abstract/2019/IsArray.js": {
+      "id": "xkbi",
+      "buildMeta": { "providedExports": true }
+    },
+    "../lib/ui/dist/components/sidebar/ListItemIcon.js": {
+      "id": "xoMe",
+      "buildMeta": { "providedExports": true }
+    },
     "./lodash/_castPath.js": {
       "id": "xoyU",
       "buildMeta": { "providedExports": true }
@@ -6777,15 +5226,12 @@
       "id": "xt6W",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/lib/matching/ActionResolver.js": {
-      "id": "xu2t",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./refractor/lang/j.js": {
       "id": "xvp0",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/helpers/regexTester.js": {
+      "id": "xyEj",
       "buildMeta": { "providedExports": true }
     },
     "../lib/components/dist/icon/icons.js": {
@@ -6796,14 +5242,6 @@
       "id": "y/9h",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/mapValues.js": {
-      "id": "y2Ah",
-      "buildMeta": { "providedExports": true }
-    },
-    "../lib/components/dist/blocks/ArgsTable/ArgRow.js": {
-      "id": "y3Rg",
-      "buildMeta": { "providedExports": true }
-    },
     "./lodash/_baseSet.js": {
       "id": "y4bl",
       "buildMeta": { "providedExports": true }
@@ -6812,20 +5250,16 @@
       "id": "y6H/",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/components/dist/blocks/ArgsTable/ArgValue.js": {
-      "id": "y7G7",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/internal/identifiers.js": {
-      "id": "y8vi",
-      "buildMeta": { "providedExports": true }
-    },
     "../lib/components/dist/html.js": {
       "id": "yEf+",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/modules/es.object.freeze.js": {
       "id": "yH/f",
+      "buildMeta": { "providedExports": true }
+    },
+    "./es-abstract/2019/IsExtensible.js": {
+      "id": "yL4z",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/object-keys-internal.js": {
@@ -6863,23 +5297,8 @@
       "id": "yeaO",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/const/ShiftedKeysDictionary.js": {
-      "id": "yfwP",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./highlight.js/lib/languages/csp.js": {
       "id": "yhe7",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@storybook/semver/functions/diff.js": {
-      "id": "ylVS",
-      "buildMeta": { "providedExports": true }
-    },
-    "./reactcss/lib/flattenNames.js": {
-      "id": "ytrb",
       "buildMeta": { "providedExports": true }
     },
     "./promise.allsettled/shim.js": {
@@ -6890,15 +5309,12 @@
       "id": "z+TE",
       "buildMeta": { "providedExports": true }
     },
-    "./react-hotkeys/es/helpers/resolving-handlers/getKeyName.js": {
-      "id": "z+jl",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
-    },
     "./refractor/lang/hpkp.js": {
       "id": "z6T4",
+      "buildMeta": { "providedExports": true }
+    },
+    "./promise.prototype.finally/implementation.js": {
+      "id": "z6U0",
       "buildMeta": { "providedExports": true }
     },
     "../lib/ui/dist/provider.js": {
@@ -6909,20 +5325,12 @@
       "id": "z84I",
       "buildMeta": { "providedExports": true }
     },
-    "./lodash/_baseIsNaN.js": {
-      "id": "z9Jh",
-      "buildMeta": { "providedExports": true }
-    },
     "./@emotion/cache/dist/cache.browser.esm.js": {
       "id": "zEpV",
       "buildMeta": {
         "exportsType": "namespace",
         "providedExports": ["default"]
       }
-    },
-    "./lodash/_getAllKeysIn.js": {
-      "id": "zF5n",
-      "buildMeta": { "providedExports": true }
     },
     "./lodash/keysIn.js": {
       "id": "zH+d",
@@ -6943,21 +5351,6 @@
     "./highlight.js/lib/languages/dos.js": {
       "id": "zKLQ",
       "buildMeta": { "providedExports": true }
-    },
-    "./lodash/_baseForOwn.js": {
-      "id": "zKkv",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-draggable/build/cjs/utils/getPrefix.js": {
-      "id": "zN8s",
-      "buildMeta": { "providedExports": true }
-    },
-    "./react-hotkeys/es/lib/shared/Registry.js": {
-      "id": "zR7/",
-      "buildMeta": {
-        "exportsType": "namespace",
-        "providedExports": ["default"]
-      }
     },
     "./es-abstract/2019/PromiseResolve.js": {
       "id": "zSbO",
@@ -6987,10 +5380,6 @@
       "id": "zaNA",
       "buildMeta": { "providedExports": true }
     },
-    "./@storybook/semver/functions/compare-loose.js": {
-      "id": "zaiU",
-      "buildMeta": { "providedExports": true }
-    },
     "./core-js/internals/internal-state.js": {
       "id": "zc29",
       "buildMeta": { "providedExports": true }
@@ -7007,20 +5396,12 @@
       "id": "zh11",
       "buildMeta": { "providedExports": true }
     },
-    "../lib/ui/dist/components/sidebar/RefIndicator.js": {
-      "id": "zhhG",
-      "buildMeta": { "providedExports": true }
-    },
     "./refractor/lang/dart.js": {
       "id": "zlmW",
       "buildMeta": { "providedExports": true }
     },
     "./core-js/internals/array-method-uses-to-length.js": {
       "id": "znGZ",
-      "buildMeta": { "providedExports": true }
-    },
-    "./@icons/material/CheckIcon.js": {
-      "id": "znGo",
       "buildMeta": { "providedExports": true }
     },
     "./highlight.js/lib/languages/haskell.js": {
