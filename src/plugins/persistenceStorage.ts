@@ -94,12 +94,18 @@ export const connectPersistenceStorage = ({
   };
 
   const setState = (state: unknown) => {
-    const execLater = () => {
+    const execPersistence = () => {
       timeout = undefined;
       setStateFn(state);
     };
     if (timeout !== undefined) clearTimeout(timeout);
-    timeout = setTimeout(execLater, debounceWait);
+
+    if (debounceWait <= 0) {
+      execPersistence();
+      timeout = undefined;
+    } else {
+      timeout = setTimeout(execPersistence, debounceWait);
+    }
   };
 
   const getState = () => {

@@ -488,7 +488,7 @@ describe("createStoreContext", () => {
       {
         devName: persistenceKey,
         storagePersistence: {
-          debounceWait: 1000,
+          debounceWait: 0,
           isActive: true,
         },
       }
@@ -513,10 +513,6 @@ describe("createStoreContext", () => {
     });
 
     expect(HookResult.result.current.store).toEqual({ a: 20 });
-
-    expect(localStorage.getItem(localStorageKey)).toBe(
-      JSON.stringify({ a: 10 })
-    );
 
     await waitForExpect(() => {
       expect(localStorage.getItem(localStorageKey)).toBe(
