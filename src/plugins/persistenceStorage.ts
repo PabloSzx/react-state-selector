@@ -76,7 +76,7 @@ export const connectPersistenceStorage = ({
   if (!persistenceMethod) return null;
 
   let isConnected = false;
-  let timeout: NodeJS.Timeout | undefined;
+  let timeout: any;
 
   const setStateFn = (state: unknown) => {
     const possiblePromise = persistenceMethod.setItem(
