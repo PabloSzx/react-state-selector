@@ -36,11 +36,11 @@ devDependencies:
   react-dom: 17.0.1_react@17.0.1
   react-is: 17.0.1
   react-scripts: 3.4.4_typescript@4.1.5
-  react-state-selector: 2.0.2_react@17.0.1
+  react-state-selector: 2.0.3_react@17.0.1
   react-test-renderer: 16.14.0_react@17.0.1
   regenerator-runtime: 0.13.7
   ts-loader: 8.0.17_typescript@4.1.5+webpack@4.46.0
-  tsdx: 0.14.1_@types+babel__@types+babel__core@7.1.12
+  tsdx: 0.14.1_@types+babel__@types+babel__@types+babel__core@7.1.12
   tslib: 2.1.0
   typescript: 4.1.5
   waait: 1.0.5
@@ -9979,12 +9979,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-O3sR1/opvCDGLEVcvrGTMtLac8GJ5IwZC4puPrLuRj3l7ICKvkmA0vGuU9OW8mV9WIBRnaxp5GJh9IEAaNOoYg==
-  /immer/7.0.15:
-    dev: true
-    resolution:
-      integrity: sha512-yM7jo9+hvYgvdCQdqvhCNRRio0SCXc8xDPzA25SvKWa7b1WVPjLwQs1VYU5JPXjcJPTqAa5NP5dqpORGYBQ2AA==
   /immer/8.0.1:
-    dev: false
     resolution:
       integrity: sha512-aqXhGP7//Gui2+UrEtvxZxSquQVXTpZ7KDxfCcKAF3Vysvw0CViVaW9RZ1j1xlIYqaaaipBoqdqeibkc18PNvA==
   /import-cwd/2.1.0:
@@ -15437,16 +15432,16 @@ packages:
       react-dom: ^0.14.0 || ^15.0.0-0 || ^16.0.0
     resolution:
       integrity: sha512-tL4sCgfmvapYRZ1FO2VmBmjPVzzqgHA7kI8lSJ6JS6L78jXFNRdOZFpXyK6P1NBZvKPPCZxReNgzZNUajAerZw==
-  /react-state-selector/2.0.2_react@17.0.1:
+  /react-state-selector/2.0.3_react@17.0.1:
     dependencies:
-      immer: 7.0.15
+      immer: 8.0.1
       react: 17.0.1
       reselect: 4.0.0
     dev: true
     peerDependencies:
       react: ">=16.13"
     resolution:
-      integrity: sha512-bHlZnanX8zsqE1eE7snRwwC+QvnLLGGnAz54iB3xsrRUkEWwKakBAWrTUX+dOsDOhR//7vnuHsYpwUtxDL8T5w==
+      integrity: sha512-nD9Z+Rb1k99gsurBYadYD32NdhxVbqNU2qGtC9Ey7VEuNhJb8mEq2Svzr6zr3ERgigoWjkWrvA4QYpBi8MAziA==
   /react-syntax-highlighter/11.0.2_react@16.14.0:
     dependencies:
       "@babel/runtime": 7.12.13
@@ -17613,7 +17608,7 @@ packages:
     dev: true
     resolution:
       integrity: sha512-dRcuzokWhajtZWkQsDVKbWyY+jgcLC5sqJhg2PSgf4ZkH2aHPvaOY8YWGhmjb68b5qqTfasSsDO9k7RUiEmZAw==
-  /tsdx/0.14.1_@types+babel__@types+babel__core@7.1.12:
+  /tsdx/0.14.1_@types+babel__@types+babel__@types+babel__core@7.1.12:
     dependencies:
       "@babel/core": 7.12.16
       "@babel/helper-module-imports": 7.12.13
@@ -19016,7 +19011,7 @@ specifiers:
   react-dom: ^17.0.1
   react-is: ^17.0.1
   react-scripts: ^3.4.3
-  react-state-selector: ^2.0.2
+  react-state-selector: 2.0.3
   react-test-renderer: ^16.13.1
   regenerator-runtime: ^0.13.7
   reselect: ^4.0.0

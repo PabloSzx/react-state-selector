@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ["10", 12", "14", "15"]
+        node: [10, 12, 14, 15]
     name: Node ${{ matrix.node }} test
     steps:
       - uses: actions/checkout@v1
@@ -17,4 +17,4 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: npm i -g pnpm
       - run: pnpm i
-      - run: pnpm test --coverage
+      - run: pnpm test -- --coverage
