@@ -433,6 +433,10 @@ export function createStoreContext<
               listener(storeCtx.current.store, props);
             });
 
+            storeCtx.current.storagePersistence?.setState(
+              storeCtx.current.store
+            );
+
             return storeCtx.current.store;
           };
         }

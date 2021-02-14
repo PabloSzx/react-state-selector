@@ -1,6 +1,6 @@
 {
   "name": "react-state-selector",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "keywords": [
     "react",
     "immer",
@@ -28,7 +28,7 @@
     "build": "tsdx build -i ./src/index.ts",
     "build-storybook": "rm -rf ./dist && build-storybook -o docs  -s stories/utils/public",
     "lint": "tsdx lint src stories test --fix",
-    "prepublishOnly": "tsdx lint src test --fix && tsdx test && tsdx build",
+    "prepare": "tsdx lint src test --fix && tsdx test && tsdx build",
     "start": "tsdx watch",
     "storybook": "start-storybook -p 6006 -s stories/utils/public",
     "test": "tsdx test"
