@@ -11,6 +11,8 @@
 ## **React global state management**, the performant, type safe and easy way
 
 ```sh
+pnpm add react-state-selector
+# or
 npm install react-state-selector
 # or
 yarn add react-state-selector
